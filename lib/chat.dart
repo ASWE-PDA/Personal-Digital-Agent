@@ -1,20 +1,51 @@
-import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import 'main.dart';
 
 class ChatPage extends StatelessWidget {
+  
+  bool recording = false;
+  
+
   @override
   Widget build(BuildContext context) {
-    var appState = context.watch<MyAppState>();
-
-
     return Center(
-        child: Text(
-          'Chat',
-          style: TextStyle(fontSize: 50),
-          ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: Row(
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      print('test');
+                      
+                      recording = !recording;
+                    }, 
+                    icon: Icon(Icons.mic)
+                  ),
+
+                  Expanded(
+                    child: TextField(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(30)),
+                        ),
+                        hintText: 'Enter a query',
+                      ),
+                    ),
+                  ),
+
+                  IconButton(
+                    onPressed: () {
+                      
+                    }, 
+                    icon: Icon(Icons.send)
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
       );
   }
 }

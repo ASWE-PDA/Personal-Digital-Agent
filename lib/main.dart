@@ -1,4 +1,3 @@
-import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:provider/provider.dart';
@@ -21,7 +20,7 @@ class MyApp extends StatelessWidget {
         title: 'Namer App',
         theme: ThemeData(
           useMaterial3: true,
-          colorScheme: ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 199, 18, 160)),
+          colorScheme: ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 55, 2, 124)),
         ),
         home: MyHomePage(),
       ),

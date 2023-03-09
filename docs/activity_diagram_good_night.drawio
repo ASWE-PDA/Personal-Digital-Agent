@@ -1,0 +1,123 @@
+<mxfile host="65bd71144e">
+    <diagram name="Page-1" id="ePVuuqO8ZZHXcMnUHlH2">
+        <mxGraphModel dx="650" dy="411" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="HjWtDsbmHX87lzNzHvFn-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="HjWtDsbmHX87lzNzHvFn-1" target="HjWtDsbmHX87lzNzHvFn-2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="HjWtDsbmHX87lzNzHvFn-1" value="Hey Luna, good Night!" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="310" y="80" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="HjWtDsbmHX87lzNzHvFn-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="HjWtDsbmHX87lzNzHvFn-2" target="HjWtDsbmHX87lzNzHvFn-3" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="HjWtDsbmHX87lzNzHvFn-2" value="Fragt, ob man geweckt werden will" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="310" y="180" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="HjWtDsbmHX87lzNzHvFn-14" value="Nein" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="HjWtDsbmHX87lzNzHvFn-3" target="HjWtDsbmHX87lzNzHvFn-4" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="HjWtDsbmHX87lzNzHvFn-16" value="Ja" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="HjWtDsbmHX87lzNzHvFn-3" target="HjWtDsbmHX87lzNzHvFn-15" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="HjWtDsbmHX87lzNzHvFn-3" value="Wecker stellen?" style="rhombus;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="345" y="280" width="50" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="HjWtDsbmHX87lzNzHvFn-21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="HjWtDsbmHX87lzNzHvFn-4" target="HjWtDsbmHX87lzNzHvFn-5" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="HjWtDsbmHX87lzNzHvFn-4" value="Bestätigt, dass kein Wecker gestellt wird" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="310" y="370" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="HjWtDsbmHX87lzNzHvFn-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="HjWtDsbmHX87lzNzHvFn-5" target="HjWtDsbmHX87lzNzHvFn-6" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="HjWtDsbmHX87lzNzHvFn-25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="HjWtDsbmHX87lzNzHvFn-5" target="HjWtDsbmHX87lzNzHvFn-8" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="HjWtDsbmHX87lzNzHvFn-5" value="Wünscht Gute Nacht" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="310" y="510" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="HjWtDsbmHX87lzNzHvFn-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="HjWtDsbmHX87lzNzHvFn-6" target="HjWtDsbmHX87lzNzHvFn-7" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="HjWtDsbmHX87lzNzHvFn-6" value="Schaltet Lichter aus über Smart Home API" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="460" y="510" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="HjWtDsbmHX87lzNzHvFn-7" value="Stellt Temperatur ein über Smart Home API" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="610" y="510" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="HjWtDsbmHX87lzNzHvFn-26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="HjWtDsbmHX87lzNzHvFn-8" target="HjWtDsbmHX87lzNzHvFn-9" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="HjWtDsbmHX87lzNzHvFn-8" value="Checkt ob Spotify Playlist hinterlegt ist" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="310" y="620" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="HjWtDsbmHX87lzNzHvFn-27" value="Ja" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="HjWtDsbmHX87lzNzHvFn-9" target="HjWtDsbmHX87lzNzHvFn-10" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="HjWtDsbmHX87lzNzHvFn-28" value="Nein" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="HjWtDsbmHX87lzNzHvFn-9" target="HjWtDsbmHX87lzNzHvFn-11" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="HjWtDsbmHX87lzNzHvFn-9" value="Playlist hinterlegt?" style="rhombus;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="345" y="720" width="50" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" style="edgeStyle=none;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="HjWtDsbmHX87lzNzHvFn-10" target="2">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="HjWtDsbmHX87lzNzHvFn-10" value="Startet Schlafplaylist über Spotify API" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="460" y="715" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="HjWtDsbmHX87lzNzHvFn-11" target="4">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="HjWtDsbmHX87lzNzHvFn-11" value="Startet keine Schlafplaylist" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="310" y="810" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="HjWtDsbmHX87lzNzHvFn-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="HjWtDsbmHX87lzNzHvFn-15" target="HjWtDsbmHX87lzNzHvFn-17" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="HjWtDsbmHX87lzNzHvFn-15" value="Fragt nach gewünschter Uhrzeit&amp;nbsp;" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="460" y="275" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="HjWtDsbmHX87lzNzHvFn-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="HjWtDsbmHX87lzNzHvFn-17" target="HjWtDsbmHX87lzNzHvFn-18" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="HjWtDsbmHX87lzNzHvFn-17" value="Stellt den gewünschten Wecker" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="610" y="275" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="HjWtDsbmHX87lzNzHvFn-22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="HjWtDsbmHX87lzNzHvFn-18" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="370" y="510" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="HjWtDsbmHX87lzNzHvFn-18" value="Bestätigt, dass Wecker gestellt ist" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="610" y="370" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;elbow=vertical;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="2" target="4">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="430" y="910" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="670" y="890"/>
+                            <mxPoint x="370" y="890"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="2" value="Schaltet die Playlist nach gewisser Zeit aus" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="610" y="715" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+                    <mxGeometry x="355" y="930" width="30" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;elbow=vertical;" edge="1" parent="1" source="7" target="HjWtDsbmHX87lzNzHvFn-1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="7" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+                    <mxGeometry x="355" width="30" height="30" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

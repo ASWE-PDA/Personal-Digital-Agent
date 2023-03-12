@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
-class ChatPage extends StatelessWidget {
+class ChatPage extends StatefulWidget {
   
   bool recording = false;
   
+
+ @override
+  State<ChatPage> createState() => _ChatPage();
+}
+
+class _ChatPage extends State<ChatPage> {
+  FlutterTts flutterTts = FlutterTts();
 
   @override
   Widget build(BuildContext context) {
@@ -11,6 +19,12 @@ class ChatPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
+            TextButton(
+              onPressed: () {
+                flutterTts.speak("Hello World, may name is Luna, how can I help you?");
+              }, 
+              child: Text("Text to Speech"),
+            ),
             Padding(
               padding: const EdgeInsets.all(10),
               child: Row(
@@ -19,7 +33,7 @@ class ChatPage extends StatelessWidget {
                     onPressed: () {
                       print('test');
                       
-                      recording = !recording;
+                      widget.recording = !widget.recording;
                     }, 
                     icon: Icon(Icons.mic)
                   ),

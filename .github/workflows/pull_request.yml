@@ -3,7 +3,7 @@ name: Pull Request
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   pull-request:
@@ -15,5 +15,5 @@ jobs:
         uses: peter-evans/create-pull-request@v3.11.1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          branch: main
+          branch: master
           delete-branch: true

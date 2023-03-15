@@ -12,38 +12,15 @@ class ChatPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Padding(
-              padding: const EdgeInsets.all(10),
-              child: Row(
-                children: [
-                  IconButton(
-                    onPressed: () {
-                      print('test');
-                      
-                      recording = !recording;
-                    }, 
-                    icon: Icon(Icons.mic)
-                  ),
-
-                  Expanded(
-                    child: TextField(
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(30)),
-                        ),
-                        hintText: 'Enter a query',
-                      ),
-                    ),
-                  ),
-
-                  IconButton(
-                    onPressed: () {
-                      
-                    }, 
-                    icon: Icon(Icons.send)
-                  ),
-                ],
+              padding: const EdgeInsets.all(20.0),
+              child: FloatingActionButton(
+                onPressed: () {
+                  print('test');
+                  recording = !recording;
+                }, 
+                child: Icon(Icons.mic),
               ),
-            )
+            ),
           ],
         ),
       );

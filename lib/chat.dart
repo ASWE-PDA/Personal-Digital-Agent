@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 
 class ChatPage extends StatelessWidget {
-  
   bool recording = false;
-  
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return Scaffold(
+        body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
@@ -23,6 +22,6 @@ class ChatPage extends StatelessWidget {
             ),
           ],
         ),
-      );
+      ));
   }
 }

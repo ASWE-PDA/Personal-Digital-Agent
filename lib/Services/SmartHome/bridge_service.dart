@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 class BridgeService {
   BridgeService();
 
+  // TODO: not used yet
   Future<List<Bridge>> getBridges() async {
     var url = Uri.parse('https://discovery.meethue.com');
     var response = await http.get(url);
@@ -27,6 +28,7 @@ class BridgeService {
     return bridges;
   }
 
+  // debugging function
   Future<List<Bridge>> getBridgesDebug() async {
     var bridges = [
       Bridge(
@@ -44,7 +46,7 @@ class BridgeService {
     });
   }
 
-  // discover bridges and users
+  // TODO: not fully implemented yet. discover bridges and users
   Future<Bridge> connectToBridge() async {
     // var url = Uri.parse('https://discovery.meethue.com');
     // var response = await http.get(url);
@@ -60,20 +62,6 @@ class BridgeService {
     });
 
     return Future.error(Exception("No active bridges found"));
-  }
-
-  // check which ip address is the correct by checking if the link button is pressed
-  Future<bool> checkBridge(String ip) async {
-    var url = Uri.parse('http://$ip/api/');
-    var response =
-        await http.post(url, body: json.encode({"devicetype": "luna"}));
-    final responseMap = json.decode(response.body);
-    print(responseMap);
-    if (responseMap[0].containsKey("error")) {
-      return false;
-    } else {
-      return true;
-    }
   }
 
   // create delayed user for debugging

@@ -3,6 +3,7 @@ import 'package:luna/Services/SmartHome/bridge_service.dart';
 import 'package:luna/Services/SmartHome/smart_home_user_model.dart';
 import 'package:provider/provider.dart';
 
+/// Screen that allows the user to connect to a Philips Hue bridge.
 class ConnectBrigdeScreen extends StatefulWidget {
   final String ip;
   const ConnectBrigdeScreen({required this.ip});
@@ -16,7 +17,6 @@ class _ConnectBrigdeScreenState extends State<ConnectBrigdeScreen> {
   late Future<dynamic> username;
   bool buttonPressed = false;
   bool userCreated = false;
-  String storedUser = "";
 
   @override
   Widget build(BuildContext context) {

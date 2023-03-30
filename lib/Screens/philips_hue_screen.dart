@@ -3,7 +3,7 @@ import 'package:luna/Screens/connect_bridge_screen.dart';
 import 'package:luna/Services/SmartHome/smart_home_user_model.dart';
 import 'package:provider/provider.dart';
 
-// Screen to enter a new email address and store the value locally.
+// Screen to enter a new ip address and store the value locally.
 class SmartHomeSettingsScreen extends StatefulWidget {
   const SmartHomeSettingsScreen({super.key});
 
@@ -14,7 +14,7 @@ class SmartHomeSettingsScreen extends StatefulWidget {
 class _SmartHomeSettingsScreen extends State<SmartHomeSettingsScreen> {
   final TextEditingController _ipController = TextEditingController();
 
-  /// Returns true if the email input field is empty
+  /// Returns true if the ip input field is empty
   bool isEmpty() {
     if (_ipController.text == "" || _ipController.text.isEmpty) {
       return true;
@@ -30,7 +30,7 @@ class _SmartHomeSettingsScreen extends State<SmartHomeSettingsScreen> {
           appBar: AppBar(
             title: const Text("Connect Bridge"),
             actions: [
-              // button to update the value of the email address
+              // button to update the value of the ip address
               TextButton(
                 onPressed: isEmpty()
                     ? null
@@ -54,7 +54,7 @@ class _SmartHomeSettingsScreen extends State<SmartHomeSettingsScreen> {
               )
             ],
           ),
-          // input field for the email address
+          // input field for the ip address
           body: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

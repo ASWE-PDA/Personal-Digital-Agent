@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:luna/Services/SmartHome/smart_home_service.dart';
-import 'package:luna/Services/SmartHome/smart_home_user_model.dart';
+import 'package:luna/Services/SmartHome/bridge_model.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

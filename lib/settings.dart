@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:luna/Screens/philips_hue_screen.dart';
-import 'package:luna/Services/SmartHome/smart_home_user_model.dart';
+import 'package:luna/Services/SmartHome/bridge_model.dart';
 import 'package:luna/Themes/theme_model.dart';
 import 'package:luna/Widgets/settings_section.dart';
 import 'package:luna/Widgets/settings_widget.dart';

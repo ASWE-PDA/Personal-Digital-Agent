@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:luna/Screens/connect_bridge_screen.dart';
-import 'package:luna/Services/SmartHome/smart_home_user_model.dart';
+import 'package:luna/Services/SmartHome/bridge_model.dart';
 import 'package:provider/provider.dart';
 
 // Screen to enter a new ip address and store the value locally.

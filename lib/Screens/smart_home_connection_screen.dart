@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:luna/Screens/connect_bridge_screen.dart';
-import 'package:luna/Services/smart_home_user_model.dart';
+import 'package:luna/Services/SmartHome/smart_home_user_model.dart';
 import 'package:provider/provider.dart';
 
 // Screen to enter a new email address and store the value locally.
@@ -24,7 +24,8 @@ class _SmartHomeSettingsScreen extends State<SmartHomeSettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<UserModel>(builder: (context, UserModel userModel, child) {
+    return Consumer<BridgeModel>(
+        builder: (context, BridgeModel userModel, child) {
       return Scaffold(
           appBar: AppBar(
             title: const Text("Connect Bridge"),

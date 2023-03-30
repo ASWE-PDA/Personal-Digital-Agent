@@ -1,5 +1,3 @@
-
-
 // class that stores the lights api results of the philips hue api
 class Light {
   final int id;
@@ -45,7 +43,7 @@ class Bridge {
   }
 }
 
-// class that stores a list of bridges 
+// class that stores a list of bridges
 class Bridges {
   final List<Bridge> bridges;
 
@@ -59,35 +57,6 @@ class Bridges {
 
     return Bridges(
       bridges: bridges,
-    );
-  }
-}
-
-// class that stores the user api results of the philips hue api
-class User {
-  final String username;
-
-  User({
-    required this.username,
-  });
-
-  factory User.fromJson(Map<String, dynamic> json) {
-    return User(
-      username: json['success']['username'],
-    );
-  }
-}
-
-class Error {
-  final String error;
-
-  Error({
-    required this.error,
-  });
-
-  factory Error.fromJson(Map<String, dynamic> json) {
-    return Error(
-      error: json['error']['description'],
     );
   }
 }

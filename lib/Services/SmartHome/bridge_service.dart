@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:luna/Model/smart_home_model.dart';
+import 'package:luna/Services/SmartHome/smart_home_model.dart';
 import 'package:http/http.dart' as http;
 
 class BridgeService {

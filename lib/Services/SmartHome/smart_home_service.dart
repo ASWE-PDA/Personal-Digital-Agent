@@ -1,8 +1,7 @@
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
-import 'package:luna/Model/smart_home_model.dart';
-import 'package:luna/Services/bridge_service.dart';
+import 'package:luna/Services/SmartHome/smart_home_model.dart';
+import 'package:luna/Services/SmartHome/bridge_service.dart';
 
 class SmartHomeService {
   String ip = "";

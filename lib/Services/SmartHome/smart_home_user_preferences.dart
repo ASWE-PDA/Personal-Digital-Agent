@@ -1,7 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-/// Class that is responsible for loading and updating the shared preferences for the user name.
-class UserPreferences {
+/// Class that is responsible for loading and updating the shared preferences for the bridge configuration.
+class BridgePreferences {
   static const userKey = 'user_key';
   static const ipKey = 'ip_key';
 
@@ -11,7 +11,7 @@ class UserPreferences {
     sharedPreferences.setString(userKey, value);
   }
 
-  /// Deletes the user.
+  /// Deletes the user name.
   deleteUser() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.remove(userKey);

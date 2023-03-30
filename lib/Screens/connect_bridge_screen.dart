@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:luna/Services/bridge_service.dart';
-import 'package:luna/Services/smart_home_user_model.dart';
+import 'package:luna/Services/SmartHome/bridge_service.dart';
+import 'package:luna/Services/SmartHome/smart_home_user_model.dart';
 import 'package:provider/provider.dart';
 
 class ConnectBrigdeScreen extends StatefulWidget {
@@ -20,7 +20,8 @@ class _ConnectBrigdeScreenState extends State<ConnectBrigdeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<UserModel>(builder: (context, UserModel userModel, child) {
+    return Consumer<BridgeModel>(
+        builder: (context, BridgeModel userModel, child) {
       return Scaffold(
           appBar: AppBar(title: Text("Connect Philips Hue Bridge")),
           body: Center(

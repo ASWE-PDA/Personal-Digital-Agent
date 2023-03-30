@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:luna/Services/smart_home_service.dart';
 import 'package:flutter_tts/flutter_tts.dart';
-import 'package:luna/Services/smart_home_user_model.dart';
+import 'package:luna/Services/SmartHome/smart_home_service.dart';
+import 'package:luna/Services/SmartHome/smart_home_user_model.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -15,10 +15,10 @@ class _ChatPageState extends State<ChatPage> {
   bool recording = false;
   SmartHomeService smartHomeService = SmartHomeService(ip: "", user: "");
 
-  UserModel userModel = UserModel();
+  BridgeModel userModel = BridgeModel();
   loadPreferences() async {
-    String user = Provider.of<UserModel>(context, listen: false).user;
-    String ip = Provider.of<UserModel>(context, listen: false).ip;
+    String user = Provider.of<BridgeModel>(context, listen: false).user;
+    String ip = Provider.of<BridgeModel>(context, listen: false).ip;
     smartHomeService.configurateBridge(ip, user);
     print(ip);
     print(user);

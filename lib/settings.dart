@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:luna/Screens/smart_home_connection_screen.dart';
-import 'package:luna/Services/smart_home_user_model.dart';
+import 'package:luna/Services/SmartHome/smart_home_user_model.dart';
 import 'package:luna/Themes/theme_model.dart';
 import 'package:luna/Widgets/settings_section.dart';
 import 'package:luna/Widgets/settings_widget.dart';
@@ -39,7 +39,7 @@ class _SettingsPage extends State<SettingsPage> {
   Widget build(BuildContext context) {
     return Consumer(builder: (context, ThemeModel themeNotifier, child) {
       bool value = themeNotifier.isDark;
-      return Consumer(builder: (context, UserModel userModel, child) {
+      return Consumer(builder: (context, BridgeModel userModel, child) {
         return Scaffold(
             appBar: AppBar(title: Text("Settings")),
             body: Container(
@@ -110,7 +110,7 @@ class _SettingsPage extends State<SettingsPage> {
                               context,
                               () async {
                                 await themeNotifier.deleteThemePreferences();
-                                await userModel.deleteUserPreferences();
+                                await userModel.deleteBridgePreferences();
                                 Navigator.pop(context);
                               },
                             );

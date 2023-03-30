@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:luna/Services/smart_home_user_model.dart';
 import 'package:luna/Themes/main_theme.dart';
 import 'package:luna/Themes/theme_model.dart';
 import 'package:provider/provider.dart';
@@ -8,7 +9,12 @@ import 'settings.dart';
 import 'chat.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: ((context) => UserModel())),
+    ],
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {

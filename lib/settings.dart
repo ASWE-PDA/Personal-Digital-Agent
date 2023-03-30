@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:luna/Screens/smart_home_connection_screen.dart';
+import 'package:luna/Screens/philips_hue_screen.dart';
 import 'package:luna/Services/SmartHome/smart_home_user_model.dart';
 import 'package:luna/Themes/theme_model.dart';
 import 'package:luna/Widgets/settings_section.dart';
@@ -26,10 +26,11 @@ class _SettingsPage extends State<SettingsPage> {
             actions: [
               TextButton(onPressed: onPressed, child: Text("Yes")),
               TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: Text("Cancel", style: TextStyle(color: Colors.red))),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text("Cancel", style: TextStyle(color: Colors.red)),
+              ),
             ],
           );
         });
@@ -62,47 +63,47 @@ class _SettingsPage extends State<SettingsPage> {
                   ]),
                   SettingsSection(title: "Personal Data", children: [
                     SettingsWidget(
-                        preventActionOverflow: true,
-                        action: (userModel.user.isEmpty || userModel.user == "")
-                            ? IconButton(
-                                onPressed: () {
-                                  // push to the SmartHomeScreen
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          SmartHomeSettingsScreen(),
-                                    ),
-                                  );
-                                },
-                                icon: Icon(Icons.arrow_forward_ios),
-                                color: Theme.of(context).colorScheme.tertiary,
-                              )
-                            : TextButton(
-                                child: Container(
-                                  padding: const EdgeInsets.only(right: 8.0),
-                                  child: Text(
-                                    userModel.ip,
-                                    style: TextStyle(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .tertiary),
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 1,
+                      preventActionOverflow: true,
+                      action: (userModel.user.isEmpty || userModel.user == "")
+                          ? IconButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        SmartHomeSettingsScreen(),
                                   ),
+                                );
+                              },
+                              icon: Icon(Icons.arrow_forward_ios),
+                              color: Theme.of(context).colorScheme.tertiary,
+                            )
+                          : TextButton(
+                              child: Container(
+                                padding: const EdgeInsets.only(right: 8.0),
+                                child: Text(
+                                  userModel.ip,
+                                  style: TextStyle(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .tertiary),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
                                 ),
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          SmartHomeSettingsScreen(),
-                                    ),
-                                  );
-                                },
                               ),
-                        title: "Philips Hue System",
-                        icon: Icon(Icons.cast_connected_outlined)),
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        SmartHomeSettingsScreen(),
+                                  ),
+                                );
+                              },
+                            ),
+                      title: "Philips Hue System",
+                      icon: Icon(Icons.cast_connected_outlined),
+                    ),
                     SettingsWidget(
                         action: IconButton(
                           onPressed: () {
@@ -123,19 +124,20 @@ class _SettingsPage extends State<SettingsPage> {
                   ]),
                   SettingsSection(title: "About", children: [
                     SettingsWidget(
-                        action: IconButton(
-                          onPressed: () {
-                            // push navigation to license page
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => LicensePage()));
-                          },
-                          icon: Icon(Icons.arrow_forward_ios),
-                          color: Theme.of(context).colorScheme.tertiary,
-                        ),
-                        title: "Licenses",
-                        icon: Icon(Icons.file_copy_outlined)),
+                      action: IconButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => LicensePage()),
+                          );
+                        },
+                        icon: Icon(Icons.arrow_forward_ios),
+                        color: Theme.of(context).colorScheme.tertiary,
+                      ),
+                      title: "Licenses",
+                      icon: Icon(Icons.file_copy_outlined),
+                    ),
                   ]),
                 ])));
       });

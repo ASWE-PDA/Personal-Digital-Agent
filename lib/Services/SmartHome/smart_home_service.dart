@@ -19,15 +19,19 @@ class SmartHomeService {
   // Get all lights
   Future<dynamic> getLights() async {
     var url = Uri.parse('http://$ip/api/$user/lights');
-    var response = await http.get(url);
-    final responseMap = json.decode(response.body);
-    var lights = _responseToLights(responseMap);
-    return lights;
+    try {
+      var response = await http.get(url);
+      final responseMap = json.decode(response.body);
+      var lights = _responseToLights(responseMap);
+      return lights;
+    } catch (e) {
+      print(e);
+      return [];
+    }
   }
 
   List<Light> _responseToLights(Map<String, dynamic> response) {
     final lights = <Light>[];
-    final ids = response.keys;
     for (final id in response.keys) {
       final item = response[id] as Map<String, dynamic>;
       final light = Light.fromJson(item, int.parse(id));
@@ -46,21 +50,17 @@ class SmartHomeService {
   }
 
   // turn off a light
-  Future<dynamic> turnOffLight(Light light) async {
+  turnOffLight(Light light) async {
     if (light.on) {
-      print("turning off light: " + light.name);
+      print("turning off light: ${light.name}");
       var url = Uri.parse('http://$ip/api/$user/lights/${light.id}/state');
-      var response = await http.put(url, body: '{"on": false}');
-      return response;
+      try {
+        var response = await http.put(url, body: '{"on": false}');
+      } catch (e) {
+        print(e);
+      }
     } else {
-      print("light already off: " + light.name);
+      print("light already off: ${light.name}");
     }
-  }
-
-  // turn on a light
-  Future<dynamic> turnOnLight(int id) async {
-    var url = Uri.parse('http://$ip/api/$user/lights/$id/state');
-    var response = await http.put(url, body: '{"on": true}');
-    return response;
   }
 }

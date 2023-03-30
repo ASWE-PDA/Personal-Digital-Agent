@@ -22,9 +22,7 @@ class SettingsSection extends StatelessWidget {
             ),
           ),
         ),
-        Column(
-          children: children
-        ),
+        Column(children: children),
       ],
     );
   }

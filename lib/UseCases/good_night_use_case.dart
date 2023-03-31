@@ -8,7 +8,6 @@ class GoodNightUseCase implements UseCase {
 
   @override
   Map<String, dynamic> settings = {};
-  SmartHomeService smartHomeService = SmartHomeService(ip: "", user: "");
 
   GoodNightUseCase(this.settings);
 
@@ -48,7 +47,7 @@ class GoodNightUseCase implements UseCase {
     print("turning off lights: $ip, $user");
     // only turn off lights if ip and user are set
     if (ip != "" && user != "") {
-      smartHomeService.turnOffAllLights(ip, user);
+      turnOffAllLights(ip, user);
       return "I turned of all your lights";
     }
     return "I don't know your ip address or user. Sorry I can't turn off your lights.";

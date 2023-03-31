@@ -14,13 +14,13 @@ class ChatPage extends StatefulWidget {
 class _ChatPageState extends State<ChatPage> {
   FlutterTts flutterTts = FlutterTts();
   bool recording = false;
-  SmartHomeService smartHomeService = SmartHomeService(ip: "", user: "");
+  String user = "";
+  String ip = "";
 
   BridgeModel userModel = BridgeModel();
   loadPreferences() async {
-    String user = Provider.of<BridgeModel>(context, listen: false).user;
-    String ip = Provider.of<BridgeModel>(context, listen: false).ip;
-    smartHomeService.configurateBridge(ip, user);
+    user = Provider.of<BridgeModel>(context, listen: false).user;
+    ip = Provider.of<BridgeModel>(context, listen: false).ip;
     print(ip);
     print(user);
   }
@@ -33,6 +33,7 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
+    loadPreferences();
     return Scaffold(
         body: Center(
       child: Column(
@@ -40,8 +41,8 @@ class _ChatPageState extends State<ChatPage> {
         children: [
           ElevatedButton(
               onPressed: () async {
-                GoodNightUseCase goodNightUseCase = GoodNightUseCase(
-                    {"ip": smartHomeService.ip, "user": smartHomeService.user});
+                GoodNightUseCase goodNightUseCase =
+                    GoodNightUseCase({"ip": ip, "user": user});
                 String text =
                     goodNightUseCase.execute("please turn off the lights");
                 await flutterTts.setLanguage("en-US");
@@ -50,14 +51,13 @@ class _ChatPageState extends State<ChatPage> {
               child: Text("Test Good Night Use Case DEBUG")),
           ElevatedButton(
               onPressed: () async {
-                if (smartHomeService.ip == "" || smartHomeService.user == "") {
+                if (ip == "" || user == "") {
                   await flutterTts.setLanguage("en-US");
                   flutterTts.speak(
                       "You have not connected your bridge yet. Please connect your bridge first.");
                   return;
                 } else {
-                  smartHomeService.turnOffAllLights(
-                      smartHomeService.ip, smartHomeService.user);
+                  turnOffAllLights(ip, user);
                   await flutterTts.setLanguage("en-US");
                   flutterTts.speak(
                       "I turned off all the lights. Good Night. Sleep Well.");

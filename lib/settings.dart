@@ -59,7 +59,7 @@ class _SettingsPage extends State<SettingsPage> {
                               child: Container(
                                 padding: const EdgeInsets.only(right: 8.0),
                                 child: Text(
-                                  userModel.ip,
+                                  "Connected",
                                   style: TextStyle(
                                       color: Theme.of(context)
                                           .colorScheme
@@ -73,7 +73,8 @@ class _SettingsPage extends State<SettingsPage> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) =>
-                                        SmartHomeSettingsScreen(),
+                                        SmartHomeSettingsScreen(
+                                            ip: userModel.ip),
                                   ),
                                 );
                               },

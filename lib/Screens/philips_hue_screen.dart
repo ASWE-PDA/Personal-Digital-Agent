@@ -5,14 +5,15 @@ import 'package:provider/provider.dart';
 
 // Screen to enter a new ip address and store the value locally.
 class SmartHomeSettingsScreen extends StatefulWidget {
-  const SmartHomeSettingsScreen({super.key});
+  final String? ip;
+  const SmartHomeSettingsScreen({super.key, this.ip});
 
   @override
   State<SmartHomeSettingsScreen> createState() => _SmartHomeSettingsScreen();
 }
 
 class _SmartHomeSettingsScreen extends State<SmartHomeSettingsScreen> {
-  final TextEditingController _ipController = TextEditingController();
+  late TextEditingController _ipController;
 
   /// Returns true if the ip input field is empty
   bool isEmpty() {
@@ -20,6 +21,13 @@ class _SmartHomeSettingsScreen extends State<SmartHomeSettingsScreen> {
       return true;
     }
     return false;
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _ipController = TextEditingController(text: widget.ip);
   }
 
   @override

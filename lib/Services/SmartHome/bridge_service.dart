@@ -60,24 +60,6 @@ class BridgeService {
     });
   }
 
-  // TODO: not fully implemented yet. discover bridges and users
-  Future<Bridge> connectToBridge() async {
-    // var url = Uri.parse('https://discovery.meethue.com');
-    // var response = await http.get(url);
-    Bridge? activeBridge;
-    Future<List<Bridge>> bridges = getBridgesDebug();
-
-    bridges.then((bridges) async {
-      for (Bridge bridge in bridges) {
-        print(bridge.internalipaddress);
-      }
-    }).catchError((error) {
-      print("Exception when fetching bridges " + error.toString());
-    });
-
-    return Future.error(Exception("No active bridges found"));
-  }
-
   // create delayed user for debugging
   Future<String> createUserDebug(String ip) async {
     return Future.delayed(Duration(seconds: 3), () {

@@ -53,7 +53,7 @@ class GoodNightUseCase implements UseCase {
     // only turn off lights if ip and user are set
     if (ip != "" && user != "") {
       turnOffAllLights(ip, user);
-      return "I turned of all your lights";
+      return "I turned off all your lights";
     }
     return "I don't know your ip address or user. Sorry I can't turn off your lights.";
   }

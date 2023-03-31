@@ -17,7 +17,7 @@ class SmartHomeService {
   }
 
   // Get all lights
-  Future<dynamic> getLights() async {
+  Future<dynamic> getLights(ip, user) async {
     var url = Uri.parse('http://$ip/api/$user/lights');
     try {
       var response = await http.get(url);
@@ -41,16 +41,16 @@ class SmartHomeService {
   }
 
   // turn off all lights
-  Future<dynamic> turnOffAllLights() async {
-    var lights = await getLights();
+  Future<dynamic> turnOffAllLights(ip, user) async {
+    var lights = await getLights(ip, user);
     print(lights);
     for (Light light in lights) {
-      await turnOffLight(light);
+      await turnOffLight(light, ip, user);
     }
   }
 
   // turn off a light
-  turnOffLight(Light light) async {
+  turnOffLight(Light light, ip, user) async {
     if (light.on) {
       print("turning off light: ${light.name}");
       var url = Uri.parse('http://$ip/api/$user/lights/${light.id}/state');

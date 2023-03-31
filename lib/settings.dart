@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:luna/Dialogs/delete_dialog.dart';
 import 'package:luna/Screens/philips_hue_screen.dart';
 import 'package:luna/Services/SmartHome/bridge_model.dart';
 import 'package:luna/Themes/theme_model.dart';
@@ -12,30 +13,6 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPage extends State<SettingsPage> {
-  void showDeleteDialog(BuildContext context, void Function()? onPressed) {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text(
-              "Delete shared preferences",
-              style: TextStyle(color: Theme.of(context).primaryColor),
-            ),
-            content:
-                Text("Are you sure you want to delete all shared preferences?"),
-            actions: [
-              TextButton(onPressed: onPressed, child: Text("Yes")),
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Text("Cancel", style: TextStyle(color: Colors.red)),
-              ),
-            ],
-          );
-        });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Consumer(builder: (context, ThemeModel themeNotifier, child) {

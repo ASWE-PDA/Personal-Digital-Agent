@@ -2,6 +2,7 @@ import 'package:luna/Services/SmartHome/smart_home_service.dart';
 import 'package:luna/UseCases/use_case.dart';
 
 class GoodNightUseCase implements UseCase {
+  List<String> goodNightTriggerWords = ["good night", "night"];
   List<String> lightTriggerWords = ["light", "lights", "turn off"];
   List<String> sleepPlaylistTriggerWords = ["music", "playlist", "spotify"];
   List<String> alarmTriggerWords = ["alarm", "wake up", "wake me up"];
@@ -13,7 +14,10 @@ class GoodNightUseCase implements UseCase {
 
   @override
   String execute(String trigger) {
-    if (lightTriggerWords.any((element) => trigger.contains(element))) {
+    if (goodNightTriggerWords.any((element) => trigger.contains(element))) {
+      print("triggered good night case");
+      return wishGoodNight();
+    } else if (lightTriggerWords.any((element) => trigger.contains(element))) {
       print("triggered light case");
       return turnOffLights();
     } else if (sleepPlaylistTriggerWords
@@ -62,5 +66,10 @@ class GoodNightUseCase implements UseCase {
   String setAlarm() {
     print("setting alarm");
     return "I set your alarm";
+  }
+
+  String wishGoodNight() {
+    print("wishing good night");
+    return "Good night. Sleep Well.";
   }
 }

@@ -44,7 +44,7 @@ class _ChatPageState extends State<ChatPage> {
                 GoodNightUseCase goodNightUseCase =
                     GoodNightUseCase({"ip": ip, "user": user});
                 String text =
-                    goodNightUseCase.execute("please turn off the lights");
+                    goodNightUseCase.execute("please turn off all lights");
                 await flutterTts.setLanguage("en-US");
                 flutterTts.speak(text);
               },

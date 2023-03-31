@@ -28,9 +28,10 @@ class GoodNightUseCase implements UseCase {
   }
 
   @override
-  void trigger() {
+  String trigger() {
     /// check proactively if good night case should be triggered
     print("good night use case triggered");
+    return "good night use case triggered";
   }
 
   List<String> getAllTriggerWords() {

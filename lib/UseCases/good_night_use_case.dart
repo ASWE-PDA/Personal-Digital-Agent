@@ -46,8 +46,12 @@ class GoodNightUseCase implements UseCase {
     String ip = settings["ip"];
     String user = settings["user"];
     print("turning off lights: $ip, $user");
-    smartHomeService.turnOffAllLights(ip, user);
-    return "I turned of all your lights";
+    // only turn off lights if ip and user are set
+    if (ip != "" && user != "") {
+      smartHomeService.turnOffAllLights(ip, user);
+      return "I turned of all your lights";
+    }
+    return "I don't know your ip address or user. Sorry I can't turn off your lights.";
   }
 
   String startSleepPlayList() {

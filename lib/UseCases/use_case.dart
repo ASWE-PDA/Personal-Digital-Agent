@@ -1,3 +1,6 @@
+/// abstract class for use cases
+/// use cases are triggered by the state machine
+/// or proactively by the use case itself
 abstract class UseCase {
   Map<String, dynamic> settings = {};
 

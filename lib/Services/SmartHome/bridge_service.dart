@@ -8,24 +8,38 @@ import 'package:http/http.dart' as http;
 class BridgeService {
   BridgeService();
 
-  // TODO: not used yet
+  /// take ip address and check if bridge is available
+  Future<bool> checkBridge(String ip) async {
+    List<Bridge> bridges = await getBridges();
+    for (Bridge bridge in bridges) {
+      print(bridge.internalipaddress);
+      if (bridge.internalipaddress == ip) {
+        return true;
+      }
+    }
+    print("Bridge not found");
+    return Future.error("Bridge not found");
+  }
+
   Future<List<Bridge>> getBridges() async {
     var url = Uri.parse('https://discovery.meethue.com');
-    var response = await http.get(url);
+    try {
+      var response = await http.get(url);
+      if (response.body.isEmpty) {
+        return [];
+      }
+      final responseMap = json.decode(response.body);
+      List<Bridge> bridges = [];
 
-    if (response.body.isEmpty) {
-      return Future.error(Exception("No bridges found"));
+      for (final json in responseMap) {
+        Bridge bridge = Bridge.fromJson(json as Map<String, dynamic>);
+        bridges.add(bridge);
+      }
+      return bridges;
+    } catch (e) {
+      print(e);
+      return [];
     }
-
-    final responseMap = json.decode(response.body);
-    List<Bridge> bridges = [];
-
-    for (final json in responseMap) {
-      Bridge bridge = Bridge.fromJson(json as Map<String, dynamic>);
-      bridges.add(bridge);
-    }
-
-    return bridges;
   }
 
   // debugging function

@@ -1,0 +1,127 @@
+<mxfile host="65bd71144e">
+    <diagram id="THrW0C8VkhBf7ImCPsbz" name="Page-1">
+        <mxGraphModel dx="855" dy="689" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="4" value="" style="edgeStyle=none;html=1;" edge="1" parent="1" source="2" target="3">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="2" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;" vertex="1" parent="1">
+                    <mxGeometry x="376" y="30" width="30" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" value="Idle state" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;" vertex="1" parent="1">
+                    <mxGeometry x="331" y="90" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="Good morning" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;" vertex="1" parent="1">
+                    <mxGeometry x="31" y="370" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" value="Event planning" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;" vertex="1" parent="1">
+                    <mxGeometry x="201" y="370" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="7" value="News" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;" vertex="1" parent="1">
+                    <mxGeometry x="491" y="370" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="8" value="Good night" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;" vertex="1" parent="1">
+                    <mxGeometry x="701" y="370" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="11" value="User: &quot;Good morning!&quot;&lt;br&gt;or good morning check returns true" style="endArrow=classic;html=1;entryX=0.25;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" target="5">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="340" y="150" as="sourcePoint"/>
+                        <mxPoint x="441" y="100" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="340" y="210"/>
+                            <mxPoint x="61" y="210"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="12" value="state finished" style="endArrow=classic;html=1;exitX=0.75;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="5">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="311" y="310" as="sourcePoint"/>
+                        <mxPoint x="350" y="150" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="121" y="240"/>
+                            <mxPoint x="350" y="240"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="13" value="User: &quot;What's happening today?&quot;&lt;br&gt;or event planning check returns true" style="endArrow=classic;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" target="6">
+                    <mxGeometry x="0.3529" width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="370" y="150" as="sourcePoint"/>
+                        <mxPoint x="311" y="340" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="370" y="290"/>
+                            <mxPoint x="261" y="290"/>
+                        </Array>
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="14" value="state finished" style="endArrow=classic;html=1;exitX=0.7;exitY=0.008;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="6">
+                    <mxGeometry x="-0.4702" width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="501" y="300" as="sourcePoint"/>
+                        <mxPoint x="380" y="150" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="285" y="330"/>
+                            <mxPoint x="380" y="330"/>
+                        </Array>
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="15" value="User: &quot;What are the news for today?&quot;&lt;br&gt;or news check returns true" style="endArrow=classic;html=1;entryX=0.6;entryY=0.008;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.652;exitY=1.008;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="3" target="7">
+                    <mxGeometry x="0.3794" width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="412" y="150" as="sourcePoint"/>
+                        <mxPoint x="591" y="280" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="410" y="300"/>
+                            <mxPoint x="563" y="300"/>
+                        </Array>
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="16" value="state finished" style="endArrow=classic;html=1;exitX=0.392;exitY=0.008;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="7">
+                    <mxGeometry x="-0.3287" width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="531" y="310" as="sourcePoint"/>
+                        <mxPoint x="400" y="150" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="538" y="330"/>
+                            <mxPoint x="400" y="330"/>
+                        </Array>
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="17" value="User: &quot;Good night!&quot;&lt;br&gt;or good night check returns true" style="endArrow=classic;html=1;entryX=0.629;entryY=0.008;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" target="8">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="440" y="150" as="sourcePoint"/>
+                        <mxPoint x="501" y="250" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="440" y="200"/>
+                            <mxPoint x="776" y="200"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="18" value="state finished" style="endArrow=classic;html=1;exitX=0.417;exitY=0.008;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.825;entryY=1;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="8" target="3">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="441" y="300" as="sourcePoint"/>
+                        <mxPoint x="441" y="150" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="751" y="240"/>
+                            <mxPoint x="430" y="240"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="19" value="Luna shut down" style="endArrow=classic;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="3" target="20">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="410" y="240" as="sourcePoint"/>
+                        <mxPoint x="500" y="120" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="20" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#FFFFFF;" vertex="1" parent="1">
+                    <mxGeometry x="630" y="105" width="30" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="22" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;" vertex="1" parent="1">
+                    <mxGeometry x="635" y="110" width="20" height="20" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

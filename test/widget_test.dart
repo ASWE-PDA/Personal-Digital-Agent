@@ -12,5 +12,5 @@ import 'package:luna/main.dart';
 
 void main() {
   
-  
+  assert(true);
 }

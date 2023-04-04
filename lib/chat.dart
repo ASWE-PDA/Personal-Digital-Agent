@@ -43,9 +43,9 @@ class _ChatPageState extends State<ChatPage> {
               onPressed: () async {
                 GoodNightUseCase goodNightUseCase =
                     GoodNightUseCase({"ip": ip, "user": user});
-                String text =
-                    goodNightUseCase.execute("please turn off all lights");
+                String text = goodNightUseCase.execute("good night");
                 await flutterTts.setLanguage("en-US");
+                // await flutterTts.setVoice({"name": "Karen", "locale": "en-US"});
                 flutterTts.speak(text);
               },
               child: Text("Test Good Night Use Case DEBUG")),
@@ -53,6 +53,7 @@ class _ChatPageState extends State<ChatPage> {
               onPressed: () async {
                 if (ip == "" || user == "") {
                   await flutterTts.setLanguage("en-US");
+
                   flutterTts.speak(
                       "You have not connected your bridge yet. Please connect your bridge first.");
                   return;

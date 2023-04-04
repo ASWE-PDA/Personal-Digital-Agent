@@ -8,5 +8,5 @@ abstract class UseCase {
   String execute(String trigger);
 
   /// method that triggers use case proactively
-  String trigger();
+  bool checkTrigger();
 }

@@ -17,7 +17,7 @@ jobs:
         uses: flutter-actions/setup-flutter@v2
         with:
           channel: stable
-          version: 3.3.7
+          version: 3.3.8
           
 
       - name: Install dependencies

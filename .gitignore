@@ -33,6 +33,7 @@ migrate_working_dir/
 .pub-cache/
 .pub-preload-cache/
 .pub/
+/build/
 
 # Android related
 **/android/**/gradle-wrapper.jar

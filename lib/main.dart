@@ -4,11 +4,15 @@ import 'package:luna/Services/SmartHome/bridge_model.dart';
 import 'package:luna/Themes/main_theme.dart';
 import 'package:luna/Themes/theme_model.dart';
 import 'package:provider/provider.dart';
+import 'package:alarm/alarm.dart';
 
 import 'settings.dart';
 import 'chat.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Alarm.init();
+
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: ((context) => BridgeModel())),

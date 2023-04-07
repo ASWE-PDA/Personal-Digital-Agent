@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+import 'package:luna/Services/Alarm/alarm_service.dart';
 import 'package:luna/Services/SmartHome/smart_home_service.dart';
 import 'package:luna/Services/SmartHome/bridge_model.dart';
 import 'package:luna/UseCases/good_night_use_case.dart';
@@ -41,30 +42,20 @@ class _ChatPageState extends State<ChatPage> {
         children: [
           ElevatedButton(
               onPressed: () async {
-                GoodNightUseCase goodNightUseCase =
-                    GoodNightUseCase({"ip": ip, "user": user});
-                String text = goodNightUseCase.execute("good night");
-                await flutterTts.setLanguage("en-US");
-                // await flutterTts.setVoice({"name": "Karen", "locale": "en-US"});
-                flutterTts.speak(text);
+                stopAlarm();
               },
-              child: Text("Test Good Night Use Case DEBUG")),
+              child: Text("Stop Alarm DEBUG")),
           ElevatedButton(
               onPressed: () async {
-                if (ip == "" || user == "") {
-                  await flutterTts.setLanguage("en-US");
-
-                  flutterTts.speak(
-                      "You have not connected your bridge yet. Please connect your bridge first.");
-                  return;
-                } else {
-                  turnOffAllLights(ip, user);
-                  await flutterTts.setLanguage("en-US");
-                  flutterTts.speak(
-                      "I turned off all the lights. Good Night. Sleep Well.");
-                }
+                setAlarmByDateTime(DateTime.now().add(Duration(seconds: 10)));
               },
-              child: Text("Turn off all lights (DEBUG)")),
+              child: Text("Test Alarm DEBUG")),
+          ElevatedButton(
+              onPressed: () async {
+                GoodNightUseCase goodNightUseCase = GoodNightUseCase();
+                goodNightUseCase.execute("good night");
+              },
+              child: Text("Test Good Night Use Case DEBUG")),
           Padding(
             padding: const EdgeInsets.all(20.0),
             child: FloatingActionButton(

@@ -18,7 +18,7 @@ dependencies:
   shared_preferences: ^2.0.16
   http: 
   flutter_tts: ^3.6.2
-  spotify_sdk:
+  alarm: ^0.2.9
 
 dev_dependencies:
   flutter_test:
@@ -31,3 +31,4 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/audio/

@@ -1,5 +1,6 @@
 import 'package:luna/Services/Alarm/alarm_service.dart';
 import 'package:luna/Services/SmartHome/bridge_model.dart';
+import 'package:luna/Services/SmartHome/smart_home_model.dart';
 import 'package:luna/Services/SmartHome/smart_home_service.dart';
 import 'package:luna/UseCases/use_case.dart';
 import 'package:flutter_tts/flutter_tts.dart';
@@ -13,11 +14,17 @@ class GoodNightUseCase implements UseCase {
 
   FlutterTts flutterTts = FlutterTts();
 
+  BridgeModel bridgeModel = BridgeModel();
+
   @override
   Map<String, dynamic> settings = {};
 
-  GoodNightUseCase(this.settings) {
+  GoodNightUseCase() {
     flutterTts.setLanguage("en-US");
+  }
+
+  loadPreferences() async {
+    await bridgeModel.getBridgePreferences();
   }
 
   @override
@@ -59,21 +66,27 @@ class GoodNightUseCase implements UseCase {
     ];
   }
 
-  String turnOffLights() {
-    String ip = settings["ip"];
-    String user = settings["user"];
+  void turnOffLights() async {
+    await loadPreferences();
+    String ip = bridgeModel.ip;
+    String user = bridgeModel.user;
     print("turning off lights: $ip, $user");
     // only turn off lights if ip and user are set
     if (ip != "" && user != "") {
       turnOffAllLights(ip, user);
-      return "I turned off all your lights";
+      flutterTts.speak("Your lights are turned off. Good Night.");
     }
-    return "I don't know your ip address or user. Sorry I can't turn off your lights.";
+    flutterTts.speak(
+        "I don't know your ip address or user. Sorry I can't turn off your lights.");
   }
 
-  String startSleepPlayList() {
+  void askForSleepPlaylist() {
+    flutterTts.speak("Do you want me to start a sleep playlist for you?");
+  }
+
+  void startSleepPlayList() {
     print("starting sleep playlist");
-    return "I started your sleep playlist";
+    flutterTts.speak("I started your sleep playlist");
   }
 
   void askForWakeUpTime() {
@@ -88,7 +101,6 @@ class GoodNightUseCase implements UseCase {
   }
 
   void wishGoodNight() {
-    print("wishing good night");
     flutterTts.speak("Good Night. Sleep Well.");
   }
 }

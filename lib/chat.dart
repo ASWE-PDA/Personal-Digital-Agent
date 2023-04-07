@@ -53,25 +53,9 @@ class _ChatPageState extends State<ChatPage> {
           ElevatedButton(
               onPressed: () async {
                 GoodNightUseCase goodNightUseCase = GoodNightUseCase();
-                goodNightUseCase.execute("turn off all lights");
+                goodNightUseCase.execute("good night");
               },
               child: Text("Test Good Night Use Case DEBUG")),
-          ElevatedButton(
-              onPressed: () async {
-                if (ip == "" || user == "") {
-                  await flutterTts.setLanguage("en-US");
-
-                  flutterTts.speak(
-                      "You have not connected your bridge yet. Please connect your bridge first.");
-                  return;
-                } else {
-                  turnOffAllLights(ip, user);
-                  await flutterTts.setLanguage("en-US");
-                  flutterTts.speak(
-                      "I turned off all the lights. Good Night. Sleep Well.");
-                }
-              },
-              child: Text("Turn off all lights (DEBUG)")),
           Padding(
             padding: const EdgeInsets.all(20.0),
             child: FloatingActionButton(

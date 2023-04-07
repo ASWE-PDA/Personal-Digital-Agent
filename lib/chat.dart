@@ -3,6 +3,7 @@ import 'package:flutter_tts/flutter_tts.dart';
 import 'package:luna/Services/Alarm/alarm_service.dart';
 import 'package:luna/Services/SmartHome/smart_home_service.dart';
 import 'package:luna/Services/SmartHome/bridge_model.dart';
+import 'package:luna/Services/notification.dart';
 import 'package:luna/UseCases/good_night_use_case.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -40,6 +41,16 @@ class _ChatPageState extends State<ChatPage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
+          ElevatedButton(
+              onPressed: () async {
+                await AlarmNotification.instance.scheduleAlarmNotif(
+                  id: 1,
+                  dateTime: DateTime.now().add(Duration(seconds: 10)),
+                  title: "Test Notifications",
+                  body: "Test body",
+                );
+              },
+              child: Text("Test Notification DEBUG")),
           ElevatedButton(
               onPressed: () async {
                 stopAlarm();

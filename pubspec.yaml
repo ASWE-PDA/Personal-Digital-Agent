@@ -19,6 +19,8 @@ dependencies:
   http: 
   flutter_tts: ^3.6.2
   spotify_sdk:
+  alarm: ^0.2.9
+  flutter_local_notifications: ^13.0.0
 
 dev_dependencies:
   flutter_test:
@@ -31,3 +33,4 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/audio/

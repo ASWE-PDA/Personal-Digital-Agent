@@ -140,6 +140,8 @@ class _SettingsPage extends State<SettingsPage> {
                                 () async {
                                   await themeNotifier.deleteThemePreferences();
                                   await userModel.deleteBridgePreferences();
+                                  await goodNightModel
+                                      .deleteGoodNightPreferences();
                                   Navigator.pop(context);
                                 },
                               );

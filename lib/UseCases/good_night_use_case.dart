@@ -1,12 +1,21 @@
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:luna/Services/Alarm/alarm_service.dart';
 import 'package:luna/Services/SmartHome/bridge_model.dart';
-import 'package:luna/Services/SmartHome/smart_home_model.dart';
 import 'package:luna/Services/SmartHome/smart_home_service.dart';
+import 'package:luna/UseCases/good_night_model.dart';
 import 'package:luna/UseCases/use_case.dart';
 import 'package:flutter_tts/flutter_tts.dart';
-import 'package:provider/provider.dart';
+import 'package:luna/Services/notification_service.dart';
 
+/// Use case for the Good Night feature.
 class GoodNightUseCase implements UseCase {
+  /// Singleton instance of [GoodNightUseCase].
+  static final instance = GoodNightUseCase._();
+
+  GoodNightUseCase._() {
+    flutterTts.setLanguage("en-US");
+  }
+
   List<String> goodNightTriggerWords = ["good night", "night"];
   List<String> lightTriggerWords = ["light", "lights", "turn off"];
   List<String> sleepPlaylistTriggerWords = ["music", "playlist", "spotify"];
@@ -15,16 +24,18 @@ class GoodNightUseCase implements UseCase {
   FlutterTts flutterTts = FlutterTts();
 
   BridgeModel bridgeModel = BridgeModel();
+  GoodNightModel goodNightModel = GoodNightModel();
 
-  @override
-  Map<String, dynamic> settings = {};
+  int notificationId = 1;
 
   GoodNightUseCase() {
     flutterTts.setLanguage("en-US");
   }
 
-  loadPreferences() async {
+  /// Loads preferences from SharedPreferences.
+  Future<void> loadPreferences() async {
     await bridgeModel.getBridgePreferences();
+    await goodNightModel.getGoodNightPreferences();
   }
 
   @override
@@ -51,48 +62,72 @@ class GoodNightUseCase implements UseCase {
     return;
   }
 
-  @override
-  bool checkTrigger() {
-    /// check proactively if good night case should be triggered
-    print("good night use case triggered");
-    return true;
+  /// Schedules a daily notification for the good night use case.
+  ///
+  /// The method cancels the old notificaion schedule and schedules a new one
+  /// at the time defined by [hours] and [minutes].
+  Future<void> schedule(int hours, int minutes) async {
+    await NotificationService.instance.cancel(notificationId);
+
+    await NotificationService.instance.scheduleAlarmNotif(
+      id: notificationId,
+      title: "Good Night",
+      body: "It is time to go to sleep!",
+      dateTime: Time(hours, minutes, 0),
+    );
+    print("Notification scheduled for $hours:$minutes");
   }
 
+  @override
+  Future<bool> checkTrigger() async {
+    return false;
+  }
+
+  /// Returns a list of all trigger words.
   List<String> getAllTriggerWords() {
     return [
+      ...goodNightTriggerWords,
       ...lightTriggerWords,
       ...sleepPlaylistTriggerWords,
       ...alarmTriggerWords
     ];
   }
 
+  /// Turns off all lights.
   void turnOffLights() async {
+    // get the ip and user from preferences
     await loadPreferences();
     String ip = bridgeModel.ip;
     String user = bridgeModel.user;
     print("turning off lights: $ip, $user");
+
     // only turn off lights if ip and user are set
     if (ip != "" && user != "") {
       turnOffAllLights(ip, user);
       flutterTts.speak("Your lights are turned off. Good Night.");
+      return;
     }
     flutterTts.speak(
         "I don't know your ip address or user. Sorry I can't turn off your lights.");
   }
 
+  // TODO: implement this
   void askForSleepPlaylist() {
     flutterTts.speak("Do you want me to start a sleep playlist for you?");
   }
 
+  // TODO: implement this
   void startSleepPlayList() {
     print("starting sleep playlist");
     flutterTts.speak("I started your sleep playlist");
   }
 
+  // TODO: implement this
   void askForWakeUpTime() {
     flutterTts.speak("When do you want to wake up tomorrow?");
   }
 
+  // TODO: get user input
   void setAlarm() {
     DateTime dateTime = DateTime.now().add(Duration(seconds: 10));
     setAlarmByDateTime(dateTime);

@@ -6,6 +6,7 @@ import 'package:timezone/timezone.dart' as tz;
 
 /// The purpose of this class is to show a notification to the user
 /// The user can tap the notification to open directly the app.
+/// TODO: add functionality when tapping the notification
 class NotificationService {
   NotificationService._();
 

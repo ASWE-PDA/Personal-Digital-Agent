@@ -26,7 +26,7 @@ class GoodNightUseCase implements UseCase {
   BridgeModel bridgeModel = BridgeModel();
   GoodNightModel goodNightModel = GoodNightModel();
 
-  int notificationId = 1;
+  int notificationId = 2;
 
   GoodNightUseCase() {
     flutterTts.setLanguage("en-US");

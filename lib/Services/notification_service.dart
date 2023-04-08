@@ -5,12 +5,12 @@ import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
 /// The purpose of this class is to show a notification to the user
-/// when the alarm rings so the user can understand where the audio
-/// comes from. He also can tap the notification to open directly the app.
-class AlarmNotification {
-  AlarmNotification._();
+/// The user can tap the notification to open directly the app.
+class NotificationService {
+  NotificationService._();
 
-  static final instance = AlarmNotification._();
+  /// Singleton instance of the [NotificationService] class.
+  static final instance = NotificationService._();
 
   final FlutterLocalNotificationsPlugin localNotif =
       FlutterLocalNotificationsPlugin();
@@ -55,6 +55,7 @@ class AlarmNotification {
     return result ?? false;
   }
 
+  /// Returns the next instance of the given [time].
   tz.TZDateTime nextInstanceOfTime(Time time) {
     final DateTime now = DateTime.now();
 
@@ -74,10 +75,10 @@ class AlarmNotification {
     return tz.TZDateTime.from(scheduledDate, tz.local);
   }
 
-  /// Schedules notification at the given [dateTime].
+  /// Schedules daily notification at the given [dateTime].
   Future<void> scheduleAlarmNotif({
     required int id,
-    required DateTime dateTime,
+    required Time dateTime,
     required String title,
     required String body,
   }) async {
@@ -126,6 +127,8 @@ class AlarmNotification {
         androidAllowWhileIdle: true,
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime,
+        // daily alarm
+        matchDateTimeComponents: DateTimeComponents.time,
       );
       alarmPrint('Notification with id $id scheduled successfuly at $zdt');
     } catch (e) {

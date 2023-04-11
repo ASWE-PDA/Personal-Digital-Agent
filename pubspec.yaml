@@ -17,6 +17,12 @@ dependencies:
   provider: ^6.0.0
   shared_preferences: ^2.0.16
   statemachine: ^3.3.1
+  http: 
+  flutter_tts: ^3.6.2
+  alarm: ^0.2.9
+  flutter_local_notifications: ^13.0.0
+  timezone: ^0.9.0
+  
 
 dev_dependencies:
   flutter_test:
@@ -26,3 +32,7 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  assets:
+    - assets/images/
+    - assets/audio/

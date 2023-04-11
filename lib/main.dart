@@ -1,14 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:luna/Services/SmartHome/bridge_model.dart';
 import 'package:luna/Themes/main_theme.dart';
 import 'package:luna/Themes/theme_model.dart';
+import 'package:luna/UseCases/good_night_model.dart';
 import 'package:provider/provider.dart';
+import 'package:alarm/alarm.dart';
 
 import 'settings.dart';
 import 'chat.dart';
 
-void main() {
-  runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Alarm.init();
+
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: ((context) => BridgeModel())),
+      ChangeNotifierProvider(create: ((context) => GoodNightModel())),
+    ],
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {

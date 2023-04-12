@@ -30,7 +30,7 @@ class UseCaseCheck extends StreamView<UseCaseCheck> {
 
     List<String> goodMorningTriggerWords = ["good morning", "morning", "wake up", "good morning luna"];
     
-    if (goodMorningTriggerWords.any((element) => _triggerWord.contains(element))) {
+    if (goodMorningTriggerWords.any((element) => input.contains(element))) {
       trigger = "good morning";
       detected = true;
     }
@@ -102,17 +102,18 @@ class UseCaseCheck extends StreamView<UseCaseCheck> {
     if (goodMorningCheck(input)) {
         _activate = 1;
       }
-      if (eventPlanningCheck(input)) {
+      else if (eventPlanningCheck(input)) {
         _activate = 2;
       }
-      if (newsCheck(input)) {
+      else if (newsCheck(input)) {
         _activate = 3;
       }
-      if (goodNightCheck(input)) {
+      else if (goodNightCheck(input)) {
         _activate = 4;
       }
-    _activate = 0;
-    
+      else {
+        _activate = 0;
+      }
     _controller.add(this);
   }
 }

@@ -1,4 +1,5 @@
 import 'package:statemachine/statemachine.dart';
+import '../UseCases/good_night_use_case.dart';
 import 'idle_service.dart';
 
 class Controller {
@@ -51,6 +52,9 @@ class StateMachine {
     // leave current state and transition to good night state
     print("transitioning to good night state");
     goodNightState.enter();
+    GoodNightUseCase.instance.execute("good night");
+    transitionToIdle();
+    //goodNightState.onFuture(GoodNightUseCase.instance.execute("good night"), (value) => idleState.enter());
   }
 
   State<String>? getCurrentState() {
@@ -60,6 +64,8 @@ class StateMachine {
 
   void runIdleState() {
     // check for use cases and transition to appropriate state
+    // someState.onStream(element.onClick, (value) => anotherState.enter());
+    // idleState.onStream(value.activate, (value) => transitionToGoodNight());
     final useCaseCheck = UseCaseCheck();
     useCaseCheck.listen((value) {
       int state = value.activate;
@@ -81,7 +87,6 @@ class StateMachine {
             print("error: invalid state");
         }
       }
-
     });
   }
 
@@ -95,8 +100,19 @@ class StateMachine {
     eventPlanningState.onExit(() => print('leaving event planning state'));
     newsState.onEntry(() => print('entering news state'));                    // TODO link to news state main
     newsState.onExit(() => print('leaving news state'));
-    goodNightState.onEntry(() => print('entering good night state'));         // TODO link to good night state main
+    goodNightState.onEntry(() => print('entering good night state'));
     goodNightState.onExit(() => print('leaving good night state'));
+
+  /*
+    final goodMorningCheck = GoodMorningCheck();
+    final eventPlanningCheck = EventPlanningCheck();
+    final newsCheck = NewsCheck();
+    final goodNightCheck = GoodNightCheck();
+    idleState.onStream(goodMorningCheck, (value) => transitionToGoodMorning());
+    idleState.onStream(eventPlanningCheck, (value) => transitionToEventPlanning());
+    idleState.onStream(newsCheck, (value) => transitionToNews());
+    idleState.onStream(goodNightCheck, (value) => transitionToGoodNight());
+*/
 
     machine.start();
   }

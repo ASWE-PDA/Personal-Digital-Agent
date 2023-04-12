@@ -10,6 +10,7 @@
 .history
 .svn/
 migrate_working_dir/
+**/lib/Services/secrets.dart
 
 # IntelliJ related
 *.iml

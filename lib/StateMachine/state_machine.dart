@@ -1,4 +1,5 @@
 import 'package:statemachine/statemachine.dart';
+import 'idle_service.dart';
 
 class Controller {
   static StateMachine machine = StateMachine();
@@ -8,10 +9,8 @@ class Controller {
     return machine.getCurrentState();
   }
 
-  void main() {
-    // move machine.start call up to constructor?
+  void start() {
     machine.start();  // start state machine. machine automatically runs use case checks and transitions to appropriate state
-
   }
 }
 
@@ -61,25 +60,29 @@ class StateMachine {
 
   void runIdleState() {
     // check for use cases and transition to appropriate state
-    int state = IdleStateChecks().check();
-    if(state>0) {
-      switch(state) {
-        case 1:
-          transitionToGoodMorning();
-          break;
-        case 2:
-          transitionToEventPlanning();
-          break;
-        case 3:
-          transitionToNews();
-          break;
-        case 4:
-          transitionToGoodNight();
-          break;
-        default:
-          print("error: invalid state");
+    final useCaseCheck = UseCaseCheck();
+    useCaseCheck.listen((value) {
+      int state = value.activate;
+      if(state>0) {
+        switch(state) {
+          case 1:
+            transitionToGoodMorning();
+            break;
+          case 2:
+            transitionToEventPlanning();
+            break;
+          case 3:
+            transitionToNews();
+            break;
+          case 4:
+            transitionToGoodNight();
+            break;
+          default:
+            print("error: invalid state");
+        }
       }
-    }
+
+    });
   }
 
   void start() {
@@ -98,49 +101,4 @@ class StateMachine {
     machine.start();
   }
 
-}
-
-
-class IdleStateChecks {
-
-  bool goodMorningCheck() {
-    // TODO: implement goodMorningCheck
-    // return true if good morning use case is detected
-    return false;
-  }
-
-  bool eventPlanningCheck() {
-    // TODO: implement eventPlanningCheck
-    // return true if event planning use case is detected
-    return false;
-  }
-
-  bool newsCheck() {
-    // TODO: implement newsCheck
-    // return true if news use case is detected
-    return false;
-  }
-
-  bool goodNightCheck() {
-    // TODO: implement goodNightCheck
-    // return true if good night use case is detected
-    return false;
-  }
-
-  int check() { // TODO how do constructors work in dart?
-    // check all checks, return if/which transition is needed
-    if (goodMorningCheck()) {
-      return 1;
-    }
-    if (eventPlanningCheck()) {
-      return 2;
-    }
-    if (newsCheck()) {
-      return 3;
-    }
-    if (goodNightCheck()) {
-      return 4;
-    }
-  return 0;
-  }
 }

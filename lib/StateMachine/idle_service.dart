@@ -1,17 +1,15 @@
 import 'dart:async';
 
-/**
- * This class is used to check if a use case is triggered.
- * Parameters:
- * - activate: 1 if good morning use case is triggered, 2 if event planning use case is triggered, 3 if news use case is triggered, 4 if good night use case is triggered, 0 if no use case is triggered
- * - triggerWord: contains trigger words if a use case is triggered, usable by the use case
- * Methods:
- * - goodMorningCheck: checks if good morning use case is triggered
- * - eventPlanningCheck: checks if event planning use case is triggered
- * - newsCheck: checks if news use case is triggered
- * - goodNightCheck: checks if good night use case is triggered
- * - monitor: monitors the use case checks and updates the activate parameter accordingly
- */
+/// This class is used to check if a use case is triggered.
+/// Parameters:
+/// - activate: 1 if good morning use case is triggered, 2 if event planning use case is triggered, 3 if news use case is triggered, 4 if good night use case is triggered, 0 if no use case is triggered
+/// - triggerWord: contains trigger words if a use case is triggered, usable by the use case
+/// Methods:
+/// - goodMorningCheck: checks if good morning use case is triggered
+/// - eventPlanningCheck: checks if event planning use case is triggered
+/// - newsCheck: checks if news use case is triggered
+/// - goodNightCheck: checks if good night use case is triggered
+/// - monitor: monitors the use case checks and updates the activate parameter accordingly
 class UseCaseCheck extends StreamView<UseCaseCheck> {
   UseCaseCheck._(this._controller) : super(_controller.stream);
   factory UseCaseCheck() => UseCaseCheck._(StreamController());

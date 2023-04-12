@@ -2,15 +2,13 @@ import 'package:statemachine/statemachine.dart';
 import '../UseCases/good_night_use_case.dart';
 import 'idle_service.dart';
 
-/**
- * Controller for the Personal Digital Agent.
- * Contains and runs the state machine to automatically detect and activate the use cases.
- * Parameters:
- * - machine: the state machine
- * Methods:
- * - getCurrentState: return current state of the state machine
- * - start: start state machine. machine automatically runs use case checks and transitions to appropriate state
- */
+/// Controller for the Personal Digital Agent.
+/// Contains and runs the state machine to automatically detect and activate the use cases.
+/// Parameters:
+/// - machine: the state machine
+/// Methods:
+/// - getCurrentState: return current state of the state machine
+/// - start: start state machine. machine automatically runs use case checks and transitions to appropriate state
 class Controller {
   static StateMachine machine = StateMachine();
 
@@ -24,25 +22,23 @@ class Controller {
   }
 }
 
-/**
- * State machine for the Personal Digital Agent.
- * Parameters:
- *  - machine: the state machine
- * - idleState: the idle state
- * - goodMorningState: the good morning state
- * - eventPlanningState: the event planning state
- * - newsState: the news state
- * - goodNightState: the good night state
- * Methods:
- * - transitionToIdle: leave current state and transition to idle state
- * - transitionToGoodMorning: leave current state and transition to good morning state
- * - transitionToEventPlanning: leave current state and transition to event planning state
- * - transitionToNews: leave current state and transition to news state
- * - transitionToGoodNight: leave current state and transition to good night state
- * - getCurrentState: return current state
- * - runIdleState: check for use cases and transition to appropriate state
- * - start: start state machine. machine automatically runs use case checks and transitions to appropriate state
- */
+/// State machine for the Personal Digital Agent.
+/// Parameters:
+///  - machine: the state machine
+/// - idleState: the idle state
+/// - goodMorningState: the good morning state
+/// - eventPlanningState: the event planning state
+/// - newsState: the news state
+/// - goodNightState: the good night state
+/// Methods:
+/// - transitionToIdle: leave current state and transition to idle state
+/// - transitionToGoodMorning: leave current state and transition to good morning state
+/// - transitionToEventPlanning: leave current state and transition to event planning state
+/// - transitionToNews: leave current state and transition to news state
+/// - transitionToGoodNight: leave current state and transition to good night state
+/// - getCurrentState: return current state
+/// - runIdleState: check for use cases and transition to appropriate state
+/// - start: start state machine. machine automatically runs use case checks and transitions to appropriate state
 class StateMachine {
   static final machine = Machine<String>();
   static final idleState = machine.newState('idle');                     // start state

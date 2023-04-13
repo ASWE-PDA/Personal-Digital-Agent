@@ -4,6 +4,11 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
+@pragma('vm:entry-point')
+void notificationTap(NotificationResponse response) {
+  print('notificationTap');
+}
+
 /// The purpose of this class is to show a notification to the user
 /// The user can tap the notification to open directly the app.
 /// TODO: add functionality when tapping the notification
@@ -17,7 +22,7 @@ class NotificationService {
       FlutterLocalNotificationsPlugin();
 
   /// Adds configuration for local notifications and initialize service.
-  Future<void> init() async {
+  Future<void> init(onNotificationClick) async {
     const initializationSettingsAndroid =
         AndroidInitializationSettings('@mipmap/ic_launcher');
     const initializationSettingsIOS = DarwinInitializationSettings(
@@ -30,7 +35,9 @@ class NotificationService {
       iOS: initializationSettingsIOS,
     );
 
-    await localNotif.initialize(initializationSettings);
+    await localNotif.initialize(initializationSettings,
+        onDidReceiveNotificationResponse: onNotificationClick,
+        onDidReceiveBackgroundNotificationResponse: onNotificationClick);
     tz.initializeTimeZones();
   }
 

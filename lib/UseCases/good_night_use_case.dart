@@ -7,6 +7,11 @@ import 'package:luna/UseCases/use_case.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:luna/Services/notification_service.dart';
 
+@pragma('vm:entry-point')
+void onNotificationTap(NotificationResponse response) {
+  print('notificationTap');
+}
+
 /// Use case for the Good Night feature.
 class GoodNightUseCase implements UseCase {
   /// Singleton instance of [GoodNightUseCase].
@@ -67,6 +72,8 @@ class GoodNightUseCase implements UseCase {
   /// The method cancels the old notificaion schedule and schedules a new one
   /// at the time defined by [hours] and [minutes].
   Future<void> schedule(int hours, int minutes) async {
+    await NotificationService.instance.init(onNotificationTap);
+
     await NotificationService.instance.cancel(notificationId);
 
     await NotificationService.instance.scheduleAlarmNotif(

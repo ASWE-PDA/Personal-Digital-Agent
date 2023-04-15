@@ -1,3 +1,4 @@
+import 'package:device_calendar/device_calendar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:geolocator/geolocator.dart';
@@ -7,6 +8,7 @@ import 'package:luna/Services/SmartHome/smart_home_service.dart';
 import 'package:luna/Services/SmartHome/bridge_model.dart';
 import 'package:luna/Services/notification_service.dart';
 import 'package:luna/UseCases/good_night_use_case.dart';
+import 'package:luna/Services/Calendar/calendar_service.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -90,6 +92,14 @@ class _ChatPageState extends State<ChatPage> {
                 _getCurrentLocation();
               },
               child: Text("Get Location DEBUG")),
+
+          ElevatedButton(
+              onPressed: () async {
+                final calendars = await getUpcomingEvents();
+                print("events::");
+                print(calendars);
+              },
+              child: Text("Get Calendar DEBUG")),
           Padding(
             padding: const EdgeInsets.all(20.0),
             child: FloatingActionButton(

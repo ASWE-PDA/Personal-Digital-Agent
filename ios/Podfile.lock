@@ -17,8 +17,6 @@ PODS:
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
-  - "permission_handler (5.1.0+2)":
-    - Flutter
   - shared_preferences_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
@@ -35,7 +33,6 @@ DEPENDENCIES:
   - geolocator_apple (from `.symlinks/plugins/geolocator_apple/ios`)
   - just_audio (from `.symlinks/plugins/just_audio/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/ios`)
-  - permission_handler (from `.symlinks/plugins/permission_handler/ios`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/ios`)
   - vibration (from `.symlinks/plugins/vibration/ios`)
 
@@ -58,8 +55,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/just_audio/ios"
   path_provider_foundation:
     :path: ".symlinks/plugins/path_provider_foundation/ios"
-  permission_handler:
-    :path: ".symlinks/plugins/permission_handler/ios"
   shared_preferences_foundation:
     :path: ".symlinks/plugins/shared_preferences_foundation/ios"
   vibration:
@@ -75,7 +70,6 @@ SPEC CHECKSUMS:
   geolocator_apple: cc556e6844d508c95df1e87e3ea6fa4e58c50401
   just_audio: baa7252489dbcf47a4c7cc9ca663e9661c99aafa
   path_provider_foundation: c68054786f1b4f3343858c1e1d0caaded73f0be9
-  permission_handler: ccb20a9fad0ee9b1314a52b70b76b473c5f8dab0
   shared_preferences_foundation: 986fc17f3d3251412d18b0265f9c64113a8c2472
   vibration: 7d883d141656a1c1a6d8d238616b2042a51a1241
 

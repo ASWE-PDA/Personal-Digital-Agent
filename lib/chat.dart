@@ -32,10 +32,23 @@ class _ChatPageState extends State<ChatPage> {
 
   void _getCurrentLocation() async {
     try {
+      // check permisisons
+      final permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied) {
+        // permission has not been granted, request permission
+        final permissionStatus = await Geolocator.requestPermission();
+        if (permissionStatus != LocationPermission.whileInUse &&
+            permissionStatus != LocationPermission.always) {
+          return;
+        }
+      }
+      // get current location
       final position = await LocationService.instance.getCurrentLocation();
       setState(() {
         _currentPosition = position;
         print("current position: $_currentPosition");
+        print("latitude: ${_currentPosition!.latitude}");
+        print("longitude: ${_currentPosition!.longitude}");
       });
     } catch (e) {
       print(e);
@@ -76,7 +89,7 @@ class _ChatPageState extends State<ChatPage> {
               onPressed: () async {
                 _getCurrentLocation();
               },
-              child: Text("Location DEBUG")),
+              child: Text("Get Location DEBUG")),
           Padding(
             padding: const EdgeInsets.all(20.0),
             child: FloatingActionButton(

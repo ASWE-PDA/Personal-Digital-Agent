@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:luna/Services/Alarm/alarm_service.dart';
+import 'package:luna/Services/location_service.dart';
 import 'package:luna/Services/SmartHome/smart_home_service.dart';
 import 'package:luna/Services/SmartHome/bridge_model.dart';
 import 'package:luna/Services/notification_service.dart';
@@ -18,6 +20,7 @@ class _ChatPageState extends State<ChatPage> {
   bool recording = false;
   String user = "";
   String ip = "";
+  Position? _currentPosition;
 
   BridgeModel userModel = BridgeModel();
   loadPreferences() {
@@ -27,10 +30,23 @@ class _ChatPageState extends State<ChatPage> {
     print(user);
   }
 
+  void _getCurrentLocation() async {
+    try {
+      final position = await LocationService.instance.getCurrentLocation();
+      setState(() {
+        _currentPosition = position;
+        print("current position: $_currentPosition");
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
   @override
   void initState() {
     super.initState();
     loadPreferences();
+    _getCurrentLocation();
   }
 
   @override
@@ -56,6 +72,11 @@ class _ChatPageState extends State<ChatPage> {
                 GoodNightUseCase.instance.execute("good night");
               },
               child: Text("Test Good Night Use Case DEBUG")),
+          ElevatedButton(
+              onPressed: () async {
+                _getCurrentLocation();
+              },
+              child: Text("Location DEBUG")),
           Padding(
             padding: const EdgeInsets.all(20.0),
             child: FloatingActionButton(

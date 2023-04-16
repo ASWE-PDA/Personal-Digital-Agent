@@ -3,6 +3,7 @@ import 'package:flutter_tts/flutter_tts.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:luna/Services/Alarm/alarm_service.dart';
 import 'package:luna/Services/location_service.dart';
+import 'package:luna/Services/maps_service.dart';
 import 'package:luna/Services/SmartHome/smart_home_service.dart';
 import 'package:luna/Services/SmartHome/bridge_model.dart';
 import 'package:luna/Services/notification_service.dart';
@@ -17,6 +18,7 @@ class ChatPage extends StatefulWidget {
 
 class _ChatPageState extends State<ChatPage> {
   FlutterTts flutterTts = FlutterTts();
+  MapsService mapsService = MapsService();
   bool recording = false;
   String user = "";
   String ip = "";
@@ -90,6 +92,17 @@ class _ChatPageState extends State<ChatPage> {
                 _getCurrentLocation();
               },
               child: Text("Get Location DEBUG")),
+          ElevatedButton(
+              onPressed: () async {
+                Map<String, dynamic> routeDetails =
+                    await mapsService.getRouteDetails(
+                        origin: _currentPosition!,
+                        destination: "California",
+                        travelMode: "driving",
+                        departureTime: DateTime.now());
+                print("Duration: ${routeDetails['durationAsText']}");
+              },
+              child: Text("Get Maps Info DEBUG")),
           Padding(
             padding: const EdgeInsets.all(20.0),
             child: FloatingActionButton(

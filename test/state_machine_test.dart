@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:luna/StateMachine/idle_service.dart';
 import 'package:luna/StateMachine/state_machine.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -10,6 +11,12 @@ void main() {
     'minutes_key': 0,
   };
   SharedPreferences.setMockInitialValues(values);
+    // expose path_provider
+  const MethodChannel channel =
+      MethodChannel('plugins.flutter.io/path_provider');
+  channel.setMockMethodCallHandler((MethodCall methodCall) async {
+    return ".";
+  });
   
   group('State Machine Transitions', () {
     test('State Machine should be initialized and in idle state', () {

@@ -38,7 +38,8 @@ Future<List<Map<String, dynamic>>> getUpcomingEventsWithDetails() async {
 
   return events.map((event) {
     final name = event.title;
+    final location = event.location;
     final date = event.start;
-    return {'name': name, 'date': date};
+    return {'name': name, 'location': location, 'date': date};
   }).toList();
 }

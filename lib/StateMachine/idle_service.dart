@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:luna/UseCases/good_night_use_case.dart';
+
 /// This class is used to check if a use case is triggered.
 /// Parameters:
 /// - activate: 1 if good morning use case is triggered, 2 if event planning use case is triggered, 3 if news use case is triggered, 4 if good night use case is triggered, 0 if no use case is triggered
@@ -24,12 +26,17 @@ class UseCaseCheck extends StreamView<UseCaseCheck> {
   String _triggerWord = "";
   String get triggerWord => _triggerWord;
 
-  bool goodMorningCheck(List<String> input){
+  bool goodMorningCheck(String input) {
     String trigger = "";
     bool detected = false;
 
-    List<String> goodMorningTriggerWords = ["good morning", "morning", "wake up", "good morning luna"];
-    
+    List<String> goodMorningTriggerWords = [
+      "good morning",
+      "morning",
+      "wake up",
+      "good morning luna"
+    ];
+
     if (goodMorningTriggerWords.any((element) => input.contains(element))) {
       trigger = "good morning";
       detected = true;
@@ -40,12 +47,22 @@ class UseCaseCheck extends StreamView<UseCaseCheck> {
     return detected;
   }
 
-  bool eventPlanningCheck(List<String> input){
+  bool eventPlanningCheck(String input) {
     String trigger = "";
     bool detected = false;
 
-    List<String> eventPlanningTriggerWords = ["event", "events", "planning", "plan", "calendar", "schedule", "scheduling", "schedules", "agenda"];
-    
+    List<String> eventPlanningTriggerWords = [
+      "event",
+      "events",
+      "planning",
+      "plan",
+      "calendar",
+      "schedule",
+      "scheduling",
+      "schedules",
+      "agenda"
+    ];
+
     if (eventPlanningTriggerWords.any((element) => input.contains(element))) {
       trigger = "event";
       detected = true;
@@ -56,64 +73,55 @@ class UseCaseCheck extends StreamView<UseCaseCheck> {
     return detected;
   }
 
-  bool newsCheck(List<String> input){
+  bool newsCheck(String input) {
     String trigger = "";
     bool detected = false;
 
-    List<String> newsTriggerWords = ["news", "headline", "headlines", "today's news", "today's headlines"];
+    List<String> newsTriggerWords = [
+      "news",
+      "headline",
+      "headlines",
+      "today's news",
+      "today's headlines"
+    ];
 
     if (newsTriggerWords.any((element) => input.contains(element))) {
       trigger = "news";
       detected = true;
     }
     _triggerWord = trigger;
-    
+
     // return true if news use case is detected
     return detected;
   }
 
-  bool goodNightCheck(List<String> input){
-    String trigger = "";
+  bool goodNightCheck(String input) {
     bool detected = false;
 
-    List<String> goodNightTriggerWords = ["good night", "night"];
-    List<String> lightTriggerWords = ["light", "lights", "turn off"];
-    List<String> sleepPlaylistTriggerWords = ["music", "playlist", "spotify"];
-    List<String> alarmTriggerWords = ["alarm", "wake up", "wake me up"];
+    List<String> goodNightTriggerWords =
+        GoodNightUseCase.instance.getAllTriggerWords();
 
     if (goodNightTriggerWords.any((element) => input.contains(element))) {
-      trigger = "good night";
-      detected = true;
-    } else if (lightTriggerWords.any((element) => trigger.contains(element))) {
-      trigger = "light";
-      detected = true;
-    } else if (sleepPlaylistTriggerWords.any((element) => trigger.contains(element))) {
-      trigger = "music";
-      detected = true;
-    } else if (alarmTriggerWords.any((element) => trigger.contains(element))) {
-      trigger = "alarm";
+      _triggerWord = input;
       detected = true;
     }
-    _triggerWord = trigger;  // contains trigger words if good night use case is detected
     return detected;
   }
 
-  void monitor(List<String> input) {
+  void monitor(String input) {
+    print("input: $input");
     if (goodMorningCheck(input)) {
-        _activate = 1;
-      }
-      else if (eventPlanningCheck(input)) {
-        _activate = 2;
-      }
-      else if (newsCheck(input)) {
-        _activate = 3;
-      }
-      else if (goodNightCheck(input)) {
-        _activate = 4;
-      }
-      else {
-        _activate = 0;
-      }
+      _activate = 1;
+      print("entered goodmorning check");
+    } else if (eventPlanningCheck(input)) {
+      _activate = 2;
+    } else if (newsCheck(input)) {
+      _activate = 3;
+    } else if (goodNightCheck(input)) {
+      _activate = 4;
+    } else {
+      _activate = 0;
+    }
     _controller.add(this);
   }
 }

@@ -17,8 +17,15 @@ class Controller {
     return machine.getCurrentState();
   }
 
+  void update(String input) {
+    // update state machine with input
+    machine.update(input);
+    machine.runIdleState();
+  }
+
   void start() {
-    machine.start();  // start state machine. machine automatically runs use case checks and transitions to appropriate state
+    machine
+        .start(); // start state machine. machine automatically runs use case checks and transitions to appropriate state
   }
 }
 
@@ -41,11 +48,15 @@ class Controller {
 /// - start: start state machine. machine automatically runs use case checks and transitions to appropriate state
 class StateMachine {
   static final machine = Machine<String>();
-  static final idleState = machine.newState('idle');                     // start state
-  static final goodMorningState = machine.newState('good_morning');      // state for good morning use case
-  static final eventPlanningState = machine.newState('event_planning');  // state for event planning use case
-  static final newsState = machine.newState('news');                     // state for news use case
-  static final goodNightState = machine.newState('good_night');          // state for good night use case
+  final useCaseCheck = UseCaseCheck();
+  static final idleState = machine.newState('idle'); // start state
+  static final goodMorningState =
+      machine.newState('good_morning'); // state for good morning use case
+  static final eventPlanningState =
+      machine.newState('event_planning'); // state for event planning use case
+  static final newsState = machine.newState('news'); // state for news use case
+  static final goodNightState =
+      machine.newState('good_night'); // state for good night use case
 
   void transitionToIdle() {
     // leave current state and transition to idle state
@@ -92,11 +103,11 @@ class StateMachine {
     // check for use cases and transition to appropriate state
     // someState.onStream(element.onClick, (value) => anotherState.enter());
     // idleState.onStream(value.activate, (value) => transitionToGoodNight());
-    final useCaseCheck = UseCaseCheck();
+    print("entered idle state");
     useCaseCheck.listen((value) {
       int state = value.activate;
-      if(state>0) {
-        switch(state) {
+      if (state > 0) {
+        switch (state) {
           case 1:
             transitionToGoodMorning(value.triggerWord);
             break;
@@ -129,7 +140,7 @@ class StateMachine {
     goodNightState.onEntry(() => print('entering good night state'));
     goodNightState.onExit(() => print('leaving good night state'));
 
-  /*
+    /*
     final goodMorningCheck = GoodMorningCheck();
     final eventPlanningCheck = EventPlanningCheck();
     final newsCheck = NewsCheck();
@@ -143,4 +154,8 @@ class StateMachine {
     machine.start();
   }
 
+  void update(String input) {
+    // update state machine with new input
+    useCaseCheck.monitor(input);
+  }
 }

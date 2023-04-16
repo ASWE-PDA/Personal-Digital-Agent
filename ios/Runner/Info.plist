@@ -49,5 +49,7 @@
 	<false/>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>This app needs access to location when open.</string>
+	<key>DART_DEFINES</key>
+	<string>$(DART_DEFINES)</string>
 </dict>
 </plist>

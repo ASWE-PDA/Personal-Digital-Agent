@@ -1,6 +1,5 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:luna/Services/Alarm/alarm_service.dart';
-import 'package:luna/Services/SmartHome/bridge_model.dart';
 import 'package:luna/Services/Calendar/calendar_service.dart';
 import 'package:luna/UseCases/scheduling_model.dart';
 import 'package:luna/UseCases/use_case.dart';
@@ -27,7 +26,6 @@ class SchedulingUseCase implements UseCase {
 
   FlutterTts flutterTts = FlutterTts();
 
-  BridgeModel bridgeModel = BridgeModel();
   SchedulingModel goodNightModel = SchedulingModel();
 
   int notificationId = 2;
@@ -38,7 +36,6 @@ class SchedulingUseCase implements UseCase {
 
   /// Loads preferences from SharedPreferences.
   Future<void> loadPreferences() async {
-    await bridgeModel.getBridgePreferences();
     await goodNightModel.getGoodNightPreferences();
   }
 
@@ -98,8 +95,10 @@ class SchedulingUseCase implements UseCase {
     ];
   }
 
-  /// Turns off all lights.
+  /// Lists all upcoming events
   void listUpcomingEvents() async {
+    final events = getUpcomingEvents();
+    print(events);
   }
 
   // TODO: implement this

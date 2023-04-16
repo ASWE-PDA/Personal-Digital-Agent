@@ -95,7 +95,7 @@ class _ChatPageState extends State<ChatPage> {
 
           ElevatedButton(
               onPressed: () async {
-                final calendars = await getUpcomingEventsWithDetails();
+                final calendars = await getUpcomingEvents();
                 print("events::");
                 print(calendars);
               },

@@ -27,19 +27,8 @@ Future<List<Event>> getUpcomingEvents() async {
 
     final eventsResult = await calendarPlugin.retrieveEvents(
         calendarId, RetrieveEventsParams(startDate: start, endDate: end));
-    return eventsResult?.data ?? [];
+    return eventsResult.data ?? [];
   } else {
     return [];
   }
-}
-
-Future<List<Map<String, dynamic>>> getUpcomingEventsWithDetails() async {
-  final events = await getUpcomingEvents();
-
-  return events.map((event) {
-    final name = event.title;
-    final location = event.location;
-    final date = event.start;
-    return {'name': name, 'location': location, 'date': date};
-  }).toList();
 }

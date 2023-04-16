@@ -68,109 +68,109 @@ void main() {
     });
     test('positive use case good morning check', () {
       final useCaseCheck = UseCaseCheck();
-      bool detected = useCaseCheck.goodMorningCheck(["good morning"]);
+      bool detected = useCaseCheck.goodMorningCheck("good morning");
       expect(detected, true);
       expect(useCaseCheck.triggerWord, "good morning");
     });
     test('positive, more complex use case good morning check', () {
       final useCaseCheck = UseCaseCheck();
-      bool detected = useCaseCheck.goodMorningCheck(["hey", "good morning", "luna"]);
+      bool detected = useCaseCheck.goodMorningCheck("hey good morning luna");
       expect(detected, true);
       expect(useCaseCheck.triggerWord, "good morning");
     });
     test('negative use case good morning check', () {
       final useCaseCheck = UseCaseCheck();
-      bool detected = useCaseCheck.goodMorningCheck(["good night"]);
+      bool detected = useCaseCheck.goodMorningCheck("good night");
       expect(detected, false);
       expect(useCaseCheck.triggerWord, "");
     });
     test('positive use case event planning check', () {
       final useCaseCheck = UseCaseCheck();
-      bool detected = useCaseCheck.eventPlanningCheck(["event"]);
+      bool detected = useCaseCheck.eventPlanningCheck("event");
       expect(detected, true);
       expect(useCaseCheck.triggerWord, "event");
     });
     test('positive, more complex use case event planning check', () {
       final useCaseCheck = UseCaseCheck();
-      bool detected = useCaseCheck.eventPlanningCheck(["hey", "event", "luna"]);
+      bool detected = useCaseCheck.eventPlanningCheck("hey luna event");
       expect(detected, true);
       expect(useCaseCheck.triggerWord, "event");
     });
     test('negative use case event planning check', () {
       final useCaseCheck = UseCaseCheck();
-      bool detected = useCaseCheck.eventPlanningCheck(["good night"]);
+      bool detected = useCaseCheck.eventPlanningCheck("good night");
       expect(detected, false);
       expect(useCaseCheck.triggerWord, "");
     });
     test('positive use case news check', () {
       final useCaseCheck = UseCaseCheck();
-      bool detected = useCaseCheck.newsCheck(["news"]);
+      bool detected = useCaseCheck.newsCheck("news");
       expect(detected, true);
       expect(useCaseCheck.triggerWord, "news");
     });
     test('positive, more complex use case news check', () {
       final useCaseCheck = UseCaseCheck();
-      bool detected = useCaseCheck.newsCheck(["hey", "news", "luna"]);
+      bool detected = useCaseCheck.newsCheck("hey luna news");
       expect(detected, true);
       expect(useCaseCheck.triggerWord, "news");
     });
     test('negative use case news check', () {
       final useCaseCheck = UseCaseCheck();
-      bool detected = useCaseCheck.newsCheck(["good night"]);
+      bool detected = useCaseCheck.newsCheck("good night");
       expect(detected, false);
       expect(useCaseCheck.triggerWord, "");
     });
     test('positive use case good night check', () {
       final useCaseCheck = UseCaseCheck();
-      bool detected = useCaseCheck.goodNightCheck(["good night"]);
+      bool detected = useCaseCheck.goodNightCheck("good night");
       expect(detected, true);
       expect(useCaseCheck.triggerWord, "good night");
     });
     test('positive, more complex use case good night check', () {
       final useCaseCheck = UseCaseCheck();
-      bool detected = useCaseCheck.goodNightCheck(["hey", "good night", "luna"]);
+      bool detected = useCaseCheck.goodNightCheck("hey luna good night");
       expect(detected, true);
       expect(useCaseCheck.triggerWord, "good night");
     });
     test('negative use case good night check', () {
       final useCaseCheck = UseCaseCheck();
-      bool detected = useCaseCheck.goodNightCheck(["good morning"]);
+      bool detected = useCaseCheck.goodNightCheck("good morning");
       expect(detected, false);
       expect(useCaseCheck.triggerWord, "");
     });
     test('monitor use case selection good morning', () {
       final useCaseCheck = UseCaseCheck();
-      useCaseCheck.monitor(["good morning"]);
+      useCaseCheck.monitor("good morning");
       expect(useCaseCheck.activate, 1);
       expect(useCaseCheck.triggerWord, "good morning");
     });
     test('monitor use case selection event planning', () {
       final useCaseCheck = UseCaseCheck();
-      useCaseCheck.monitor(["event"]);
+      useCaseCheck.monitor("event");
       expect(useCaseCheck.activate, 2);
       expect(useCaseCheck.triggerWord, "event");
     });
     test('monitor use case selection news', () {
       final useCaseCheck = UseCaseCheck();
-      useCaseCheck.monitor(["news"]);
+      useCaseCheck.monitor("news");
       expect(useCaseCheck.activate, 3);
       expect(useCaseCheck.triggerWord, "news");
     });
     test('monitor use case selection good night', () {
       final useCaseCheck = UseCaseCheck();
-      useCaseCheck.monitor(["good night"]);
+      useCaseCheck.monitor("good night");
       expect(useCaseCheck.activate, 4);
       expect(useCaseCheck.triggerWord, "good night");
     });
     test('monitor use case selection no match', () {
       final useCaseCheck = UseCaseCheck();
-      useCaseCheck.monitor(["good"]);
+      useCaseCheck.monitor("good");
       expect(useCaseCheck.activate, 0);
       expect(useCaseCheck.triggerWord, "");
     });
     test('monitor use case selection more complex good morning match', () {
       final useCaseCheck = UseCaseCheck();
-      useCaseCheck.monitor(["good", "morning", "luna"]);
+      useCaseCheck.monitor("good morning luna");
       expect(useCaseCheck.activate, 1);
       expect(useCaseCheck.triggerWord, "good morning");
     });

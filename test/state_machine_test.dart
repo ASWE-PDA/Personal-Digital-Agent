@@ -1,9 +1,13 @@
-import 'package:flutter/services.dart';
 import 'package:luna/StateMachine/idle_service.dart';
 import 'package:luna/StateMachine/state_machine.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:luna/UseCases/good_night_use_case.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:mockito/annotations.dart';
 
+import 'state_machine_test.mocks.dart';
+
+@GenerateMocks([GoodNightUseCase])
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   Map<String, Object> values = <String, Object>{
@@ -11,13 +15,7 @@ void main() {
     'minutes_key': 0,
   };
   SharedPreferences.setMockInitialValues(values);
-    // expose path_provider
-  const MethodChannel channel =
-      MethodChannel('plugins.flutter.io/path_provider');
-  channel.setMockMethodCallHandler((MethodCall methodCall) async {
-    return ".";
-  });
-  
+
   group('State Machine Transitions', () {
     test('State Machine should be initialized and in idle state', () {
       final sm = StateMachine();
@@ -47,6 +45,7 @@ void main() {
     });
     test('State Machine should transition to good night state', () {
       final sm = StateMachine();
+      sm.goodNightUseCase = MockGoodNightUseCase();
       sm.start();
       expect(sm.getCurrentState(), StateMachine.idleState);
       sm.transitionToGoodNight("good night");

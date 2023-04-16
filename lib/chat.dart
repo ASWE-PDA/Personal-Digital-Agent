@@ -21,7 +21,7 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
-  Controller controller = Controller();
+  Controller controller = Controller(); // State machine controller
   FlutterTts flutterTts = FlutterTts();
   SpeechToText _speechToText = SpeechToText();
   MapsService mapsService = MapsService();
@@ -88,7 +88,10 @@ class _ChatPageState extends State<ChatPage> {
   /// Manually stop the active speech recognition session
   void _stopListening() async {
     await _speechToText.stop();
-    setState(() {});
+    setState(() {
+      // State machine controller interface: push update with recognized words
+      controller.update(lastWords);
+    });
   }
 
   /// Callback that the SpeechToText plugin uses to return the recognized words

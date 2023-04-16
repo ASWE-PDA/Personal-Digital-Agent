@@ -13,6 +13,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
+import 'package:luna/StateMachine/state_machine.dart';
 
 class ChatPage extends StatefulWidget {
   @override
@@ -20,6 +21,7 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
+  Controller controller = Controller();
   FlutterTts flutterTts = FlutterTts();
   SpeechToText _speechToText = SpeechToText();
   MapsService mapsService = MapsService();

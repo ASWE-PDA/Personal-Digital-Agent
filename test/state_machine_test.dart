@@ -1,9 +1,16 @@
 import 'package:luna/StateMachine/idle_service.dart';
 import 'package:luna/StateMachine/state_machine.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
+  Map<String, Object> values = <String, Object>{
+    'hours_key': 0,
+    'minutes_key': 0,
+  };
+  SharedPreferences.setMockInitialValues(values);
+  
   group('State Machine Transitions', () {
     test('State Machine should be initialized and in idle state', () {
       final sm = StateMachine();

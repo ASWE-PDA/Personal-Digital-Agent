@@ -43,7 +43,6 @@ void main() {
       sm.transitionToNews("news");
       expect(sm.getCurrentState(), StateMachine.newsState);
     });
-    /*
     test('State Machine should transition to good night state', () {
       final sm = StateMachine();
       sm.goodNightUseCase = MockGoodNightUseCase();
@@ -52,7 +51,6 @@ void main() {
       sm.transitionToGoodNight("good night");
       expect(sm.getCurrentState(), StateMachine.idleState); //back to idle after good night
     });
-    */
     test('State Machine should transition to idle state', () {
       final sm = StateMachine();
       sm.start();
@@ -137,6 +135,7 @@ void main() {
     });
     test('positive use case good night check', () {
       final useCaseCheck = UseCaseCheck();
+      useCaseCheck.goodNightTriggerWords = ["good night", "night", "light", "lights", "turn off", "music", "playlist", "spotify", "alarm", "wake up", "wake me up"];
       bool detected = useCaseCheck.goodNightCheck("good night");
       expect(detected, true);
       expect(useCaseCheck.triggerWord, "good night");

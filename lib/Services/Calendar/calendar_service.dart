@@ -2,6 +2,16 @@ import 'package:device_calendar/device_calendar.dart';
 
 Future<List<Event>> getUpcomingEvents() async {
   final calendarPlugin = DeviceCalendarPlugin();
+
+  var permissionsGranted = await calendarPlugin.hasPermissions();
+  if (permissionsGranted.data != null) {
+
+    if (permissionsGranted.isSuccess && !permissionsGranted.data!) {
+      permissionsGranted = await calendarPlugin.requestPermissions();
+      if (!permissionsGranted.isSuccess || !permissionsGranted.data!) return [];
+    }
+  }
+  
   final calendarListResult = await calendarPlugin.retrieveCalendars();
   final calendarId = calendarListResult.data?.isNotEmpty ?? false ? calendarListResult.data?.first.id : null;
 

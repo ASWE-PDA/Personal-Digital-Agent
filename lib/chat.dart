@@ -13,6 +13,8 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
+import 'package:luna/UseCases/news/news_use_case.dart';
+
 
 class ChatPage extends StatefulWidget {
   @override
@@ -149,14 +151,19 @@ class _ChatPageState extends State<ChatPage> {
               ElevatedButton(
                   onPressed: () async {
                     Map<String, dynamic> routeDetails =
-                        await mapsService.getRouteDetails(
-                            origin: _currentPosition!,
-                            destination: "California",
-                            travelMode: "driving",
-                            departureTime: DateTime.now());
+                    await mapsService.getRouteDetails(
+                        origin: _currentPosition!,
+                        destination: "California",
+                        travelMode: "driving",
+                        departureTime: DateTime.now());
                     print("Duration: ${routeDetails['durationAsText']}");
                   },
                   child: Text("Get Maps Info DEBUG")),
+              ElevatedButton(
+                  onPressed: () async {
+                    NewsUseCase.instance.execute("news");
+                  },
+                  child: Text("Test News Use Case DEBUG")),
               Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: AvatarGlow(

@@ -4,8 +4,10 @@ import 'package:luna/Services/SmartHome/bridge_model.dart';
 import 'package:luna/Themes/main_theme.dart';
 import 'package:luna/Themes/theme_model.dart';
 import 'package:luna/UseCases/good_night_model.dart';
+import 'package:luna/UseCases/news/news_use_case.dart';
 import 'package:provider/provider.dart';
 import 'package:alarm/alarm.dart';
+import 'package:luna/Screens/newsScreen.dart';
 
 import 'settings.dart';
 import 'chat.dart';
@@ -18,6 +20,7 @@ void main() async {
     providers: [
       ChangeNotifierProvider(create: ((context) => BridgeModel())),
       ChangeNotifierProvider(create: ((context) => GoodNightModel())),
+      ChangeNotifierProvider(create: ((context) => NewsUseCase())),
     ],
     child: const MyApp(),
   ));
@@ -58,7 +61,17 @@ class _MyHomePageState extends State<MyHomePage> {
         page = ChatPage();
         break;
       case 1:
-        page = Placeholder();
+        page = Consumer<NewsUseCase>(
+
+          builder: (context, newsNotifier, child) {
+
+            print("inside builder");
+            print(NewsUseCase.instance.cardArticles.length);
+            return NewsUseCase.instance.showNews
+                ? MyNewsCardsWidget(news: newsNotifier.cardArticles,)
+                : Placeholder();
+          },
+        );
         break;
       case 2:
         page = SettingsPage();
@@ -108,3 +121,4 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 }
+

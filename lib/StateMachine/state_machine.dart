@@ -1,5 +1,6 @@
 import 'package:statemachine/statemachine.dart';
 import '../UseCases/good_night_use_case.dart';
+import '../UseCases/use_case.dart';
 import 'idle_service.dart';
 
 /// Controller for the Personal Digital Agent.
@@ -57,6 +58,15 @@ class StateMachine {
   static final newsState = machine.newState('news'); // state for news use case
   static final goodNightState =
       machine.newState('good_night'); // state for good night use case
+  
+  //static UseCase goodMorningUseCase;
+  //static UseCase eventPlanningUseCase;
+  //static UseCase newsUseCase;
+  static UseCase _goodNightUseCase = GoodNightUseCase.instance;
+
+  set goodNightUseCase(UseCase instance){
+    _goodNightUseCase = instance;
+  }
 
   void transitionToIdle() {
     // leave current state and transition to idle state
@@ -89,7 +99,7 @@ class StateMachine {
     // leave current state and transition to good night state
     print("transitioning to good night state");
     goodNightState.enter();
-    GoodNightUseCase.instance.execute(trigger);
+    _goodNightUseCase.execute(trigger);
     transitionToIdle();
     //goodNightState.onFuture(GoodNightUseCase.instance.execute("good night"), (value) => idleState.enter());
   }

@@ -17,6 +17,11 @@ class UseCaseCheck {
   String _triggerWord = "";
   String get triggerWord => _triggerWord;
 
+  static List<String> _goodNightTriggerWords = GoodNightUseCase.instance.getAllTriggerWords();
+  set goodNightTriggerWords(List<String> goodNightTriggerWords) {
+    _goodNightTriggerWords = goodNightTriggerWords;
+  }
+
   bool goodMorningCheck(String input) {
     String trigger = "";
     bool detected = false;
@@ -89,10 +94,7 @@ class UseCaseCheck {
   bool goodNightCheck(String input) {
     bool detected = false;
 
-    List<String> goodNightTriggerWords =
-        GoodNightUseCase.instance.getAllTriggerWords();
-
-    if (goodNightTriggerWords.any((element) => input.contains(element))) {
+    if (_goodNightTriggerWords.any((element) => input.contains(element))) {
       _triggerWord = input;
       detected = true;
     }

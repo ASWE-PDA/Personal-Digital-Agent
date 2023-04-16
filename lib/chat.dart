@@ -5,6 +5,7 @@ import 'package:luna/Services/SmartHome/smart_home_service.dart';
 import 'package:luna/Services/SmartHome/bridge_model.dart';
 import 'package:luna/Services/notification_service.dart';
 import 'package:luna/UseCases/good_night_use_case.dart';
+import 'package:luna/UseCases/news/news_use_case.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -56,6 +57,11 @@ class _ChatPageState extends State<ChatPage> {
                 GoodNightUseCase.instance.execute("good night");
               },
               child: Text("Test Good Night Use Case DEBUG")),
+          ElevatedButton(
+              onPressed: () async {
+                NewsUseCase.instance.execute("news");
+              },
+              child: Text("Test News Use Case DEBUG")),
           Padding(
             padding: const EdgeInsets.all(20.0),
             child: FloatingActionButton(

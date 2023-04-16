@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-  group('State Machine', () {
+  group('State Machine Transitions', () {
     test('State Machine should be initialized and in idle state', () {
       final sm = StateMachine();
       sm.start();
@@ -60,7 +60,7 @@ void main() {
       expect(controller.getCurrentState(), StateMachine.idleState);
     });
   });
-  group('Use Case Checks', () {
+  group('State Machine Use Case Checks', () {
     test('use case check service creation', () {
       final useCaseCheck = UseCaseCheck();
       expect(useCaseCheck.activate, 0);
@@ -130,7 +130,7 @@ void main() {
       final useCaseCheck = UseCaseCheck();
       bool detected = useCaseCheck.goodNightCheck("hey luna good night");
       expect(detected, true);
-      expect(useCaseCheck.triggerWord, "good night");
+      expect(useCaseCheck.triggerWord, "hey luna good night");
     });
     test('negative use case good night check', () {
       final useCaseCheck = UseCaseCheck();

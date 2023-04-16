@@ -104,27 +104,25 @@ class StateMachine {
     // someState.onStream(element.onClick, (value) => anotherState.enter());
     // idleState.onStream(value.activate, (value) => transitionToGoodNight());
     print("entered idle state");
-    useCaseCheck.listen((value) {
-      int state = value.activate;
+      int state = useCaseCheck.activate;
       if (state > 0) {
         switch (state) {
           case 1:
-            transitionToGoodMorning(value.triggerWord);
+            transitionToGoodMorning(useCaseCheck.triggerWord);
             break;
           case 2:
-            transitionToEventPlanning(value.triggerWord);
+            transitionToEventPlanning(useCaseCheck.triggerWord);
             break;
           case 3:
-            transitionToNews(value.triggerWord);
+            transitionToNews(useCaseCheck.triggerWord);
             break;
           case 4:
-            transitionToGoodNight(value.triggerWord);
+            transitionToGoodNight(useCaseCheck.triggerWord);
             break;
           default:
             print("error: invalid state");
         }
       }
-    });
   }
 
   void start() {

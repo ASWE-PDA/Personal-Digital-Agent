@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:luna/UseCases/good_night_use_case.dart';
 
 /// This class is used to check if a use case is triggered.
@@ -12,14 +10,7 @@ import 'package:luna/UseCases/good_night_use_case.dart';
 /// - newsCheck: checks if news use case is triggered
 /// - goodNightCheck: checks if good night use case is triggered
 /// - monitor: monitors the use case checks and updates the activate parameter accordingly
-class UseCaseCheck extends StreamView<UseCaseCheck> {
-  UseCaseCheck._(this._controller) : super(_controller.stream);
-  factory UseCaseCheck() => UseCaseCheck._(StreamController());
-
-  final StreamController<UseCaseCheck> _controller;
-
-  Future<void> close() => _controller.close();
-
+class UseCaseCheck {
   int _activate = 0;
   int get activate => _activate;
 
@@ -122,6 +113,5 @@ class UseCaseCheck extends StreamView<UseCaseCheck> {
     } else {
       _activate = 0;
     }
-    _controller.add(this);
   }
 }

@@ -49,5 +49,7 @@
 	<false/>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>This app needs access to location when open.</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>This app needs access to calendar in order to list the events.</string>
 </dict>
 </plist>

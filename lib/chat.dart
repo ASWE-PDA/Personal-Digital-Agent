@@ -115,15 +115,15 @@ class _ChatPageState extends State<ChatPage> {
                     // if recording is active: show the recognized words
                     _speechToText.isListening
                         ? lastWords
-                    // if recording isn't active but could be tell the user
-                    // how to start it, otherwise indicate that speed
-                    // recognition is not yet ready or not supported on
-                    // target device
+                        // if recording isn't active but could be tell the user
+                        // how to start it, otherwise indicate that speed
+                        // recognition is not yet ready or not supported on
+                        // target device
                         : _speechEnabled
-                        ? lastWords != ''
-                        ? lastWords
-                        : 'Tap the microphone to start speaking...'
-                        : 'Speech recognition is not available on this device.',
+                            ? lastWords != ''
+                                ? lastWords
+                                : 'Tap the microphone to start speaking...'
+                            : 'Speech recognition is not available on this device.',
                   ),
                 ),
               ),
@@ -176,10 +176,10 @@ class _ChatPageState extends State<ChatPage> {
                   repeat: true,
                   child: FloatingActionButton(
                     onPressed:
-                    // if not yet listening: start listening, otherwise stop
-                    _speechToText.isNotListening
-                        ? _startListening
-                        : _stopListening,
+                        // if not yet listening: start listening, otherwise stop
+                        _speechToText.isNotListening
+                            ? _startListening
+                            : _stopListening,
                     child: Icon(_speechToText.isNotListening
                         ? Icons.mic_none
                         : Icons.mic),

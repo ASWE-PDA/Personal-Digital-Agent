@@ -1,10 +1,13 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:luna/Services/Alarm/alarm_service.dart';
 import 'package:luna/Services/Calendar/calendar_service.dart';
-import 'package:luna/UseCases/Scheduling/scheduling_model.dart';
+import 'package:luna/Services/maps_service.dart';
 import 'package:luna/UseCases/use_case.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:luna/Services/notification_service.dart';
+
+import '../../Services/location_service.dart';
 
 @pragma('vm:entry-point')
 void onNotificationTap(NotificationResponse response) {
@@ -26,7 +29,6 @@ class SchedulingUseCase implements UseCase {
 
   FlutterTts flutterTts = FlutterTts();
 
-  SchedulingModel goodNightModel = SchedulingModel();
 
   int notificationId = 2;
 
@@ -36,7 +38,6 @@ class SchedulingUseCase implements UseCase {
 
   /// Loads preferences from SharedPreferences.
   Future<void> loadPreferences() async {
-    await goodNightModel.getGoodNightPreferences();
   }
 
   @override
@@ -97,8 +98,65 @@ class SchedulingUseCase implements UseCase {
 
   /// Lists all upcoming events
   void listUpcomingEvents() async {
-    final events = getUpcomingEvents();
-    print(events);
+    final events = await getUpcomingEvents();
+    flutterTts.speak("You have ${events.length} events planned today.");
+    for (var i = 0; i < events.length; i++) {
+      flutterTts.speak(
+        "From ${getTimeFromHoursMinutes(events[i].start!.hour, events[i].start!.minute)} till ${getTimeFromHoursMinutes(events[i].end!.hour, events[i].end!.minute)}.");
+      if (events[i].description != null) {
+        flutterTts.speak("The event has following description: ${events[i].description}");
+      }
+      if (events[i].location != null) {
+        flutterTts.speak("The event takes place in the location ${events[i].location}");
+        final travelDuration = await getTravelDuration(events[i].location!);
+        flutterTts.speak("You will need an estimated time of $travelDuration");
+        
+      }
+    }
+  }
+
+  Future<String> getTravelDuration(String destination) async {
+    try {
+      // check permisisons
+      final permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied) {
+        // permission has not been granted, request permission
+        final permissionStatus = await Geolocator.requestPermission();
+        if (permissionStatus != LocationPermission.whileInUse &&
+            permissionStatus != LocationPermission.always) {
+          return "Unknown travel duration please allow location access";
+        }
+      }
+      // get current location
+      final position = await LocationService.instance.getCurrentLocation();
+      MapsService mapsService = MapsService();
+        Map<String, dynamic> routeDetails =
+                        await mapsService.getRouteDetails(
+                            origin: position!,
+                            destination: destination,
+                            travelMode: "driving",
+                            departureTime: DateTime.now());
+      return "${routeDetails['durationAsText']}";
+    } catch (e) {
+      print(e);
+    }
+    return "unknown travel duration";
+  }
+
+  String getTimeFromHoursMinutes(int hours, int minutes) {
+    String amPm = "a.m";
+    int h = hours;
+    if (hours > 11) {
+      if (hours != 12) h = hours-12;
+      amPm = "p.m";
+    }
+
+    if (minutes == 0) {
+      return "$h $amPm";
+    }
+    else {
+      return "$h:$minutes $amPm";
+    }
   }
 
   // TODO: implement this

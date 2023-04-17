@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:luna/Dialogs/delete_dialog.dart';
 import 'package:luna/Screens/good_night_schedule_screen.dart';
+import 'package:luna/Screens/news_preferences_screen.dart';
 import 'package:luna/Screens/philips_hue_screen.dart';
 import 'package:luna/Services/SmartHome/bridge_model.dart';
 import 'package:luna/Themes/theme_model.dart';
 import 'package:luna/UseCases/good_night_model.dart';
+import 'package:luna/UseCases/news/news_use_case.dart';
 import 'package:luna/Widgets/settings_section.dart';
 import 'package:luna/Widgets/settings_widget.dart';
 import 'package:provider/provider.dart';
@@ -87,6 +89,23 @@ class _SettingsPage extends State<SettingsPage> {
                         title: "Good Night Schedule",
                         icon: Icon(Icons.bed),
                       ),
+                        SettingsWidget(
+                            title: "News Preferences",
+                            icon: Icon(Icons.newspaper),
+                            action: IconButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        PreferencesScreen(),
+                                  ),
+                                );
+                              },
+                              icon: Icon(Icons.arrow_forward_ios),
+                              color: Theme.of(context).colorScheme.tertiary,
+                            )
+                        )
                     ]),
                     SettingsSection(title: "Personal Data", children: [
                       SettingsWidget(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:luna/UseCases/news/news_use_case.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:luna/UseCases/news/news_model.dart';
+
 
 class MyNewsCardsWidget extends StatefulWidget {
 

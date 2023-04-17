@@ -9,6 +9,7 @@ import 'package:luna/UseCases/good_night_model.dart';
 import 'package:luna/Widgets/settings_section.dart';
 import 'package:luna/Widgets/settings_widget.dart';
 import 'package:provider/provider.dart';
+import 'package:luna/UseCases/news/news_use_case.dart';
 
 class SettingsPage extends StatefulWidget {
   @override
@@ -160,6 +161,7 @@ class _SettingsPage extends State<SettingsPage> {
                                   await userModel.deleteBridgePreferences();
                                   await goodNightModel
                                       .deleteGoodNightPreferences();
+                                  await NewsUseCase.instance.deletePreferences();
                                   Navigator.pop(context);
                                 },
                               );

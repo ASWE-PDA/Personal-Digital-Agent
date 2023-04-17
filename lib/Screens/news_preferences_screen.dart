@@ -8,7 +8,7 @@ class PreferencesScreen extends StatefulWidget {
 
 class _PreferencesScreenState extends State<PreferencesScreen> {
   SharedPreferences? _prefs;
-  late List<String> _selectedPreferences;
+  late List<String> _selectedPreferences = [];
 
   @override
   void initState() {
@@ -22,6 +22,11 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
     setState(() {
       _selectedPreferences = _prefs!.getStringList('preferences') ?? [];
     });
+  }
+
+  Future<void> deletePreferences() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    await sharedPreferences.setStringList('preferences', []);
   }
 
   Future<void> _savePreferences() async {
@@ -39,17 +44,7 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
     });
   }
 
-  Widget _buildPreferenceList() {
-    final preferenceList = [
-      'Technology',
-      'Business',
-      'US politics',
-      'German News',
-      'Automobile',
-      'Finances',
-      'Sports'
-    ];
-
+  Widget _buildPreferenceList(List<String> preferenceList) {
     return ListView.builder(
       itemCount: preferenceList.length,
       itemBuilder: (context, index) {
@@ -67,6 +62,16 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final preferenceList = [
+      'Technology',
+      //'Business',
+      'US politics',
+      'German News',
+      //'Automobile',
+      'Finances',
+      //'Sports'
+    ];
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Preferences'),
@@ -79,7 +84,7 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
       ),
       body: _selectedPreferences == null
           ? Center(child: CircularProgressIndicator())
-          : _buildPreferenceList(),
+          : _buildPreferenceList(preferenceList),
     );
   }
 }

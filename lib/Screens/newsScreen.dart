@@ -57,7 +57,7 @@ class _MyNewsCardsWidgetState extends State<MyNewsCardsWidget> {
                   Padding(
                     padding: EdgeInsets.fromLTRB(16.0, 12.0, 16.0, 16.0),
                     child: Text(
-                      NewsUseCase.instance.cardArticles[index].summary!,
+                      NewsUseCase.instance.cardArticles[index].summary,
                       style: Theme.of(context).textTheme.bodyText2,
                     ),
                   ),

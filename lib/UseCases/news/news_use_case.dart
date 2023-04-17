@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:luna/Services/Alarm/alarm_service.dart';
@@ -9,6 +10,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'news_model.dart';
+import 'news_api.dart';
 
 
 /// Use case for the News feature.
@@ -27,13 +29,12 @@ class NewsUseCase extends ChangeNotifier implements UseCase {
 
   List<String> NewsTriggerWords = ["news", "inform me", "whats up"];
   List<String> providerTriggerWords = ["tagesschau", "hackernews", "new york times", "financial times"];
-  //List<String> sleepPlaylistTriggerWords = ["music", "playlist", "spotify"];
-  //List<String> alarmTriggerWords = ["alarm", "wake up", "wake me up"];
 
   FlutterTts flutterTts = FlutterTts();
-
-  //BridgeModel bridgeModel = BridgeModel();
-  //NewsModel newsModel = NewsModel();
+  NewYorkTimesNews newYorkTimesNews = NewYorkTimesNews();
+  GermanNews germanNews = GermanNews();
+  FinanceNews financeNews = FinanceNews();
+  TechNews techNews = TechNews();
 
   int notificationId = 2;
   List<String>? _preferences;
@@ -55,14 +56,21 @@ class NewsUseCase extends ChangeNotifier implements UseCase {
   /// Loads preferences from SharedPreferences.
   Future<void> loadPreferences() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    _preferences = sharedPreferences.getStringList('preferences');
+    _preferences = sharedPreferences.getStringList('preferences') ?? [];
+
+    for(var a in _preferences! ){print('a $a');}
+  }
+
+  Future<void> deletePreferences() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    await sharedPreferences.setStringList('preferences', []);
   }
 
   @override
-  void execute(String trigger) {
+  void execute(String trigger) async {
     if (NewsTriggerWords.any((element) => trigger.contains(element))) {
       print("triggered news use case");
-      newsRoutine();
+      await newsRoutine();
       return;
     }
     /*else if (lightTriggerWords.any((element) => trigger.contains(element))) {
@@ -88,89 +96,101 @@ class NewsUseCase extends ChangeNotifier implements UseCase {
     // we have different ranks of preferences:
     // big ones: German News, Technology, Finances --- these decided if certain apis are even called
     // the other ones are used to differentiate in the New York Times API#
-    /*
-    if (_preferences!.any((element) => element == 'German News')) {
-      await pollTagesschau();
-    }
-    if (_preferences!.any((element) => element == 'Technology')) {
-      await pollHackerNews();
-    }
-    if (_preferences!.any((element) => element == 'Finances')) {
-      await pollFinancialTimes();
-    }
-    // NYT can always be evoked
-    if (true) {
-      await fetchNYTArticles();
-    }
-  */
-    await flutterTts.speak("The following headlines might interest you ");
 
     //sortArticlesByRelevance(articles);
-    _cardArticles = await fetchNYTArticles();
-    //for(var art in _cardArticles) {
-    //  print(art.categories);
-    //}
+    await loadPreferences();
+    await fetchArticles();
+
     notifyListeners();
     await flutterTts.speak("The following headlines might interest you ");
     displayNews();
 
-    await flutterTts.speak("use the main screen for more information!");
     return true;
   }
+
+  Future<void> fetchArticles() async {
+    dynamic germanArticles, nYTArticles, financeArticles, techArticles, genericArticles;
+    List<Article> completeList = [];
+    _preferences ??= [];
+    if(_preferences != []){
+      if (_preferences!.contains('German News')) {
+        germanArticles = await germanNews.fetchNews();
+        germanArticles = prepareList(germanArticles);
+        completeList.addAll(germanArticles);
+      }
+      if(_preferences!.contains('Finances')) {
+        financeArticles = await financeNews.fetchNews();
+        financeArticles = prepareList(financeArticles);
+        completeList.addAll(financeArticles);
+      }
+      if(_preferences!.contains('Technology')) {
+        techArticles = await techNews.fetchNews();
+        techArticles = prepareList(techArticles);
+        completeList.addAll(techArticles);
+      }
+      if(_preferences!.contains('US politics')) {
+        nYTArticles = await newYorkTimesNews.fetchSection('politics');
+        nYTArticles = prepareList(nYTArticles);
+        completeList.addAll(nYTArticles);
+      }
+    } else {
+      genericArticles += await newYorkTimesNews.fetchSection('home');
+      genericArticles = prepareList(genericArticles);
+      completeList.addAll(genericArticles);
+    }
+
+    completeList = sortArticleAlgorithm(completeList);
+    // Set the sorted articles to the private member _cardArticles
+    _cardArticles = completeList;
+    // Notify listeners of the change
+    notifyListeners();
+  }
+
+  List<Article> prepareList(List<Article> inputList) {
+    dynamic outputList;
+    outputList = trimListByVal(inputList);
+    outputList = rankArticlesInList(inputList);
+    return outputList;
+  }
+
+  List<Article> trimListByVal(List<Article> inputList, [int n = 5]) {
+    inputList.shuffle();
+    List<Article> outputList = inputList.take(n).toList();
+    return outputList;
+  }
+
+  List<Article> rankArticlesInList(List<Article> inputList) {
+    if(_preferences == null) {
+      print("preferences are null");
+    }
+    for(var element in inputList) {
+      element.calculateScore(_preferences!);
+    }
+    return inputList;
+  }
+
   void setShowNews(bool value) {
     _showNews = value;
     notifyListeners();
   }
-  /*
-  Future<String> pollHackerNews() async {
 
-    return "done";
-  }
-
-  Future<String> pollFinancialTimes() async {
-
-    return "done";
-  }
-
-  Future<String> pollTagesschau() async {
-
-    return "done";
-  }
-
-  Future<List<String>?> gatherHeadlines() async {
-    return null;
-  }
-
-  Future<bool> gatherNews() async {
-    return true;
-  }
-
-  //Future<>
-  List<Article> sortArticlesByRelevance(List<Article> articles) {
-    dynamic temp;
-
-    return temp;
-  }
-  */
   void displayNews() async {
     readNewsHeadlines();
     setShowNews(true);
   }
-
+  /*
   Future<List<Article>> fetchSpecificNYTArticles(String section) async {
     const String apiKey = 'xMoAsAq9ibAxohHIg1LcD7EGu4PAduMo';
     String baseUrl = 'https://api.nytimes.com/svc/topstories/v2/$section.json?api-key=$apiKey';
     //final response = await http.get(Uri.parse(baseUrl));
     final response = await http.get(Uri.parse(baseUrl));
-    inspect(response);
-    print(response.statusCode);
     if (response.statusCode == 200) {
 
       //final List<dynamic> articlesJson = jsonDecode(response.body)['results'];
       //return articlesJson.map((articleJson) => Article.fromJson(articleJson)).toList();
       final Map<String, dynamic> data = json.decode(response.body);
       final List<Article> articles = List<Article>.from(
-          data['results'].map((article) => Article.fromJson(article)));
+          data['results'].map((article) => Article.fromNYTJson(article)));
       return articles;
     } else {
       throw Exception('Failed to load articles');
@@ -191,17 +211,63 @@ class NewsUseCase extends ChangeNotifier implements UseCase {
     return returnList;
   }
 
+  Future<List<Article>> fetchGermanNews() async {
+    const String apiKey = 'bb57d567ccbd4e32b33a379b0888d731';
+    String baseUrl = 'https://newsapi.org/v2/top-headlines?country=de&apiKey=$apiKey';
+    //List<Article> returnList = [];
+    final response = await http.get(Uri.parse(baseUrl));
+    if (response.statusCode == 200) {
+
+      //final List<dynamic> articlesJson = jsonDecode(response.body)['results'];
+      //return articlesJson.map((articleJson) => Article.fromJson(articleJson)).toList();
+      final Map<String, dynamic> data = json.decode(response.body);
+      final List<Article> articles = List<Article>.from(
+          data['articles'].map((article) => Article.fromGermanJson(article)));
+      return articles;
+    } else {
+      throw Exception('Failed to load articles');
+    }
+    //return returnList;
+  }
+
+  Future<List<Article>> fetchItNews() async {
+
+
+  }
+
+  Future<List<Article>> fetchFinancialNews() asnyc {
+    const String apiKey = 'n5Fa6vCC2s4X0NZI76FtDXf7boMpCrDDRTy2iM8u';
+    String baseUrl = 'https://api.marketaux.com/v1/news/all?filter_entities=true&language=en&api_token=$apiKey';
+
+  }
+  */
+
+  List<Article> sortArticleAlgorithm(List<Article> allArticles) {
+    // Calculate the scores for each article
+    for (var article in allArticles) {
+      article.calculateScore(_preferences!);
+    }
+
+    // Sort the articles by score
+    allArticles.sort((a, b) => b.score.compareTo(a.score));
+
+    // If every article has a score of 0, use a random order
+    if (allArticles.every((article) => article.score == 0)) {
+      allArticles.shuffle();
+    }
+
+    return allArticles;
+  }
+
   void readNewsHeadlines() async {
 
-    for(var article in _cardArticles) {
-
-
-      await flutterTts.speak(article.title);
-      //await flutterTts.awaitSpeakCompletion(true);
-      //await flutterTts.setSilence(1000);
+    for (var i = 0; i < min(_cardArticles.length, 5); i++) {
+      await flutterTts.speak(_cardArticles[i].title);
     }
     await flutterTts.awaitSpeakCompletion(true);
   }
+
+
 
 
   /// Schedules a daily notification for the good night use case.

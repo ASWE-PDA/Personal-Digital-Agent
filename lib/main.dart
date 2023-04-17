@@ -64,8 +64,6 @@ class _MyHomePageState extends State<MyHomePage> {
         page = Consumer<NewsUseCase>(
 
           builder: (context, newsNotifier, child) {
-
-            print("inside builder");
             print(NewsUseCase.instance.cardArticles.length);
             return NewsUseCase.instance.showNews
                 ? MyNewsCardsWidget(news: newsNotifier.cardArticles,)

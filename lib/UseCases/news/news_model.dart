@@ -4,40 +4,60 @@ import 'dart:convert';
 class Article {
   String title;
   String summary;
-  //int views;
   List<String> categories;
   String link;
+  int score;
 
-  Article({required this.title, required this.summary, /*required this.views,*/ required this.categories, required this.link});
+  Article({required this.title, required this.summary, required this.categories, required this.link, this.score = 0});
 
-  factory Article.fromJson(Map<String, dynamic> json) {
+  factory Article.fromNYTJson(Map<String, dynamic> json) {
     return Article(
       title: json['title'],
-      summary: json['abstract'],
-      //views: json['views'],
+      summary: json['abstract'] ?? [],
       categories: json['des_facet'] != null
           ? List<String>.from(json['des_facet'])
           : [],
       link: json['short_url'],
     );
   }
-}
-/*
-Future<List<Article>> fetchNYTArticles() async {
-  final String apiKey = 'xMoAsAq9ibAxohHIg1LcD7EGu4PAduMo';
-  final String baseUrl = 'https://api.nytimes.com/svc/mostpopular/v2/viewed/1.json?api-key=$apiKey';
-  final response = await http.get(Uri.parse(baseUrl));
 
-  if (response.statusCode == 200) {
-    final List<dynamic> articlesJson = jsonDecode(response.body)['results'];
-    return articlesJson.map((articleJson) => Article.fromJson(articleJson)).toList();
-  } else {
-    throw Exception('Failed to load articles');
+  factory Article.fromGermanJson(Map<String, dynamic> json) {
+    return Article(
+      title: json['title'],
+      summary: json['description'] ?? '',
+      categories: json['des_facet'] != null
+          ? List<String>.from(json['des_facet'])
+          : [],
+      link: json['url'],
+    );
   }
-}
 
-List<Article> filterArticlesByPopularity(List<Article> articles, int threshold) {
-  return articles.where((article) => article.views >= threshold).toList();
-}
+  factory Article.fromFinancialJson(Map<String, dynamic> json) {
+    return Article(
+      title: json['title'],
+      summary: json['description'] ?? [],
+      categories: json['keywords'] != null
+          ? List<String>.from(json['keywords'])
+          : [],
+      link: json['url'],
+    );
+  }
 
-*/
+  void calculateScore(List<String> preferences) {
+    score = categories.fold(0, (score, category) {
+      if (preferences.contains(category)) {
+        return score + 1;
+      }
+      return score;
+    });
+
+    // add score based on title
+    for (String preference in preferences) {
+      if (title.toLowerCase().contains(preference.toLowerCase())) {
+        score += 1;
+        break;
+      }
+    }
+  }
+
+}

@@ -2,6 +2,7 @@ import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:luna/Screens/newsScreen.dart';
 import 'package:luna/Services/Alarm/alarm_service.dart';
 import 'package:luna/Services/Calendar/calendar_service.dart';
 import 'package:luna/Services/location_service.dart';
@@ -105,6 +106,13 @@ class _ChatPageState extends State<ChatPage> {
     _getCurrentLocation();
   }
 
+  void pushNewsScreen() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => MyNewsCardsWidget()),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     loadPreferences();
@@ -174,6 +182,7 @@ class _ChatPageState extends State<ChatPage> {
               ElevatedButton(
                   onPressed: () async {
                     NewsUseCase.instance.execute("news");
+                    pushNewsScreen();
                   },
                   child: Text("Test News Use Case DEBUG")),
               Padding(

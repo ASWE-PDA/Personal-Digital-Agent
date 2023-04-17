@@ -1,5 +1,5 @@
-import "package:flutter/material.dart";
-import "package:shared_preferences/shared_preferences.dart";
+import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PreferencesScreen extends StatefulWidget {
   @override
@@ -20,17 +20,17 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
     print("init news prefs");
     _prefs = await SharedPreferences.getInstance();
     setState(() {
-      _selectedPreferences = _prefs!.getStringList("preferences") ?? [];
+      _selectedPreferences = _prefs!.getStringList('preferences') ?? [];
     });
   }
 
   Future<void> deletePreferences() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    await sharedPreferences.setStringList("preferences", []);
+    await sharedPreferences.setStringList('preferences', []);
   }
 
   Future<void> _savePreferences() async {
-    await _prefs!.setStringList("preferences", _selectedPreferences);
+    await _prefs!.setStringList('preferences', _selectedPreferences);
     print("saved news prefs");
   }
 
@@ -54,7 +54,6 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
         return CheckboxListTile(
           title: Text(preference),
           value: isSelected,
-          checkColor: Colors.green,
           onChanged: (value) => _handlePreferenceSelect(preference, value!),
         );
       },
@@ -64,18 +63,18 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
   @override
   Widget build(BuildContext context) {
     final preferenceList = [
-      "Technology",
+      'Technology',
       //'Business',
-      "US politics",
-      "German News",
+      'US politics',
+      'German News',
       //'Automobile',
-      "Finances",
+      'Finances',
       //'Sports'
     ];
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Preferences"),
+        title: Text('Preferences'),
         actions: [
           IconButton(
             icon: Icon(Icons.save),

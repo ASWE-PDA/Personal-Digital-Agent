@@ -99,7 +99,16 @@ class SchedulingUseCase implements UseCase {
   /// Lists all upcoming events
   void listUpcomingEvents() async {
     final events = await getUpcomingEvents();
-    flutterTts.speak("You have ${events.length} events planned today.");
+    if (events.isEmpty) {
+      flutterTts.speak("You have no events planned today.");
+    }
+    else if (events.length == 1) {
+      flutterTts.speak("You have ${events.length} event planned today.");
+    }
+    else {
+      flutterTts.speak("You have ${events.length} events planned today.");
+    }
+    
     for (var i = 0; i < events.length; i++) {
       flutterTts.speak(
         "From ${getTimeFromHoursMinutes(events[i].start!.hour, events[i].start!.minute)} till ${getTimeFromHoursMinutes(events[i].end!.hour, events[i].end!.minute)}.");

@@ -58,9 +58,6 @@ class _MyHomePageState extends State<MyHomePage> {
         page = ChatPage();
         break;
       case 1:
-        page = Placeholder();
-        break;
-      case 2:
         page = SettingsPage();
         break;
       default:
@@ -98,7 +95,6 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               tabs: [
                 GButton(icon: Icons.chat, text: 'Chat'),
-                GButton(icon: Icons.home, text: 'Home'),
                 GButton(icon: Icons.settings, text: 'Settings'),
               ],
             ),

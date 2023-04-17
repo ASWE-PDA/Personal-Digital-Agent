@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:luna/Services/Alarm/alarm_service.dart';
+import 'package:luna/Services/Calendar/calendar_service.dart';
 import 'package:luna/Services/location_service.dart';
 import 'package:luna/Services/maps_service.dart';
 import 'package:luna/Services/SmartHome/smart_home_service.dart';
 import 'package:luna/Services/SmartHome/bridge_model.dart';
 import 'package:luna/Services/notification_service.dart';
+import 'package:luna/UseCases/Scheduling/scheduling_use_case.dart';
 import 'package:luna/UseCases/good_night_use_case.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -21,7 +23,7 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
-  Controller controller = Controller();
+  Controller controller = Controller(); // State machine controller
   FlutterTts flutterTts = FlutterTts();
   SpeechToText _speechToText = SpeechToText();
   MapsService mapsService = MapsService();
@@ -88,7 +90,10 @@ class _ChatPageState extends State<ChatPage> {
   /// Manually stop the active speech recognition session
   void _stopListening() async {
     await _speechToText.stop();
-    setState(() {});
+    setState(() {
+      // State machine controller interface: push update with recognized words
+      controller.update(lastWords);
+    });
   }
 
   /// Callback that the SpeechToText plugin uses to return the recognized words
@@ -159,6 +164,12 @@ class _ChatPageState extends State<ChatPage> {
                     print("Duration: ${routeDetails['durationAsText']}");
                   },
                   child: Text("Get Maps Info DEBUG")),
+              ElevatedButton(
+                  onPressed: () async {
+                    SchedulingUseCase.instance.execute("calendar");
+                    
+                  },
+                  child: Text("Test Calendar Usecase DEBUG")),
               Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: AvatarGlow(

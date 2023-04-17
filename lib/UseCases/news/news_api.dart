@@ -52,7 +52,7 @@ class NewYorkTimesNews implements NewsAPI {
     if (response.statusCode == 200) {
       //final List<dynamic> articlesJson = jsonDecode(response.body)['results'];
       //return articlesJson.map((articleJson) => Article.fromJson(articleJson)).toList();
-      final Map<String, dynamic> data = json.decode(response.body);
+      final Map<String, dynamic> data = json.decode(utf8.decode(response.body.codeUnits));
       final List<Article> articles = List<Article>.from(
           data['results'].map((article) => Article.fromNYTJson(article)));
       return articles;
@@ -82,7 +82,7 @@ class GermanNews implements NewsAPI {
     if (response.statusCode == 200) {
       //final List<dynamic> articlesJson = jsonDecode(response.body)['results'];
       //return articlesJson.map((articleJson) => Article.fromJson(articleJson)).toList();
-      final Map<String, dynamic> data = json.decode(response.body);
+      final Map<String, dynamic> data = json.decode(utf8.decode(response.body.codeUnits));
       final List<Article> articles = List<Article>.from(
           data['articles'].map((article) => Article.fromGermanJson(article)));
       return articles;
@@ -111,7 +111,7 @@ class FinanceNews implements NewsAPI {
     if (response.statusCode == 200) {
       //final List<dynamic> articlesJson = jsonDecode(response.body)['results'];
       //return articlesJson.map((articleJson) => Article.fromJson(articleJson)).toList();
-      final Map<String, dynamic> data = json.decode(response.body);
+      final Map<String, dynamic> data = json.decode(utf8.decode(response.body.codeUnits));
       final List<Article> articles = List<Article>.from(
           data['data'].map((article) => Article.fromGermanJson(article)));
       print("financeFetch done");
@@ -141,7 +141,7 @@ class TechNews implements NewsAPI {
     if (response.statusCode == 200) {
       //final List<dynamic> articlesJson = jsonDecode(response.body)['results'];
       //return articlesJson.map((articleJson) => Article.fromJson(articleJson)).toList();
-      final Map<String, dynamic> data = json.decode(response.body);
+      final Map<String, dynamic> data = json.decode(utf8.decode(response.body.codeUnits));
       final List<Article> articles = List<Article>.from(
           data['articles'].map((article) => Article.fromGermanJson(article)));
       return articles;

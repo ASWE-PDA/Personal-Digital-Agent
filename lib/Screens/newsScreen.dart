@@ -4,9 +4,9 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:luna/UseCases/news/news_model.dart';
 
 class MyNewsCardsWidget extends StatefulWidget {
-  List<Article> news;
 
-  MyNewsCardsWidget({required this.news});
+
+  MyNewsCardsWidget();
 
   @override
   _MyNewsCardsWidgetState createState() => _MyNewsCardsWidgetState();
@@ -18,16 +18,7 @@ class _MyNewsCardsWidgetState extends State<MyNewsCardsWidget> {
     return Scaffold(
       appBar: AppBar(
         title: Text('My News'),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.clear),
-            onPressed: () {
-              print(NewsUseCase.instance.cardArticles[0].title);
-              NewsUseCase.instance.setShowNews(false);
-              setState(() {}); // call setState to update the state of MyNewsCardsWidget
-            },
-          )
-        ],
+        actions: [],
       ),
       body: ListView.builder(
         itemCount: NewsUseCase.instance.cardArticles.length > 5 ? 5 : NewsUseCase.instance.cardArticles.length,

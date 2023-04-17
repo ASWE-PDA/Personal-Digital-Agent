@@ -59,5 +59,14 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This app needs access to location when open.</string>
+	<key>DART_DEFINES</key>
+	<string>$(DART_DEFINES)</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>Access most functions for calendar viewing and editing.</string>
+
+	<key>NSContactsUsageDescription</key>
+	<string>Access contacts for event attendee editing.</string>
 </dict>
 </plist>

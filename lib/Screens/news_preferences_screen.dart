@@ -54,6 +54,7 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
         return CheckboxListTile(
           title: Text(preference),
           value: isSelected,
+          checkColor: Colors.green,
           onChanged: (value) => _handlePreferenceSelect(preference, value!),
         );
       },

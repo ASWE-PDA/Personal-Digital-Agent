@@ -9,6 +9,7 @@ import 'package:luna/Services/maps_service.dart';
 import 'package:luna/Services/SmartHome/smart_home_service.dart';
 import 'package:luna/Services/SmartHome/bridge_model.dart';
 import 'package:luna/Services/notification_service.dart';
+import 'package:luna/UseCases/Scheduling/scheduling_use_case.dart';
 import 'package:luna/UseCases/good_night_use_case.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -165,17 +166,10 @@ class _ChatPageState extends State<ChatPage> {
                   child: Text("Get Maps Info DEBUG")),
               ElevatedButton(
                   onPressed: () async {
-                    final calendarEntries = await getUpcomingEvents();
-                    for (var i = 0; i < calendarEntries.length; i++) {
-                      print("EventID: ${calendarEntries[i].eventId}");
-                      print("start: ${calendarEntries[i].start}");
-                      print("descr: ${calendarEntries[i].description}");
-                      print("loc: ${calendarEntries[i].location}");
-                      print("title: ${calendarEntries[i].title}");
-                    }
+                    SchedulingUseCase.instance.execute("calendar");
                     
                   },
-                  child: Text("Calendar DEBUG")),
+                  child: Text("Test Calendar Usecase DEBUG")),
               Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: AvatarGlow(

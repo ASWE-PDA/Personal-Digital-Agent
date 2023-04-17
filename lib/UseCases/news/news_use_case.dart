@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -6,7 +5,6 @@ import 'package:luna/Services/Alarm/alarm_service.dart';
 import 'package:luna/UseCases/use_case.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:luna/Services/notification_service.dart';
-import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'news_model.dart';
@@ -28,7 +26,7 @@ class NewsUseCase extends ChangeNotifier implements UseCase {
   }
 
   List<String> NewsTriggerWords = ["news", "inform me", "whats up"];
-  List<String> providerTriggerWords = ["tagesschau", "hackernews", "new york times", "financial times"];
+  //List<String> providerTriggerWords = ["tagesschau", "hackernews", "new york times", "financial times"];
 
   FlutterTts flutterTts = FlutterTts();
   NewYorkTimesNews newYorkTimesNews = NewYorkTimesNews();

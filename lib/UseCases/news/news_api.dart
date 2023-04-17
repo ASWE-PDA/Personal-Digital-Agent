@@ -1,21 +1,11 @@
-import 'dart:developer';
-import 'package:flutter/foundation.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:luna/Services/Alarm/alarm_service.dart';
-import 'package:luna/UseCases/use_case.dart';
-import 'package:flutter_tts/flutter_tts.dart';
-import 'package:luna/Services/notification_service.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
 import 'news_model.dart';
 
 
 abstract class NewsAPI {
   late final String _apiKey;
   late String baseUrl;
-  //late Article articleType;
-  List<Article> _currentArticles = [];
   Future<List<Article>> fetchNews();
 
 }
@@ -23,9 +13,6 @@ abstract class NewsAPI {
 class NewYorkTimesNews implements NewsAPI {
   @override
   String _apiKey = "xMoAsAq9ibAxohHIg1LcD7EGu4PAduMo";
-
-  @override
-  List<Article> _currentArticles = [];
 
   @override
   String baseUrl = "https://api.nytimes.com/svc/topstories/v2/";
@@ -50,8 +37,6 @@ class NewYorkTimesNews implements NewsAPI {
     advancedUrl = baseUrl + advancedUrl;
     final response = await http.get(Uri.parse(advancedUrl));
     if (response.statusCode == 200) {
-      //final List<dynamic> articlesJson = jsonDecode(response.body)['results'];
-      //return articlesJson.map((articleJson) => Article.fromJson(articleJson)).toList();
       final Map<String, dynamic> data = json.decode(utf8.decode(response.body.codeUnits));
       final List<Article> articles = List<Article>.from(
           data['results'].map((article) => Article.fromNYTJson(article)));
@@ -70,9 +55,6 @@ class GermanNews implements NewsAPI {
   String _apiKey = 'bb57d567ccbd4e32b33a379b0888d731';
 
   @override
-  List<Article> _currentArticles = [];
-
-  @override
   String baseUrl = 'https://newsapi.org/v2/everything?q=germany&apiKey=';
 
   @override
@@ -80,8 +62,6 @@ class GermanNews implements NewsAPI {
     String advancedUrl = baseUrl + _apiKey;
     final response = await http.get(Uri.parse(advancedUrl));
     if (response.statusCode == 200) {
-      //final List<dynamic> articlesJson = jsonDecode(response.body)['results'];
-      //return articlesJson.map((articleJson) => Article.fromJson(articleJson)).toList();
       final Map<String, dynamic> data = json.decode(utf8.decode(response.body.codeUnits));
       final List<Article> articles = List<Article>.from(
           data['articles'].map((article) => Article.fromGermanJson(article)));
@@ -99,9 +79,6 @@ class FinanceNews implements NewsAPI {
   String _apiKey = 'n5Fa6vCC2s4X0NZI76FtDXf7boMpCrDDRTy2iM8u';
 
   @override
-  List<Article> _currentArticles = [];
-
-  @override
   String baseUrl = 'https://api.marketaux.com/v1/news/all?filter_entities=true&language=en&api_token=';
 
   @override
@@ -109,8 +86,6 @@ class FinanceNews implements NewsAPI {
     String advancedUrl = baseUrl + _apiKey;
     final response = await http.get(Uri.parse(advancedUrl));
     if (response.statusCode == 200) {
-      //final List<dynamic> articlesJson = jsonDecode(response.body)['results'];
-      //return articlesJson.map((articleJson) => Article.fromJson(articleJson)).toList();
       final Map<String, dynamic> data = json.decode(utf8.decode(response.body.codeUnits));
       final List<Article> articles = List<Article>.from(
           data['data'].map((article) => Article.fromGermanJson(article)));
@@ -119,7 +94,6 @@ class FinanceNews implements NewsAPI {
     } else {
       throw Exception('Failed to load articles');
     }
-    //return returnList;
 
   }
 }
@@ -129,9 +103,6 @@ class TechNews implements NewsAPI {
   String _apiKey = 'bb57d567ccbd4e32b33a379b0888d731';
 
   @override
-  List<Article> _currentArticles = [];
-
-  @override
   String baseUrl = 'https://newsapi.org/v2/top-headlines?country=us&category=technology&apiKey=';
 
   @override
@@ -139,8 +110,6 @@ class TechNews implements NewsAPI {
     String advancedUrl = baseUrl + _apiKey;
     final response = await http.get(Uri.parse(advancedUrl));
     if (response.statusCode == 200) {
-      //final List<dynamic> articlesJson = jsonDecode(response.body)['results'];
-      //return articlesJson.map((articleJson) => Article.fromJson(articleJson)).toList();
       final Map<String, dynamic> data = json.decode(utf8.decode(response.body.codeUnits));
       final List<Article> articles = List<Article>.from(
           data['articles'].map((article) => Article.fromGermanJson(article)));
@@ -148,7 +117,6 @@ class TechNews implements NewsAPI {
     } else {
       throw Exception('Failed to load articles');
     }
-    //return returnList;
   }
 
 

@@ -95,8 +95,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 });
               },
               tabs: [
-                GButton(icon: Icons.chat, text: "Chat"),
-                GButton(icon: Icons.settings, text: "Settings"),
+                GButton(icon: Icons.chat, text: 'Chat'),
+                GButton(icon: Icons.settings, text: 'Settings'),
               ],
             ),
           ),

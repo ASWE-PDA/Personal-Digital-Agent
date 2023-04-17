@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:luna/Services/Alarm/alarm_service.dart';
+import 'package:luna/Services/Calendar/calendar_service.dart';
 import 'package:luna/Services/location_service.dart';
 import 'package:luna/Services/maps_service.dart';
 import 'package:luna/Services/SmartHome/smart_home_service.dart';
@@ -162,6 +163,19 @@ class _ChatPageState extends State<ChatPage> {
                     print("Duration: ${routeDetails['durationAsText']}");
                   },
                   child: Text("Get Maps Info DEBUG")),
+              ElevatedButton(
+                  onPressed: () async {
+                    final calendarEntries = await getUpcomingEvents();
+                    for (var i = 0; i < calendarEntries.length; i++) {
+                      print("EventID: ${calendarEntries[i].eventId}");
+                      print("start: ${calendarEntries[i].start}");
+                      print("descr: ${calendarEntries[i].description}");
+                      print("loc: ${calendarEntries[i].location}");
+                      print("title: ${calendarEntries[i].title}");
+                    }
+                    
+                  },
+                  child: Text("Calendar DEBUG")),
               Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: AvatarGlow(

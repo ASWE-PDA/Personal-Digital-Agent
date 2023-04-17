@@ -103,7 +103,7 @@ class SchedulingUseCase implements UseCase {
       flutterTts.speak("You have no events planned today.");
     }
     else if (events.length == 1) {
-      flutterTts.speak("You have ${events.length} event planned today.");
+      flutterTts.speak("You have ${events.length} event planned this today.");
     }
     else {
       flutterTts.speak("You have ${events.length} events planned today.");
@@ -111,7 +111,7 @@ class SchedulingUseCase implements UseCase {
     
     for (var i = 0; i < events.length; i++) {
       flutterTts.speak(
-        "From ${getTimeFromHoursMinutes(events[i].start!.hour, events[i].start!.minute)} till ${getTimeFromHoursMinutes(events[i].end!.hour, events[i].end!.minute)}.");
+        "The event ${events[i].title} takes place from ${getTimeFromHoursMinutes(events[i].start!.hour, events[i].start!.minute)} till ${getTimeFromHoursMinutes(events[i].end!.hour, events[i].end!.minute)}.");
       if (events[i].description != null) {
         flutterTts.speak("The event has following description: ${events[i].description}");
       }

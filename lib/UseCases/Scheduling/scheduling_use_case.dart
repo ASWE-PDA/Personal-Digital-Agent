@@ -69,7 +69,7 @@ class SchedulingUseCase implements UseCase {
       flutterTts.speak("You have no events planned today.");
     }
     else if (events.length == 1) {
-      flutterTts.speak("You have ${events.length} event planned this today.");
+      flutterTts.speak("You have ${events.length} event planned today.");
     }
     else {
       flutterTts.speak("You have ${events.length} events planned today.");
@@ -143,9 +143,15 @@ class SchedulingUseCase implements UseCase {
       flutterTts.speak(movie["title"]);
     }
     flutterTts.speak("Which Movie would you like to watch tonight");
-    await Future.delayed(Duration(seconds: 15));
+    await Future.delayed(Duration(seconds: 20));
+    print("----------------------------------------");
+    print("----------------------------------------");
+    print("----------------------------------------");
+    print("----------------------------------------");
+    print("----------------------------------------");
+    print("start talking");
     String watchMovie = await listenForSpeech(Duration(seconds: 3));
-    await Future.delayed(Duration(seconds: 3));
+    await Future.delayed(Duration(seconds: 7));
     print(watchMovie);
     for (var i = 0; i < 5; i++) {
       final movieTitle = movies[i]["title"];

@@ -1,22 +1,22 @@
-import 'package:avatar_glow/avatar_glow.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_tts/flutter_tts.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:luna/Screens/newsScreen.dart';
-import 'package:luna/Services/Alarm/alarm_service.dart';
-import 'package:luna/Services/location_service.dart';
-import 'package:luna/Services/maps_service.dart';
-import 'package:luna/Services/SmartHome/smart_home_service.dart';
-import 'package:luna/Services/SmartHome/bridge_model.dart';
-import 'package:luna/Services/notification_service.dart';
-import 'package:luna/UseCases/Scheduling/scheduling_use_case.dart';
-import 'package:luna/UseCases/good_night_use_case.dart';
-import 'package:luna/UseCases/news/news_use_case.dart';
-import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:speech_to_text/speech_recognition_result.dart';
-import 'package:speech_to_text/speech_to_text.dart';
-import 'package:luna/StateMachine/state_machine.dart';
+import "package:avatar_glow/avatar_glow.dart";
+import "package:flutter/material.dart";
+import "package:flutter_tts/flutter_tts.dart";
+import "package:geolocator/geolocator.dart";
+import "package:luna/Screens/newsScreen.dart";
+import "package:luna/Services/Alarm/alarm_service.dart";
+import "package:luna/Services/location_service.dart";
+import "package:luna/Services/maps_service.dart";
+import "package:luna/Services/SmartHome/smart_home_service.dart";
+import "package:luna/Services/SmartHome/bridge_model.dart";
+import "package:luna/Services/notification_service.dart";
+import "package:luna/UseCases/Scheduling/scheduling_use_case.dart";
+import "package:luna/UseCases/good_night_use_case.dart";
+import "package:luna/UseCases/news/news_use_case.dart";
+import "package:provider/provider.dart";
+import "package:shared_preferences/shared_preferences.dart";
+import "package:speech_to_text/speech_recognition_result.dart";
+import "package:speech_to_text/speech_to_text.dart";
+import "package:luna/StateMachine/state_machine.dart";
 
 class ChatPage extends StatefulWidget {
   @override

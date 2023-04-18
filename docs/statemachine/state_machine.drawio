@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="THrW0C8VkhBf7ImCPsbz" name="Page-1">
-        <mxGraphModel dx="693" dy="541" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+        <mxGraphModel dx="844" dy="552" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -25,7 +25,7 @@
                 <mxCell id="8" value="Good night" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;" parent="1" vertex="1">
                     <mxGeometry x="701" y="370" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="11" value="User key words &quot;good morning&quot;, ...&#10;or good morning check returns true" style="endArrow=classic;html=1;entryX=0.25;entryY=0;entryDx=0;entryDy=0;" parent="1" target="5" edge="1">
+                <mxCell id="11" value="User says good morning key words&lt;br&gt;or good morning notification is triggered" style="endArrow=classic;html=1;entryX=0.25;entryY=0;entryDx=0;entryDy=0;" parent="1" target="5" edge="1">
                     <mxGeometry x="0.002" width="50" height="50" relative="1" as="geometry">
                         <mxPoint x="340" y="150" as="sourcePoint"/>
                         <mxPoint x="441" y="100" as="targetPoint"/>
@@ -46,7 +46,7 @@
                         </Array>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="13" value="User key words &quot;event&quot;, &quot;planning&quot;, &#10;&quot;calendar&quot;, ...&#10;or event planning check returns true" style="endArrow=classic;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" target="6" edge="1">
+                <mxCell id="13" value="User says event planning key words&amp;nbsp;&lt;br&gt;or event planning notification is triggered" style="endArrow=classic;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" target="6" edge="1">
                     <mxGeometry x="0.5137" width="50" height="50" relative="1" as="geometry">
                         <mxPoint x="370" y="150" as="sourcePoint"/>
                         <mxPoint x="311" y="340" as="targetPoint"/>
@@ -68,7 +68,7 @@
                         <mxPoint as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="15" value="User key words &quot;news&quot;, ...&#10;or news check returns true" style="endArrow=classic;html=1;entryX=0.6;entryY=0.008;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.652;exitY=1.008;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="3" target="7" edge="1">
+                <mxCell id="15" value="User says news key words&lt;br&gt;or news notification is triggered" style="endArrow=classic;html=1;entryX=0.6;entryY=0.008;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.652;exitY=1.008;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="3" target="7" edge="1">
                     <mxGeometry x="0.3794" width="50" height="50" relative="1" as="geometry">
                         <mxPoint x="412" y="150" as="sourcePoint"/>
                         <mxPoint x="591" y="280" as="targetPoint"/>
@@ -90,7 +90,7 @@
                         <mxPoint as="offset"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="17" value="&lt;div&gt;User key words &quot;good night&quot;, &quot;lights&quot;, &quot;playlist&quot;, ...&lt;/div&gt;&lt;div&gt;or good night check returns true&lt;/div&gt;" style="endArrow=classic;html=1;entryX=0.629;entryY=0.008;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" target="8" edge="1">
+                <mxCell id="17" value="User says good night key words&lt;br&gt;or good night notification is triggered" style="endArrow=classic;html=1;entryX=0.629;entryY=0.008;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" target="8" edge="1">
                     <mxGeometry x="-0.1374" width="50" height="50" relative="1" as="geometry">
                         <mxPoint x="440" y="150" as="sourcePoint"/>
                         <mxPoint x="501" y="250" as="targetPoint"/>

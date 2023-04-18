@@ -8,7 +8,7 @@ import 'package:flutter_tts/flutter_tts.dart';
 import 'package:luna/Services/notification_service.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../Screens/newsScreen.dart';
+import '../../Screens/news_screen.dart';
 import 'article.dart';
 import 'news_api.dart';
 import 'package:luna/Services/navigation_service.dart';

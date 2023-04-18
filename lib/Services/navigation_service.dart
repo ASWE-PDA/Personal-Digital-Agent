@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:luna/Screens/newsScreen.dart';
+import 'package:luna/Screens/news_screen.dart';
 
 class NavigationService {
   static final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();

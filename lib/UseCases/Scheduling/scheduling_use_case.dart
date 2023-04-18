@@ -79,10 +79,10 @@ class SchedulingUseCase implements UseCase {
     for (var i = 0; i < events.length; i++) {
       output += "The event ${events[i].title} takes place from ${getTimeFromHoursMinutes(events[i].start!.hour, events[i].start!.minute)} till ${getTimeFromHoursMinutes(events[i].end!.hour, events[i].end!.minute)}.";
       if (events[i].description != null) {
-        output += "The event has following description: ${events[i].description}. ";
+        output += "It following description: ${events[i].description}. ";
       }
       if (events[i].location != null) {
-        output += "The event takes place in the location ${events[i].location}: ";
+        output += "The location of the event is: ${events[i].location}: ";
         final travelDuration = await getTravelDuration(events[i].location!);
         output += "You will need an estimated time of $travelDuration. ";
       }
@@ -137,23 +137,32 @@ class SchedulingUseCase implements UseCase {
 
   void listMovies() async{
     final movies = await getPopularMovies();
-    flutterTts.speak("The 5 most popular movies from the movie database are:");
+    String output = "The 5 most popular movies from the movie database are: ";
     
     for (var i = 0; i < 5; i++) {
       final movie = movies[i];
-      flutterTts.speak(movie["title"]);
+      output += "${movie["title"]}, ";
     }
 
-    flutterTts.speak("Would you like to watch on of those Movies today?");
-    await Future.delayed(Duration(seconds: 16));
+    output += ". Would you like to watch on of those Movies today? ";
+    flutterTts.speak(output);
+    flutterTts.setCompletionHandler(() {
+      print("=======================================\n\n\COMPLETION HANDLER DONE\n\n\n====================================");
+    });
+
+    print("=======================================\n\n\nDONETALKING NOW LISTENING\n\n\n====================================");
     String watchMovie = await listenForSpeech(Duration(seconds: 3));
     if (!watchMovie.toLowerCase().contains("yes")) {
       return;
     }
 
     flutterTts.speak("Which Movie would you like to watch tonight");
+    flutterTts.setCompletionHandler(() {
+      print("=======================================\n\n\COMPLETION HANDLER DONE\n\n\n====================================");
+    });
+
+    print("=======================================\n\n\nDONETALKING NOW LISTENING\n\n\n====================================");
     String movieToWatch = await listenForSpeech(Duration(seconds: 3));
-    await Future.delayed(Duration(seconds: 7));
     
     for (var i = 0; i < 5; i++) {
       final movieTitle = movies[i]["title"];
@@ -167,7 +176,12 @@ class SchedulingUseCase implements UseCase {
                               movieTitle, 
                               await getMovieLength(movies[i]["id"])
                               );
-          flutterTts.speak("I created an Event for this evening");
+          flutterTts.speak("I created an Event for this evening for the movie $movieTitle.");
+          flutterTts.setCompletionHandler(() {
+            print("=======================================\n\n\COMPLETION HANDLER DONE\n\n\n====================================");
+          });
+
+          print("=======================================\n\n\nDONETALKING NOW LISTENING\n\n\n====================================");
           return;
         }
       }  

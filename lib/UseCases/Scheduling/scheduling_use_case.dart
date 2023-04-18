@@ -142,5 +142,7 @@ class SchedulingUseCase implements UseCase {
       final movie = movies[i];
       flutterTts.speak(movie["title"]);
     }
+    
+    createCalendarEvent(DateTime.now(), movies[0]["title"], await getMovieLength(movies[0]["id"]));
   }
 }

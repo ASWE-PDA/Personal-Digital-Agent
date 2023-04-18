@@ -7,13 +7,19 @@ Future<List<Event>> getUpcomingEvents() async {
   if (calendarPlugin == null) return [];
   
   final calendarListResult = await calendarPlugin.retrieveCalendars();
-  final calendarId = calendarListResult.data?.isNotEmpty ?? false ? calendarListResult.data?.first.id : null;
-
+  String? calendarId;
+  for (var calendar in calendarListResult.data!) {
+    final defaultCalendar = calendar.isDefault!;
+    if (defaultCalendar) {
+      calendarId = calendar.id!;
+    }
+  }
+  
   if (calendarId != null) {
     final now = DateTime.now();
     final start = DateTime(now.year, now.month, now.day).toUtc();
     final end = DateTime(now.year, now.month, now.day + 3).toUtc();
-
+    
     final eventsResult = await calendarPlugin.retrieveEvents(
         calendarId, RetrieveEventsParams(startDate: start, endDate: end));
     return eventsResult.data ?? [];
@@ -26,13 +32,14 @@ Future<void> createCalendarEvent(DateTime date, String name, int durationInMin) 
   // Get the default calendar
   final calendarPlugin = await requestCalendarPermissions();
   if (calendarPlugin == null) return;
-
+  
   final calendarListResult = await calendarPlugin.retrieveCalendars();
-  final calendarId = calendarListResult.data?.isNotEmpty ?? false ? calendarListResult.data?.first.id : null;
-
-  if (calendarId == null) {
-    print("Unable to find default calendar");
-    return;
+  String? calendarId;
+  for (var calendar in calendarListResult.data!) {
+    final defaultCalendar = calendar.isDefault!;
+    if (defaultCalendar) {
+      calendarId = calendar.id!;
+    }
   }
 
   // Create the event

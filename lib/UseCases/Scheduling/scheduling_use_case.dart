@@ -39,7 +39,7 @@ class SchedulingUseCase implements UseCase {
       listUpcomingEvents();
       return;
     } else if (movieTriggerWords.any((element) => trigger.contains(element))) {
-      print("triggered maps case");
+      print("triggered movie case");
       listMovies();
       return;
     }

@@ -1,3 +1,4 @@
+import "package:luna/UseCases/Scheduling/scheduling_use_case.dart";
 import "package:statemachine/statemachine.dart";
 import "../UseCases/good_night_use_case.dart";
 import "../UseCases/use_case.dart";
@@ -54,6 +55,11 @@ class StateMachine {
     _goodNightUseCase = instance;
   }
 
+  static UseCase _eventPlanningUseCase = SchedulingUseCase.instance;
+  set eventPlanningUseCase(UseCase instance) {
+    _eventPlanningUseCase = instance;
+  }
+
   /// leave current state and transition to [idleState]
   void transitionToIdle() {
     print("transitioning to idle state");
@@ -71,6 +77,7 @@ class StateMachine {
   void transitionToEventPlanning(String trigger) {
     print("transitioning to event planning state");
     eventPlanningState.enter();
+    _eventPlanningUseCase.execute(trigger);
     // TODO link to event planning state main and transition back to idle afterwards
   }
 

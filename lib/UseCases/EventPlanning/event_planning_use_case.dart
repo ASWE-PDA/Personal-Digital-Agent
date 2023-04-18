@@ -5,22 +5,22 @@ import "package:luna/Services/Calendar/calendar_service.dart";
 import "package:luna/Services/Movies/movie_service.dart";
 import "package:luna/Services/maps_service.dart";
 import "package:luna/UseCases/use_case.dart";
-import "../../Services/location_service.dart";
+import '../../Services/location_service.dart';
 
 @pragma("vm:entry-point")
 void onNotificationTap(NotificationResponse response) {
   print("notificationTap");
 }
 
-class SchedulingUseCase extends UseCase {
+class EventPlanningUseCase extends UseCase {
   /// Singleton instance of [GoodNightUseCase].
-  static final instance = SchedulingUseCase._();
+  static final instance = EventPlanningUseCase._();
 
-  SchedulingUseCase._() {
+  EventPlanningUseCase._() {
     flutterTts.setLanguage("en-US");
   }
 
-  SchedulingUseCase() {
+  EventPlanningUseCase() {
     flutterTts.setLanguage("en-US");
   }
 

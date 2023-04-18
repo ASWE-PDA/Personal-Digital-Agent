@@ -1,4 +1,4 @@
-import "package:luna/UseCases/Scheduling/scheduling_use_case.dart";
+import 'package:luna/UseCases/EventPlanning/event_planning_use_case.dart';
 import "package:statemachine/statemachine.dart";
 import "../UseCases/good_night_use_case.dart";
 import "../UseCases/use_case.dart";
@@ -47,7 +47,6 @@ class StateMachine {
       machine.newState("good_night"); // state for good night use case
   
   //static UseCase goodMorningUseCase = TODO link good morning use case;
-  //static UseCase eventPlanningUseCase = TODO link event planning use case;
   //static UseCase newsUseCase = TODO link news use case;
   static UseCase _goodNightUseCase = GoodNightUseCase.instance;
 
@@ -55,7 +54,7 @@ class StateMachine {
     _goodNightUseCase = instance;
   }
 
-  static UseCase _eventPlanningUseCase = SchedulingUseCase.instance;
+  static UseCase _eventPlanningUseCase = EventPlanningUseCase.instance;
   set eventPlanningUseCase(UseCase instance) {
     _eventPlanningUseCase = instance;
   }

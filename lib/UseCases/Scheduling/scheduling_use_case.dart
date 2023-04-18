@@ -75,19 +75,20 @@ class SchedulingUseCase implements UseCase {
       flutterTts.speak("You have ${events.length} events planned today.");
     }
     
+    String output = "";
     for (var i = 0; i < events.length; i++) {
-      flutterTts.speak(
-        "The event ${events[i].title} takes place from ${getTimeFromHoursMinutes(events[i].start!.hour, events[i].start!.minute)} till ${getTimeFromHoursMinutes(events[i].end!.hour, events[i].end!.minute)}.");
+      output += "The event ${events[i].title} takes place from ${getTimeFromHoursMinutes(events[i].start!.hour, events[i].start!.minute)} till ${getTimeFromHoursMinutes(events[i].end!.hour, events[i].end!.minute)}.";
       if (events[i].description != null) {
-        flutterTts.speak("The event has following description: ${events[i].description}");
+        output += "The event has following description: ${events[i].description}. ";
       }
       if (events[i].location != null) {
-        flutterTts.speak("The event takes place in the location ${events[i].location}");
+        output += "The event takes place in the location ${events[i].location}: ";
         final travelDuration = await getTravelDuration(events[i].location!);
-        flutterTts.speak("You will need an estimated time of $travelDuration");
-        
+        output += "You will need an estimated time of $travelDuration. ";
       }
     }
+
+    flutterTts.speak(output);
   }
 
   Future<String> getTravelDuration(String destination) async {

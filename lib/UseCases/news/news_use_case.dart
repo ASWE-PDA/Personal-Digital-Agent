@@ -7,9 +7,10 @@ import 'package:flutter_tts/flutter_tts.dart';
 import 'package:luna/Services/notification_service.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../Screens/newsScreen.dart';
 import 'news_model.dart';
 import 'news_api.dart';
-import 'package:luna/chat.dart';
+import 'package:luna/Services/navigation_service.dart';
 
 /// Use case for the News feature.
 class NewsUseCase extends ChangeNotifier implements UseCase {
@@ -67,6 +68,7 @@ class NewsUseCase extends ChangeNotifier implements UseCase {
     if (NewsTriggerWords.any((element) => trigger.contains(element))) {
       print("triggered news use case");
       await newsRoutine();
+      NavigationService.pushNewsScreen();
       return;
     }
 
@@ -162,7 +164,6 @@ class NewsUseCase extends ChangeNotifier implements UseCase {
       print(elem.title);
     }
 
-    //ChatPage.chatPageKey.currentState?.pushNewsScreen();
   }
 
   List<Article> sortArticleAlgorithm(List<Article> allArticles) {

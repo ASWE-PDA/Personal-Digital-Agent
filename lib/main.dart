@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:luna/Services/SmartHome/bridge_model.dart';
+import 'package:luna/Services/navigation_service.dart';
 import 'package:luna/Themes/main_theme.dart';
 import 'package:luna/Themes/theme_model.dart';
 import 'package:luna/UseCases/good_night_model.dart';
 import 'package:provider/provider.dart';
 import 'package:alarm/alarm.dart';
-
 import 'settings.dart';
 import 'chat.dart';
 
@@ -37,6 +37,7 @@ class MyApp extends StatelessWidget {
             themeMode: themeNotifier.currentTheme(),
             theme: MyThemes.lightTheme,
             home: MyHomePage(),
+            navigatorKey: NavigationService.navigatorKey,
           );
         }));
   }

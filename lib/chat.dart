@@ -8,6 +8,7 @@ import 'package:luna/Services/location_service.dart';
 import 'package:luna/Services/maps_service.dart';
 import 'package:luna/Services/SmartHome/smart_home_service.dart';
 import 'package:luna/Services/SmartHome/bridge_model.dart';
+import 'package:luna/Services/navigation_service.dart';
 import 'package:luna/Services/notification_service.dart';
 import 'package:luna/UseCases/Scheduling/scheduling_use_case.dart';
 import 'package:luna/UseCases/good_night_use_case.dart';
@@ -105,13 +106,6 @@ class _ChatPageState extends State<ChatPage> {
     _getCurrentLocation();
   }
 
-  void pushNewsScreen() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => MyNewsCardsWidget()),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     loadPreferences();
@@ -181,7 +175,7 @@ class _ChatPageState extends State<ChatPage> {
               ElevatedButton(
                   onPressed: () async {
                     NewsUseCase.instance.execute("news");
-                    pushNewsScreen();
+                    NavigationService.pushNewsScreen();
                   },
                   child: Text("Test News Use Case DEBUG")),
               ElevatedButton(

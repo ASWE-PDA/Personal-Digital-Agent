@@ -9,7 +9,7 @@ import "package:luna/Services/maps_service.dart";
 import "package:luna/Services/SmartHome/smart_home_service.dart";
 import "package:luna/Services/SmartHome/bridge_model.dart";
 import "package:luna/Services/notification_service.dart";
-import "package:luna/UseCases/Scheduling/scheduling_use_case.dart";
+import 'package:luna/UseCases/EventPlanning/event_planning_use_case.dart';
 import "package:luna/UseCases/good_night_use_case.dart";
 import "package:luna/UseCases/news/news_use_case.dart";
 import "package:provider/provider.dart";
@@ -178,7 +178,7 @@ class _ChatPageState extends State<ChatPage> {
                   child: Text("Test News Use Case DEBUG")),
               ElevatedButton(
                   onPressed: () async {
-                    SchedulingUseCase.instance.execute("movie");
+                    EventPlanningUseCase.instance.execute("movie");
                   },
                   child: Text("Test Move Service DEBUG")),
               Padding(

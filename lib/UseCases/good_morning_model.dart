@@ -1,6 +1,4 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:luna/UseCases/good_morning_preferences.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -24,9 +22,9 @@ class GoodMorningModel extends ChangeNotifier {
   Future<TimeOfDay> get wakeUpTime async => await getWakeUpTime();
   Future<TimeOfDay> get preferredArrivalTime async =>
       await getPreferredArrivalTime();
-  Future<String> get workAddress async => await getWorkAddress();
-  Future<String> get transportMode async => await getTransportMode();
-  Future<bool> get latestDeparture async => await getLatestDeparture();
+  Future<String?> get workAddress async => await getWorkAddress();
+  Future<String?> get transportMode async => await getTransportMode();
+  Future<bool?> get latestDeparture async => await getLatestDeparture();
 
   /// Constructor of the [GoodMorningModel] class.
   GoodMorningModel(
@@ -78,16 +76,16 @@ class GoodMorningModel extends ChangeNotifier {
     return await goodMorningPreferences.getPreferredArrivalTime();
   }
 
-  Future<String> getWorkAddress() async {
-    return await goodMorningPreferences.getWorkAddress() ?? "California";
+  Future<String?> getWorkAddress() async {
+    return await goodMorningPreferences.getWorkAddress();
   }
 
-  Future<String> getTransportMode() async {
-    return await goodMorningPreferences.getTransportMode() ?? "Driving";
+  Future<String?> getTransportMode() async {
+    return await goodMorningPreferences.getTransportMode();
   }
 
-  Future<bool> getLatestDeparture() async {
-    return await goodMorningPreferences.getLatestDeparture() ?? true;
+  Future<bool?> getLatestDeparture() async {
+    return await goodMorningPreferences.getLatestDeparture();
   }
 
   /// Updates the [value] of the wake-up time.

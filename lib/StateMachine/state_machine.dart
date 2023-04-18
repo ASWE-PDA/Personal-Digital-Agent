@@ -1,3 +1,4 @@
+import 'package:luna/UseCases/good_morning_use_case.dart';
 import 'package:statemachine/statemachine.dart';
 import '../UseCases/good_night_use_case.dart';
 import '../UseCases/use_case.dart';
@@ -58,13 +59,15 @@ class StateMachine {
   static final newsState = machine.newState('news'); // state for news use case
   static final goodNightState =
       machine.newState('good_night'); // state for good night use case
-  
+
   //static UseCase goodMorningUseCase;
   //static UseCase eventPlanningUseCase;
   //static UseCase newsUseCase;
+  static UseCase _goodMorningUseCase = GoodMorningUseCase.instance;
   static UseCase _goodNightUseCase = GoodNightUseCase.instance;
 
-  set goodNightUseCase(UseCase instance){
+  set goodNightUseCase(UseCase instance) {
+    _goodMorningUseCase = instance;
     _goodNightUseCase = instance;
   }
 
@@ -78,7 +81,8 @@ class StateMachine {
     // leave current state and transition to good morning state
     print("transitioning to good morning state");
     goodMorningState.enter();
-    // TODO link to good morning state main and transition back to idle afterwards
+    _goodMorningUseCase.execute(trigger);
+    transitionToIdle();
   }
 
   void transitionToEventPlanning(String trigger) {
@@ -114,25 +118,25 @@ class StateMachine {
     // someState.onStream(element.onClick, (value) => anotherState.enter());
     // idleState.onStream(value.activate, (value) => transitionToGoodNight());
     print("entered idle state");
-      int state = useCaseCheck.activate;
-      if (state > 0) {
-        switch (state) {
-          case 1:
-            transitionToGoodMorning(useCaseCheck.triggerWord);
-            break;
-          case 2:
-            transitionToEventPlanning(useCaseCheck.triggerWord);
-            break;
-          case 3:
-            transitionToNews(useCaseCheck.triggerWord);
-            break;
-          case 4:
-            transitionToGoodNight(useCaseCheck.triggerWord);
-            break;
-          default:
-            print("error: invalid state");
-        }
+    int state = useCaseCheck.activate;
+    if (state > 0) {
+      switch (state) {
+        case 1:
+          transitionToGoodMorning(useCaseCheck.triggerWord);
+          break;
+        case 2:
+          transitionToEventPlanning(useCaseCheck.triggerWord);
+          break;
+        case 3:
+          transitionToNews(useCaseCheck.triggerWord);
+          break;
+        case 4:
+          transitionToGoodNight(useCaseCheck.triggerWord);
+          break;
+        default:
+          print("error: invalid state");
       }
+    }
   }
 
   void start() {

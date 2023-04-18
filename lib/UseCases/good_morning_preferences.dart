@@ -65,7 +65,7 @@ class GoodMorningPreferences {
   /// Loads the work address value.
   getWorkAddress() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    return sharedPreferences.getString(workAddressKey);
+    return sharedPreferences.getString(workAddressKey) ?? "";
   }
 
   /// Loads the preferred transport mode.

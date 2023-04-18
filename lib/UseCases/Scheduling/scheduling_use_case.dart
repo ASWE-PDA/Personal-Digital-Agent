@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:luna/Services/Calendar/calendar_service.dart';
@@ -142,9 +144,34 @@ class SchedulingUseCase implements UseCase {
       final movie = movies[i];
       flutterTts.speak(movie["title"]);
     }
-    flutterTts.speak("Do you want to watch any of those movies tonight?");
-    String result = await listenForSpeech(Duration(seconds: 5));
-    //createCalendarEvent(DateTime.now(), movies[0]["title"], await getMovieLength(movies[0]["id"]));
+    flutterTts.speak("Which Movie would you like to watch tonight");
+    await Future.delayed(Duration(seconds: 15));
+    String watchMovie = await listenForSpeech(Duration(seconds: 3));
+    await Future.delayed(Duration(seconds: 3));
+    print(watchMovie);
+    for (var i = 0; i < 5; i++) {
+      final movieTitle = movies[i]["title"];
+      List<String> watchMovieeSubstring = watchMovie.split(" ");
+      for (var substring in watchMovieeSubstring) {
+        print(substring);
+        print(movieTitle);
+        if (movieTitle.toLowerCase().contains(substring.toLowerCase())) {
+          print("true");
+          print("stop wait");
+          createCalendarEvent(DateTime.now(), 
+                              movieTitle, 
+                              await getMovieLength(movies[i]["id"])
+                              );
+          flutterTts.speak("I created an Event for this evening");
+          return;
+        }  
+        else {
+          print("false");
+        }
+      }
+      
+    }
+    return;
   }
 
 
@@ -159,25 +186,30 @@ class SchedulingUseCase implements UseCase {
       return "";
     }
 
+    // Create a completer to create a future that completes with the recognized text
+    Completer<String> completer = Completer<String>();
+
     // Start listening for speech for the specified duration
-    bool isListening = await speechToText.listen(
+    Timer timer = Timer(duration, () {
+      speechToText.stop();
+    });
+    speechToText.listen(
       onResult: (result) {
         print("Speech recognition result: ${result.recognizedWords}");
+        completer.complete(result.recognizedWords);
       },
       listenFor: duration,
     );
 
-    // If speech was recognized, return it as a string
-    if (isListening) {
-      await speechToText.stop();
-      String result = speechToText.lastRecognizedWords;
-      print(result);
-      return result;
+    // Wait for the future to complete and return the recognized text
+    try {
+      String recognizedText = await completer.future;
+      return recognizedText;
+    } catch (e) {
+      print("Error: $e");
+      return "";
+    } finally {
+      timer.cancel();
     }
-
-    // If no speech was recognized, return an empty string
-    print("nothing");
-    return "";
   }
-
 }

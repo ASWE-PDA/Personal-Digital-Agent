@@ -3,14 +3,15 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i8;
+import 'dart:async' as _i9;
 
 import 'package:flutter_tts/flutter_tts.dart' as _i2;
 import 'package:luna/Services/SmartHome/bridge_model.dart' as _i3;
 import 'package:luna/Services/SmartHome/smart_home_service.dart' as _i5;
 import 'package:luna/Services/spotify_service.dart' as _i6;
+import 'package:luna/UseCases/good_morning_model.dart' as _i7;
 import 'package:luna/UseCases/good_night_model.dart' as _i4;
-import 'package:luna/UseCases/good_night_use_case.dart' as _i7;
+import 'package:luna/UseCases/good_night_use_case.dart' as _i8;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -77,10 +78,21 @@ class _FakeSpotifySdkService_4 extends _i1.SmartFake
         );
 }
 
+class _FakeGoodMorningModel_5 extends _i1.SmartFake
+    implements _i7.GoodMorningModel {
+  _FakeGoodMorningModel_5(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
 /// A class which mocks [GoodNightUseCase].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockGoodNightUseCase extends _i1.Mock implements _i7.GoodNightUseCase {
+class MockGoodNightUseCase extends _i1.Mock implements _i8.GoodNightUseCase {
   MockGoodNightUseCase() {
     _i1.throwOnMissingStub(this);
   }
@@ -235,6 +247,23 @@ class MockGoodNightUseCase extends _i1.Mock implements _i7.GoodNightUseCase {
         returnValueForMissingStub: null,
       );
   @override
+  _i7.GoodMorningModel get goodMorningModel => (super.noSuchMethod(
+        Invocation.getter(#goodMorningModel),
+        returnValue: _FakeGoodMorningModel_5(
+          this,
+          Invocation.getter(#goodMorningModel),
+        ),
+      ) as _i7.GoodMorningModel);
+  @override
+  set goodMorningModel(_i7.GoodMorningModel? _goodMorningModel) =>
+      super.noSuchMethod(
+        Invocation.setter(
+          #goodMorningModel,
+          _goodMorningModel,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
   String get lastWords => (super.noSuchMethod(
         Invocation.getter(#lastWords),
         returnValue: '',
@@ -274,14 +303,14 @@ class MockGoodNightUseCase extends _i1.Mock implements _i7.GoodNightUseCase {
         returnValueForMissingStub: null,
       );
   @override
-  _i8.Future<void> loadPreferences() => (super.noSuchMethod(
+  _i9.Future<void> loadPreferences() => (super.noSuchMethod(
         Invocation.method(
           #loadPreferences,
           [],
         ),
-        returnValue: _i8.Future<void>.value(),
-        returnValueForMissingStub: _i8.Future<void>.value(),
-      ) as _i8.Future<void>);
+        returnValue: _i9.Future<void>.value(),
+        returnValueForMissingStub: _i9.Future<void>.value(),
+      ) as _i9.Future<void>);
   @override
   void execute(String? trigger) => super.noSuchMethod(
         Invocation.method(
@@ -291,7 +320,7 @@ class MockGoodNightUseCase extends _i1.Mock implements _i7.GoodNightUseCase {
         returnValueForMissingStub: null,
       );
   @override
-  _i8.Future<void> schedule(
+  _i9.Future<void> schedule(
     int? hours,
     int? minutes,
   ) =>
@@ -303,17 +332,17 @@ class MockGoodNightUseCase extends _i1.Mock implements _i7.GoodNightUseCase {
             minutes,
           ],
         ),
-        returnValue: _i8.Future<void>.value(),
-        returnValueForMissingStub: _i8.Future<void>.value(),
-      ) as _i8.Future<void>);
+        returnValue: _i9.Future<void>.value(),
+        returnValueForMissingStub: _i9.Future<void>.value(),
+      ) as _i9.Future<void>);
   @override
-  _i8.Future<bool> checkTrigger() => (super.noSuchMethod(
+  _i9.Future<bool> checkTrigger() => (super.noSuchMethod(
         Invocation.method(
           #checkTrigger,
           [],
         ),
-        returnValue: _i8.Future<bool>.value(false),
-      ) as _i8.Future<bool>);
+        returnValue: _i9.Future<bool>.value(false),
+      ) as _i9.Future<bool>);
   @override
   List<String> getAllTriggerWords() => (super.noSuchMethod(
         Invocation.method(
@@ -323,52 +352,71 @@ class MockGoodNightUseCase extends _i1.Mock implements _i7.GoodNightUseCase {
         returnValue: <String>[],
       ) as List<String>);
   @override
-  _i8.Future<String> turnOffAllLights() => (super.noSuchMethod(
+  _i9.Future<String> turnOffAllLights() => (super.noSuchMethod(
         Invocation.method(
           #turnOffAllLights,
           [],
         ),
-        returnValue: _i8.Future<String>.value(''),
-      ) as _i8.Future<String>);
+        returnValue: _i9.Future<String>.value(''),
+      ) as _i9.Future<String>);
   @override
-  void askForSleepPlaylist() => super.noSuchMethod(
+  _i9.Future<void> askForSleepPlaylist() => (super.noSuchMethod(
         Invocation.method(
           #askForSleepPlaylist,
           [],
         ),
-        returnValueForMissingStub: null,
-      );
+        returnValue: _i9.Future<void>.value(),
+        returnValueForMissingStub: _i9.Future<void>.value(),
+      ) as _i9.Future<void>);
   @override
-  _i8.Future<void> startSleepPlayList() => (super.noSuchMethod(
+  _i9.Future<void> startSleepPlayList() => (super.noSuchMethod(
         Invocation.method(
           #startSleepPlayList,
           [],
         ),
-        returnValue: _i8.Future<void>.value(),
-        returnValueForMissingStub: _i8.Future<void>.value(),
-      ) as _i8.Future<void>);
+        returnValue: _i9.Future<void>.value(),
+        returnValueForMissingStub: _i9.Future<void>.value(),
+      ) as _i9.Future<void>);
   @override
-  void askForWakeUpTime() => super.noSuchMethod(
+  _i9.Future<void> askForWakeUpTime() => (super.noSuchMethod(
         Invocation.method(
           #askForWakeUpTime,
           [],
         ),
-        returnValueForMissingStub: null,
-      );
+        returnValue: _i9.Future<void>.value(),
+        returnValueForMissingStub: _i9.Future<void>.value(),
+      ) as _i9.Future<void>);
   @override
-  void setAlarm() => super.noSuchMethod(
+  _i9.Future<String> setAlarm() => (super.noSuchMethod(
         Invocation.method(
           #setAlarm,
           [],
         ),
-        returnValueForMissingStub: null,
-      );
+        returnValue: _i9.Future<String>.value(''),
+      ) as _i9.Future<String>);
   @override
-  void executeCompleteUseCase() => super.noSuchMethod(
+  _i9.Future<void> executeCompleteUseCase() => (super.noSuchMethod(
         Invocation.method(
           #executeCompleteUseCase,
           [],
         ),
-        returnValueForMissingStub: null,
-      );
+        returnValue: _i9.Future<void>.value(),
+        returnValueForMissingStub: _i9.Future<void>.value(),
+      ) as _i9.Future<void>);
+  @override
+  bool checkIfAnswerIsYes(String? answer) => (super.noSuchMethod(
+        Invocation.method(
+          #checkIfAnswerIsYes,
+          [answer],
+        ),
+        returnValue: false,
+      ) as bool);
+  @override
+  _i9.Future<String> listenForSpeech(Duration? duration) => (super.noSuchMethod(
+        Invocation.method(
+          #listenForSpeech,
+          [duration],
+        ),
+        returnValue: _i9.Future<String>.value(''),
+      ) as _i9.Future<String>);
 }

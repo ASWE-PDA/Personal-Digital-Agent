@@ -31,13 +31,13 @@ class Article {
   }
 
   factory Article.fromFinancialJson(Map<String, dynamic> json) {
+    String keywordsString = json['keywords'];
+    List<String> keywordsList = keywordsString.split(" ");
     return Article(
-      title: json["title"],
-      summary: json["description"] ?? [],
-      categories: json["keywords"] != null
-          ? List<String>.from(json["keywords"])
-          : [],
-      link: json["url"],
+      title: json['title'],
+      summary: json['description'] ?? [],
+      categories: keywordsList,
+      link: json['url'],
     );
   }
 

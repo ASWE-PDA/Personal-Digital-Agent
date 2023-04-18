@@ -175,7 +175,7 @@ class _ChatPageState extends State<ChatPage> {
               ElevatedButton(
                   onPressed: () async {
                     NewsUseCase.instance.execute("news");
-                    NavigationService.pushNewsScreen();
+                    //NavigationService.pushNewsScreen();
                   },
                   child: Text("Test News Use Case DEBUG")),
               ElevatedButton(

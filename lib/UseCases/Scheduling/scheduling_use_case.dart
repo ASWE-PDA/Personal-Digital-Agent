@@ -198,9 +198,11 @@ class SchedulingUseCase implements UseCase {
       await speechToText.stop();
     });
     speechToText.listen(
-      onResult: (result) {
+      partialResults: false,
+      onResult: (result) async {
         print("Speech recognition result: ${result.recognizedWords}");
         completer.complete(result.recognizedWords);
+        await speechToText.stop();
       },
       listenFor: duration,
     );

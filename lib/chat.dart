@@ -100,7 +100,7 @@ class _ChatPageState extends State<ChatPage> {
   /// Callback that the SpeechToText plugin uses to return the recognized words
   void _onSpeechResult(SpeechRecognitionResult result) {
     setState(() {
-      lastWords = result.recognizedWords;
+      lastWords = result.recognizedWords.toLowerCase();
     });
     _getCurrentLocation();
   }

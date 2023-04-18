@@ -1,3 +1,4 @@
+import 'package:luna/UseCases/good_morning_use_case.dart';
 import 'package:luna/UseCases/good_night_use_case.dart';
 
 /// This class is used to check if a use case is triggered.
@@ -17,29 +18,35 @@ class UseCaseCheck {
   String _triggerWord = "";
   String get triggerWord => _triggerWord;
 
-  static List<String> _goodNightTriggerWords = GoodNightUseCase.instance.getAllTriggerWords();
+  static List<String> _goodMorningTriggerWords =
+      GoodMorningUseCase.instance.getAllTriggerWords();
+  static List<String> _goodNightTriggerWords =
+      GoodNightUseCase.instance.getAllTriggerWords();
+  set goodMorningTriggerWords(List<String> goodMorningTriggerWords) {
+    _goodMorningTriggerWords = goodMorningTriggerWords;
+  }
+
   set goodNightTriggerWords(List<String> goodNightTriggerWords) {
     _goodNightTriggerWords = goodNightTriggerWords;
   }
 
   bool goodMorningCheck(String input) {
-    String trigger = "";
     bool detected = false;
 
-    List<String> goodMorningTriggerWords = [
-      "good morning",
-      "morning",
-      "wake up",
-      "good morning luna"
-    ];
-
-    if (goodMorningTriggerWords.any((element) => input.contains(element))) {
-      trigger = "good morning";
+    if (_goodMorningTriggerWords.any((element) => input.contains(element))) {
+      _triggerWord = input;
       detected = true;
     }
-    _triggerWord = trigger;
+    return detected;
+  }
 
-    // return true if good morning use case is detected
+  bool goodNightCheck(String input) {
+    bool detected = false;
+
+    if (_goodNightTriggerWords.any((element) => input.contains(element))) {
+      _triggerWord = input;
+      detected = true;
+    }
     return detected;
   }
 
@@ -91,25 +98,18 @@ class UseCaseCheck {
     return detected;
   }
 
-  bool goodNightCheck(String input) {
-    bool detected = false;
-
-    if (_goodNightTriggerWords.any((element) => input.contains(element))) {
-      _triggerWord = input;
-      detected = true;
-    }
-    return detected;
-  }
-
   void monitor(String input) {
     print("input: $input");
     if (goodMorningCheck(input)) {
       _activate = 1;
       print("entered goodmorning check");
+      return;
     } else if (eventPlanningCheck(input)) {
       _activate = 2;
+      return;
     } else if (newsCheck(input)) {
       _activate = 3;
+      return;
     } else if (goodNightCheck(input)) {
       _activate = 4;
     } else {

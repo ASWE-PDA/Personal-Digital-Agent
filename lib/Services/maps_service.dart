@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:geolocator/geolocator.dart';
 import 'package:luna/environment.dart';
@@ -11,17 +12,16 @@ class MapsService {
 
   final String _apiKey;
   static const baseUrl =
-      'https://maps.googleapis.com/maps/api/directions/json?';
+      "https://maps.googleapis.com/maps/api/directions/json?";
 
   Future<Map<String, dynamic>> getRouteDetails({
     required Position origin,
     required String destination,
-    String travelMode =
-        'driving', // TODO import from settings. either bicycling, driving, transit or walking
-    DateTime? departureTime,
-    DateTime? arrivalTime,
+    String travelMode = "driving",
+    TimeOfDay? departureTime,
+    TimeOfDay? arrivalTime,
   }) async {
-    const baseUrl = 'https://maps.googleapis.com/maps/api/directions/json?';
+    const baseUrl = "https://maps.googleapis.com/maps/api/directions/json?";
     final url = _buildUrl(
       baseUrl: baseUrl,
       origin: origin,
@@ -34,24 +34,41 @@ class MapsService {
     final response = await http.get(Uri.parse(url));
     final data = json.decode(response.body);
 
-    if (data['status'] != 'OK') {
-      // throw Exception(data['error_message']);
-      print('Error: ${data['status']}');
+    if (data["status"] != "OK") {
+      // throw Exception(data["error_message"]);
+      print("Error: ${data["status"]}");
       return {};
     }
 
     // routes[0] -> legs[0] -> duration -> text: e.g. "1 hour 48 mins"
     // routes[0] -> overview_polyline -> summary: e.g. "B10 and B27"
-    // return data['routes'][0]['legs'][0]['duration']['text'];
+    // return data["routes"][0]["legs"][0]["duration"]["text"];
     final durationAsText = data["routes"][0]["legs"][0]["duration"]["text"];
-    final durationInSeconds = data['routes'][0]['legs'][0]['duration']['value'];
-    final distanceInMeters = data['routes'][0]['legs'][0]['distance']['value'];
+    final durationInSeconds = data["routes"][0]["legs"][0]["duration"]["value"];
+    final distanceInMeters = data["routes"][0]["legs"][0]["distance"]["value"];
 
     return {
-      'durationAsText': durationAsText,
-      'durationInSeconds': durationInSeconds,
-      'distanceInMeters': distanceInMeters,
+      "durationAsText": durationAsText,
+      "durationInSeconds": durationInSeconds,
+      "distanceInMeters": distanceInMeters,
     };
+  }
+
+  // TODO add latest departure mode bool
+  Future<List<Prediction>> getPlacePredictions(String input) async {
+    var response = await http.get(
+        Uri.parse("https://maps.googleapis.com/maps/api/place/autocomplete/json"
+            "?input=$input"
+            "&key=$_apiKey"));
+
+    if (response.statusCode == 200) {
+      var predictions = json.decode(response.body)["predictions"] as List;
+      return predictions
+          .map((prediction) => Prediction.fromJson(prediction))
+          .toList();
+    } else {
+      throw Exception("Failed to load predictions");
+    }
   }
 
   String _buildUrl({
@@ -59,24 +76,49 @@ class MapsService {
     required Position origin,
     required String destination,
     required String travelMode,
-    DateTime? departureTime,
-    DateTime? arrivalTime,
+    TimeOfDay? departureTime,
+    TimeOfDay? arrivalTime,
   }) {
-    final originString = '${origin.latitude},${origin.longitude}';
-    final destinationString = destination.replaceAll(' ', '+');
-    final travelModeString = travelMode.toLowerCase();
-    final timeMode = departureTime != null ? 'departure_time' : 'arrival_time';
+    final originString = "${origin.latitude},${origin.longitude}";
+    final destinationString = destination.replaceAll(" ", "+");
+    final travelModeString = travelMode;
+    final timeMode = departureTime != null ? "departure_time" : "arrival_time";
+
+    // Convert to DateTime objects
+    DateTime now = DateTime.now();
     final time = departureTime != null
-        ? departureTime.toUtc().millisecondsSinceEpoch ~/ 1000
-        : arrivalTime!.toUtc().millisecondsSinceEpoch ~/ 1000;
+        ? DateTime(now.year, now.month, now.day, departureTime.hour,
+                    departureTime.minute)
+                .toUtc()
+                .millisecondsSinceEpoch ~/
+            1000
+        : DateTime(now.year, now.month, now.day, arrivalTime!.hour,
+                    arrivalTime.minute)
+                .toUtc()
+                .millisecondsSinceEpoch ~/
+            1000;
 
     final url = StringBuffer(baseUrl)
-      ..write('origin=$originString')
-      ..write('&destination=$destinationString')
-      ..write('&mode=$travelModeString')
-      ..write('&$timeMode=$time')
-      ..write('&key=$_apiKey');
+      ..write("origin=$originString")
+      ..write("&destination=$destinationString")
+      ..write("&mode=$travelModeString")
+      ..write("&$timeMode=$time")
+      ..write("&key=$_apiKey");
 
     return url.toString();
+  }
+}
+
+class Prediction {
+  final String description;
+  final String placeId;
+
+  Prediction({required this.description, required this.placeId});
+
+  factory Prediction.fromJson(Map<String, dynamic> json) {
+    return Prediction(
+      description: json["description"],
+      placeId: json["place_id"],
+    );
   }
 }

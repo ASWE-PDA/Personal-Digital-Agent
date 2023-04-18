@@ -11,6 +11,8 @@ import 'package:luna/Services/SmartHome/smart_home_service.dart';
 import 'package:luna/Services/SmartHome/bridge_model.dart';
 import 'package:luna/Services/notification_service.dart';
 import 'package:luna/UseCases/Scheduling/scheduling_use_case.dart';
+import 'package:luna/Services/weather_service.dart';
+import 'package:luna/UseCases/good_morning_use_case.dart';
 import 'package:luna/UseCases/good_night_use_case.dart';
 import 'package:luna/UseCases/news/news_use_case.dart';
 import 'package:provider/provider.dart';
@@ -25,12 +27,11 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
-  Controller controller = Controller(); // State machine controller
+  Controller controller = Controller();
   FlutterTts flutterTts = FlutterTts();
   SpeechToText _speechToText = SpeechToText();
-  MapsService mapsService = MapsService();
   bool _speechEnabled = false;
-  String lastWords = '';
+  String lastWords = "";
   String user = "";
   String ip = "";
 
@@ -41,39 +42,12 @@ class _ChatPageState extends State<ChatPage> {
     _initSpeech();
   }
 
-  Position? _currentPosition;
-
   BridgeModel userModel = BridgeModel();
   loadPreferences() {
     user = Provider.of<BridgeModel>(context, listen: false).user;
     ip = Provider.of<BridgeModel>(context, listen: false).ip;
     print(ip);
     print(user);
-  }
-
-  void _getCurrentLocation() async {
-    try {
-      // check permisisons
-      final permission = await Geolocator.checkPermission();
-      if (permission == LocationPermission.denied) {
-        // permission has not been granted, request permission
-        final permissionStatus = await Geolocator.requestPermission();
-        if (permissionStatus != LocationPermission.whileInUse &&
-            permissionStatus != LocationPermission.always) {
-          return;
-        }
-      }
-      // get current location
-      final position = await LocationService.instance.getCurrentLocation();
-      setState(() {
-        _currentPosition = position;
-        print("current position: $_currentPosition");
-        print("latitude: ${_currentPosition!.latitude}");
-        print("longitude: ${_currentPosition!.longitude}");
-      });
-    } catch (e) {
-      print(e);
-    }
   }
 
   /// Initialize speech to text, only once
@@ -84,7 +58,7 @@ class _ChatPageState extends State<ChatPage> {
 
   /// Each time to start a speech recognition session
   void _startListening() async {
-    lastWords = '';
+    lastWords = "";
     await _speechToText.listen(onResult: _onSpeechResult);
     setState(() {});
   }
@@ -103,7 +77,6 @@ class _ChatPageState extends State<ChatPage> {
     setState(() {
       lastWords = result.recognizedWords;
     });
-    _getCurrentLocation();
   }
 
   void pushNewsScreen() {
@@ -134,10 +107,10 @@ class _ChatPageState extends State<ChatPage> {
                         // recognition is not yet ready or not supported on
                         // target device
                         : _speechEnabled
-                            ? lastWords != ''
+                            ? lastWords != ""
                                 ? lastWords
-                                : 'Tap the microphone to start speaking...'
-                            : 'Speech recognition is not available on this device.',
+                                : "Tap the microphone to start speaking..."
+                            : "Speech recognition is not available on this device.",
                   ),
                 ),
               ),
@@ -159,20 +132,9 @@ class _ChatPageState extends State<ChatPage> {
                   child: Text("Test Good Night Use Case DEBUG")),
               ElevatedButton(
                   onPressed: () async {
-                    _getCurrentLocation();
+                    GoodMorningUseCase.instance.execute("good morning");
                   },
-                  child: Text("Get Location DEBUG")),
-              ElevatedButton(
-                  onPressed: () async {
-                    Map<String, dynamic> routeDetails =
-                        await mapsService.getRouteDetails(
-                            origin: _currentPosition!,
-                            destination: "California",
-                            travelMode: "driving",
-                            departureTime: DateTime.now());
-                    print("Duration: ${routeDetails['durationAsText']}");
-                  },
-                  child: Text("Get Maps Info DEBUG")),
+                  child: Text("Test Good Morning Use Case DEBUG")),
               ElevatedButton(
                   onPressed: () async {
                     SchedulingUseCase.instance.execute("calendar");

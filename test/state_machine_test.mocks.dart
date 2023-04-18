@@ -331,13 +331,14 @@ class MockGoodNightUseCase extends _i1.Mock implements _i7.GoodNightUseCase {
         returnValueForMissingStub: null,
       );
   @override
-  void askForSleepPlaylist() => super.noSuchMethod(
+  _i8.Future<void> askForSleepPlaylist() => (super.noSuchMethod(
         Invocation.method(
           #askForSleepPlaylist,
           [],
         ),
-        returnValueForMissingStub: null,
-      );
+        returnValue: _i8.Future<void>.value(),
+        returnValueForMissingStub: _i8.Future<void>.value(),
+      ) as _i8.Future<void>);
   @override
   _i8.Future<void> startSleepPlayList() => (super.noSuchMethod(
         Invocation.method(
@@ -348,13 +349,14 @@ class MockGoodNightUseCase extends _i1.Mock implements _i7.GoodNightUseCase {
         returnValueForMissingStub: _i8.Future<void>.value(),
       ) as _i8.Future<void>);
   @override
-  void askForWakeUpTime() => super.noSuchMethod(
+  _i8.Future<void> askForWakeUpTime() => (super.noSuchMethod(
         Invocation.method(
           #askForWakeUpTime,
           [],
         ),
-        returnValueForMissingStub: null,
-      );
+        returnValue: _i8.Future<void>.value(),
+        returnValueForMissingStub: _i8.Future<void>.value(),
+      ) as _i8.Future<void>);
   @override
   String setAlarm(DateTime? dateTime) => (super.noSuchMethod(
         Invocation.method(

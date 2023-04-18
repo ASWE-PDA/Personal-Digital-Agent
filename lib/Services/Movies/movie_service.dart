@@ -11,3 +11,10 @@ Future<List<dynamic>> getPopularMovies() async {
 
   return response["results"];
 }
+
+Future<int> getMovieLength(int movieId) async {
+  final tmdb = TMDB(ApiKeys(Environment.tmbdApiKey, Environment.tmdbApiReadAccessTokenV4));
+
+  final response = await tmdb.v3.movies.getDetails(movieId);
+  return response["runtime"];
+}

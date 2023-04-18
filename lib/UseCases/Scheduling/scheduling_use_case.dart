@@ -5,8 +5,6 @@ import "package:luna/Services/Calendar/calendar_service.dart";
 import "package:luna/Services/Movies/movie_service.dart";
 import "package:luna/Services/maps_service.dart";
 import "package:luna/UseCases/use_case.dart";
-import "package:flutter_tts/flutter_tts.dart";
-import "package:speech_to_text/speech_to_text.dart" as stt;
 import "../../Services/location_service.dart";
 
 @pragma("vm:entry-point")
@@ -14,7 +12,7 @@ void onNotificationTap(NotificationResponse response) {
   print("notificationTap");
 }
 
-class SchedulingUseCase implements UseCase {
+class SchedulingUseCase extends UseCase {
   /// Singleton instance of [GoodNightUseCase].
   static final instance = SchedulingUseCase._();
 
@@ -25,12 +23,6 @@ class SchedulingUseCase implements UseCase {
   List<String> schedulingTriggerWords = ["schedule", "scheduling"];
   List<String> calendarTriggerWords = ["calendar", "events", "plans"];
   List<String> movieTriggerWords = ["movie", "film", "movies", "films", "show", "shows"];
-
-  FlutterTts flutterTts = FlutterTts();
-
-  SchedulingUseCase() {
-    flutterTts.setLanguage("en-US");
-  }
 
   @override
   void execute(String trigger) {
@@ -43,7 +35,7 @@ class SchedulingUseCase implements UseCase {
       listMovies();
       return;
     }
-    flutterTts.speak("I don't know what you want");
+    textToSpeechOutput("I don't know what you want");
     return;
   }
   
@@ -66,13 +58,13 @@ class SchedulingUseCase implements UseCase {
   void listUpcomingEvents() async {
     final events = await getUpcomingEvents();
     if (events.isEmpty) {
-      flutterTts.speak("You have no events planned today.");
+      await textToSpeechOutput("You have no events planned today.");
     }
     else if (events.length == 1) {
-      flutterTts.speak("You have ${events.length} event planned today.");
+      await textToSpeechOutput("You have ${events.length} event planned today.");
     }
     else {
-      flutterTts.speak("You have ${events.length} events planned today.");
+      await textToSpeechOutput("You have ${events.length} events planned today.");
     }
     
     String output = "";
@@ -87,8 +79,7 @@ class SchedulingUseCase implements UseCase {
         output += "You will need an estimated time of $travelDuration. ";
       }
     }
-
-    flutterTts.speak(output);
+    await textToSpeechOutput(output);
   }
 
   Future<String> getTravelDuration(String destination) async {
@@ -108,7 +99,7 @@ class SchedulingUseCase implements UseCase {
       MapsService mapsService = MapsService();
         Map<String, dynamic> routeDetails =
                         await mapsService.getRouteDetails(
-                            origin: position!,
+                            origin: position,
                             destination: destination,
                             travelMode: "driving",
                             departureTime: DateTime.now());
@@ -145,27 +136,18 @@ class SchedulingUseCase implements UseCase {
     }
 
     output += ". Would you like to watch on of those Movies today? ";
-    Completer<bool> completer = Completer<bool>();
-    flutterTts.speak(output);
-    flutterTts.setCompletionHandler(() {
-      completer.complete(true);
-      print("=======================================\n\n\COMPLETION HANDLER DONE\n\n\n====================================");
-    });
-    bool isComplete = await completer.future;
+    await textToSpeechOutput(output);
 
-    print("=======================================\n\n\nDONETALKING NOW LISTENING\n\n\n====================================");
+    print("=======================================\n\n\nDONE Listing NOW LISTENING\n\n\n====================================");
     String watchMovie = await listenForSpeech(Duration(seconds: 3));
     if (!watchMovie.toLowerCase().contains("yes")) {
       print("=======================================\n\n\n No YES DETECTED got $watchMovie \n\n\n====================================");
       return;
     }
 
-    await flutterTts.speak("Which Movie would you like to watch tonight");
-    flutterTts.setCompletionHandler(() {
-      print("=======================================\n\n\COMPLETION HANDLER DONE\n\n\n====================================");
-    });
+    await textToSpeechOutput("Which Movie would you like to watch tonight");
 
-    print("=======================================\n\n\nDONETALKING NOW LISTENING\n\n\n====================================");
+    print("=======================================\n\n\nDONE Asking NOW LISTENING\n\n\n====================================");
     String movieToWatch = await listenForSpeech(Duration(seconds: 3));
     
     for (var i = 0; i < 5; i++) {
@@ -180,10 +162,7 @@ class SchedulingUseCase implements UseCase {
                               movieTitle, 
                               await getMovieLength(movies[i]["id"])
                               );
-          await flutterTts.speak("I created an Event for this evening for the movie $movieTitle.");
-          flutterTts.setCompletionHandler(() {
-            print("=======================================\n\n\COMPLETION HANDLER DONE\n\n\n====================================");
-          });
+          await textToSpeechOutput("I created an Event for this evening for the movie $movieTitle.");
           return;
         }
       }  
@@ -192,43 +171,5 @@ class SchedulingUseCase implements UseCase {
   }
 
 
-  Future<String> listenForSpeech(Duration duration) async {
-    // Create an instance of the speech_to_text package
-    stt.SpeechToText speechToText = stt.SpeechToText();
-
-    // Check if the device supports speech recognition
-    bool isAvailable = await speechToText.initialize();
-    if (!isAvailable) {
-      print("Speech recognition not available");
-      return "";
-    }
-
-    // Create a completer to create a future that completes with the recognized text
-    Completer<String> completer = Completer<String>();
-
-    // Start listening for speech for the specified duration
-    Timer timer = Timer(duration, () async{
-      await speechToText.stop();
-    });
-    speechToText.listen(
-      partialResults: false,
-      onResult: (result) async {
-        print("Speech recognition result: ${result.recognizedWords}");
-        completer.complete(result.recognizedWords);
-        await speechToText.stop();
-      },
-      listenFor: duration,
-    );
-
-    // Wait for the future to complete and return the recognized text
-    try {
-      String recognizedText = await completer.future;
-      return recognizedText;
-    } catch (e) {
-      print("Error: $e");
-      return "";
-    } finally {
-      timer.cancel();
-    }
-  }
+  
 }

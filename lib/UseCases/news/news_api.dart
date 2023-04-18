@@ -1,7 +1,7 @@
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-import 'news_model.dart';
-
+import "dart:convert";
+import "package:http/http.dart" as http;
+import "news_model.dart";
+import "package:luna/environment.dart";
 
 abstract class NewsAPI {
   late final String _apiKey;
@@ -12,8 +12,10 @@ abstract class NewsAPI {
 
 class NewYorkTimesNews implements NewsAPI {
   @override
-  String _apiKey = "xMoAsAq9ibAxohHIg1LcD7EGu4PAduMo";
-
+  NewYorkTimesNews() : _apiKey = Environment.newYorkTimesKey;
+  @override
+  final String _apiKey;
+  
   @override
   String baseUrl = "https://api.nytimes.com/svc/topstories/v2/";
 
@@ -48,11 +50,17 @@ class NewYorkTimesNews implements NewsAPI {
       throw Exception('Failed to load articles, ${response.statusCode}');
     }
   }
+
+  @override
+  set _apiKey(String __apiKey) {
+    // TODO: implement _apiKey
+  }
 }
 class GermanNews implements NewsAPI {
-  GermanNews();
   @override
-  String _apiKey = 'bb57d567ccbd4e32b33a379b0888d731';
+  GermanNews() : _apiKey = Environment.newsapiKey;
+  @override
+  final String _apiKey;
 
   @override
   String baseUrl = 'https://newsapi.org/v2/everything?q=germany&apiKey=';
@@ -71,13 +79,19 @@ class GermanNews implements NewsAPI {
     }
     //return returnList;
   }
+
+  @override
+  set _apiKey(String __apiKey) {
+    // TODO: implement _apiKey
+  }
 }
 
 class FinanceNews implements NewsAPI {
-  FinanceNews();
   @override
-  String _apiKey = 'n5Fa6vCC2s4X0NZI76FtDXf7boMpCrDDRTy2iM8u';
-
+  FinanceNews() : _apiKey = Environment.marketauxApiKey;
+  @override
+  final String _apiKey;
+  
   @override
   String baseUrl = 'https://api.marketaux.com/v1/news/all?filter_entities=true&language=en&api_token=';
 
@@ -96,11 +110,18 @@ class FinanceNews implements NewsAPI {
     }
 
   }
+
+  @override
+  set _apiKey(String __apiKey) {
+    // TODO: implement _apiKey
+  }
 }
 
 class TechNews implements NewsAPI {
   @override
-  String _apiKey = 'bb57d567ccbd4e32b33a379b0888d731';
+  TechNews() : _apiKey = Environment.newsapiKey;
+  @override
+  final String _apiKey;
 
   @override
   String baseUrl = 'https://newsapi.org/v2/top-headlines?country=us&category=technology&apiKey=';
@@ -117,6 +138,11 @@ class TechNews implements NewsAPI {
     } else {
       throw Exception('Failed to load articles');
     }
+  }
+
+  @override
+  set _apiKey(String __apiKey) {
+    // TODO: implement _apiKey
   }
 
 

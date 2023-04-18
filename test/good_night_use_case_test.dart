@@ -1,19 +1,24 @@
+import 'package:flutter/material.dart';
+import 'package:luna/Services/Alarm/alarm_service.dart';
 import 'package:luna/Services/SmartHome/smart_home_model.dart';
 import 'package:luna/Services/SmartHome/smart_home_service.dart';
+import 'package:luna/Services/spotify_service.dart';
 import 'package:luna/UseCases/good_night_use_case.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:spotify_sdk/spotify_sdk.dart';
 import 'good_night_use_case_test.mocks.dart';
 
-@GenerateMocks([SmartHomeService])
+@GenerateMocks([SmartHomeService, SpotifySdkService])
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   SharedPreferences.setMockInitialValues({});
   var smartHomeService = MockSmartHomeService();
+  var spotifySdkService = MockSpotifySdkService();
   GoodNightUseCase.instance.smartHomeService = smartHomeService;
+  GoodNightUseCase.instance.spotifySdkService = spotifySdkService;
 
   test('test light execution if no lights are connected', () async {
     SharedPreferences.setMockInitialValues({
@@ -132,5 +137,37 @@ void main() {
 
     expect(GoodNightUseCase.instance.bridgeModel.ip, "123.123.123.123");
     expect(GoodNightUseCase.instance.bridgeModel.user, "1234567890");
+  });
+
+  test(
+      "Check if no playlist is started if the spoitfy remote connection does not work",
+      () async {
+    when(spotifySdkService.connect()).thenAnswer((_) => Future.value(false));
+    await GoodNightUseCase.instance.startSleepPlayList();
+    verify(spotifySdkService.connect());
+    verifyNever(spotifySdkService.playPlaylist(any));
+    verifyNever(spotifySdkService.setRepeatMode(any));
+  });
+
+  test(
+      "Check if playlist is started if the spoitfy remote connection does work",
+      () async {
+    when(spotifySdkService.connect()).thenAnswer((_) => Future.value(true));
+    when(spotifySdkService.playPlaylist("6X7wz4cCUBR6p68mzM7mZ4"))
+        .thenAnswer((_) => Future.value());
+
+    await GoodNightUseCase.instance.startSleepPlayList();
+    verify(spotifySdkService.connect());
+    verify(spotifySdkService.playPlaylist("6X7wz4cCUBR6p68mzM7mZ4"));
+  });
+
+  test("Check if answer is in yes trigger words", () {
+    bool check = GoodNightUseCase.instance.checkIfAnswerIsYes("yes please");
+    expect(check, true);
+  });
+
+  test("Check if answer is not in yes trigger words", () {
+    bool check = GoodNightUseCase.instance.checkIfAnswerIsYes("no");
+    expect(check, false);
   });
 }

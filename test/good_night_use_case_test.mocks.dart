@@ -7,7 +7,9 @@ import 'dart:async' as _i3;
 
 import 'package:luna/Services/SmartHome/smart_home_model.dart' as _i4;
 import 'package:luna/Services/SmartHome/smart_home_service.dart' as _i2;
+import 'package:luna/Services/spotify_service.dart' as _i5;
 import 'package:mockito/mockito.dart' as _i1;
+import 'package:spotify_sdk/spotify_sdk.dart' as _i6;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -66,6 +68,56 @@ class MockSmartHomeService extends _i1.Mock implements _i2.SmartHomeService {
             ip,
             user,
           ],
+        ),
+        returnValue: _i3.Future<void>.value(),
+        returnValueForMissingStub: _i3.Future<void>.value(),
+      ) as _i3.Future<void>);
+}
+
+/// A class which mocks [SpotifySdkService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockSpotifySdkService extends _i1.Mock implements _i5.SpotifySdkService {
+  MockSpotifySdkService() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  String get clientId => (super.noSuchMethod(
+        Invocation.getter(#clientId),
+        returnValue: '',
+      ) as String);
+  @override
+  set clientId(String? _clientId) => super.noSuchMethod(
+        Invocation.setter(
+          #clientId,
+          _clientId,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  _i3.Future<bool> connect() => (super.noSuchMethod(
+        Invocation.method(
+          #connect,
+          [],
+        ),
+        returnValue: _i3.Future<bool>.value(false),
+      ) as _i3.Future<bool>);
+  @override
+  _i3.Future<void> setRepeatMode(_i6.RepeatMode? repeatMode) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #setRepeatMode,
+          [repeatMode],
+        ),
+        returnValue: _i3.Future<void>.value(),
+        returnValueForMissingStub: _i3.Future<void>.value(),
+      ) as _i3.Future<void>);
+  @override
+  _i3.Future<void> playPlaylist(String? id) => (super.noSuchMethod(
+        Invocation.method(
+          #playPlaylist,
+          [id],
         ),
         returnValue: _i3.Future<void>.value(),
         returnValueForMissingStub: _i3.Future<void>.value(),

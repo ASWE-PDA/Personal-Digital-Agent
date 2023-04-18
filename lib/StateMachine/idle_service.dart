@@ -1,17 +1,9 @@
 import 'package:luna/UseCases/good_night_use_case.dart';
 
-/// This class is used to check if a use case is triggered.
-/// Parameters:
-/// - activate: 1 if good morning use case is triggered, 2 if event planning use case is triggered, 3 if news use case is triggered, 4 if good night use case is triggered, 0 if no use case is triggered
-/// - triggerWord: contains trigger words if a use case is triggered, usable by the use case
-/// Methods:
-/// - goodMorningCheck: checks if good morning use case is triggered
-/// - eventPlanningCheck: checks if event planning use case is triggered
-/// - newsCheck: checks if news use case is triggered
-/// - goodNightCheck: checks if good night use case is triggered
-/// - monitor: monitors the use case checks and updates the activate parameter accordingly
+/// This class is used to check if a use case is triggered. 
+/// It signals which use case to [activate] and contains the detected [triggerWord]s. 
 class UseCaseCheck {
-  int _activate = 0;
+  int _activate = 0;  // 1 if good morning use case is triggered, 2 if event planning use case is triggered, 3 if news use case is triggered, 4 if good night use case is triggered, 0 if no use case is triggered
   int get activate => _activate;
 
   String _triggerWord = "";
@@ -22,6 +14,7 @@ class UseCaseCheck {
     _goodNightTriggerWords = goodNightTriggerWords;
   }
 
+  /// checks if good morning use case is triggered
   bool goodMorningCheck(String input) {
     String trigger = "";
     bool detected = false;
@@ -43,6 +36,7 @@ class UseCaseCheck {
     return detected;
   }
 
+  /// checks if event planning use case is triggered
   bool eventPlanningCheck(String input) {
     String trigger = "";
     bool detected = false;
@@ -69,6 +63,7 @@ class UseCaseCheck {
     return detected;
   }
 
+  /// checks if news use case is triggered
   bool newsCheck(String input) {
     String trigger = "";
     bool detected = false;
@@ -91,6 +86,7 @@ class UseCaseCheck {
     return detected;
   }
 
+  /// checks if good night use case is triggered
   bool goodNightCheck(String input) {
     bool detected = false;
 
@@ -101,6 +97,7 @@ class UseCaseCheck {
     return detected;
   }
 
+  /// monitors the use case checks and updates the [activate] parameter accordingly
   void monitor(String input) {
     print("input: $input");
     if (goodMorningCheck(input)) {

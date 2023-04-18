@@ -1,3 +1,4 @@
+import 'dart:html';
 import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -8,7 +9,7 @@ import 'package:luna/Services/notification_service.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../Screens/newsScreen.dart';
-import 'news_model.dart';
+import 'article.dart';
 import 'news_api.dart';
 import 'package:luna/Services/navigation_service.dart';
 
@@ -27,7 +28,6 @@ class NewsUseCase extends ChangeNotifier implements UseCase {
   }
 
   List<String> NewsTriggerWords = ["news", "inform me", "whats up"];
-  //List<String> providerTriggerWords = ["tagesschau", "hackernews", "new york times", "financial times"];
 
   FlutterTts flutterTts = FlutterTts();
   NewYorkTimesNews newYorkTimesNews = NewYorkTimesNews();
@@ -37,32 +37,31 @@ class NewsUseCase extends ChangeNotifier implements UseCase {
 
   int notificationId = 2;
   List<String>? _preferences;
-  final List<String> debugPreferences = ['sports', 'technology'];
 
   bool _showNews = false;
-
   bool get showNews => _showNews;
 
   set showNews(bool value) {
     _showNews = value;
-    print("now notifying");
     notifyListeners();
   }
 
   List<Article> _cardArticles = [];
   List<Article> get cardArticles => _cardArticles;
 
-  /// Loads preferences from SharedPreferences.
+  /// Loads preferences from SharedPreferences and copies them into [_preferences].
   Future<void> loadPreferences() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     _preferences = sharedPreferences.getStringList('preferences') ?? [];
   }
-
+  /// deletes [preferences] from sharedPreferences, mainly used for debugging
   Future<void> deletePreferences() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     await sharedPreferences.setStringList('preferences', []);
   }
 
+  /// called via statemachine
+  /// calls newsRoutine and pushes NewsScreen
   @override
   void execute(String trigger) async {
     if (NewsTriggerWords.any((element) => trigger.contains(element))) {
@@ -71,25 +70,23 @@ class NewsUseCase extends ChangeNotifier implements UseCase {
       NavigationService.pushNewsScreen();
       return;
     }
-
     flutterTts.speak("I don't know what you want");
     return;
   }
 
+  /// news routine
+  /// gets called when news case is executed through [execute()]
   Future<bool> newsRoutine() async {
     await loadPreferences();
     await fetchArticles();
-
     await flutterTts.speak("The following headlines might interest you ");
     displayNews();
-
     return true;
   }
 
   Future<void> fetchArticles() async {
     dynamic germanArticles, nYTArticles, financeArticles, techArticles, genericArticles;
     List<Article> completeList = [];
-    int score = 0;
     _preferences ??= [];
 
     if (_preferences!.contains('German News')) {
@@ -156,16 +153,14 @@ class NewsUseCase extends ChangeNotifier implements UseCase {
     _showNews = value;
     notifyListeners();
   }
-
-  void displayNews() async {
+  /// calls [readHeadlines] and
+  void displayNews(){
     readNewsHeadlines();
     setShowNews(true);
-    for(var elem in _cardArticles){
-      print(elem.title);
-    }
-
   }
-
+  /// takes input list [allArticles] and sorts them via [article.score]
+  /// the [score] is calculated internally for each article
+  /// returns the resulting list
   List<Article> sortArticleAlgorithm(List<Article> allArticles) {
     // Calculate the scores for each article
     for (var article in allArticles) {
@@ -182,16 +177,13 @@ class NewsUseCase extends ChangeNotifier implements UseCase {
 
     return allArticles;
   }
-
+  /// reads out the 5 most relevant (top) headlines of [_cardArticles]
   void readNewsHeadlines() async {
-
     for (var i = 0; i < min(_cardArticles.length, 5); i++) {
       await flutterTts.speak(_cardArticles[i].title);
     }
     await flutterTts.awaitSpeakCompletion(true);
   }
-
-
 
 
   /// Schedules a daily notification for the good night use case.
@@ -213,16 +205,6 @@ class NewsUseCase extends ChangeNotifier implements UseCase {
   @override
   Future<bool> checkTrigger() async {
     return false;
-  }
-
-  /// Returns a list of all trigger words.
-  List<String> getAllTriggerWords() {
-    return [
-      ...NewsTriggerWords,
-      //...lightTriggerWords,
-      //...sleepPlaylistTriggerWords,
-      //...alarmTriggerWords
-    ];
   }
 }
 

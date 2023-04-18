@@ -3,12 +3,14 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i6;
+import 'dart:async' as _i8;
 
 import 'package:flutter_tts/flutter_tts.dart' as _i2;
 import 'package:luna/Services/SmartHome/bridge_model.dart' as _i3;
+import 'package:luna/Services/SmartHome/smart_home_service.dart' as _i5;
+import 'package:luna/Services/spotify_service.dart' as _i6;
 import 'package:luna/UseCases/good_night_model.dart' as _i4;
-import 'package:luna/UseCases/good_night_use_case.dart' as _i5;
+import 'package:luna/UseCases/good_night_use_case.dart' as _i7;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -53,10 +55,32 @@ class _FakeGoodNightModel_2 extends _i1.SmartFake
         );
 }
 
+class _FakeSmartHomeService_3 extends _i1.SmartFake
+    implements _i5.SmartHomeService {
+  _FakeSmartHomeService_3(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeSpotifySdkService_4 extends _i1.SmartFake
+    implements _i6.SpotifySdkService {
+  _FakeSpotifySdkService_4(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
 /// A class which mocks [GoodNightUseCase].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockGoodNightUseCase extends _i1.Mock implements _i5.GoodNightUseCase {
+class MockGoodNightUseCase extends _i1.Mock implements _i7.GoodNightUseCase {
   MockGoodNightUseCase() {
     _i1.throwOnMissingStub(this);
   }
@@ -116,6 +140,19 @@ class MockGoodNightUseCase extends _i1.Mock implements _i5.GoodNightUseCase {
         returnValueForMissingStub: null,
       );
   @override
+  List<String> get yesTriggerWords => (super.noSuchMethod(
+        Invocation.getter(#yesTriggerWords),
+        returnValue: <String>[],
+      ) as List<String>);
+  @override
+  set yesTriggerWords(List<String>? _yesTriggerWords) => super.noSuchMethod(
+        Invocation.setter(
+          #yesTriggerWords,
+          _yesTriggerWords,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
   _i2.FlutterTts get flutterTts => (super.noSuchMethod(
         Invocation.getter(#flutterTts),
         returnValue: _FakeFlutterTts_0(
@@ -164,6 +201,66 @@ class MockGoodNightUseCase extends _i1.Mock implements _i5.GoodNightUseCase {
         returnValueForMissingStub: null,
       );
   @override
+  _i5.SmartHomeService get smartHomeService => (super.noSuchMethod(
+        Invocation.getter(#smartHomeService),
+        returnValue: _FakeSmartHomeService_3(
+          this,
+          Invocation.getter(#smartHomeService),
+        ),
+      ) as _i5.SmartHomeService);
+  @override
+  set smartHomeService(_i5.SmartHomeService? _smartHomeService) =>
+      super.noSuchMethod(
+        Invocation.setter(
+          #smartHomeService,
+          _smartHomeService,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  _i6.SpotifySdkService get spotifySdkService => (super.noSuchMethod(
+        Invocation.getter(#spotifySdkService),
+        returnValue: _FakeSpotifySdkService_4(
+          this,
+          Invocation.getter(#spotifySdkService),
+        ),
+      ) as _i6.SpotifySdkService);
+  @override
+  set spotifySdkService(_i6.SpotifySdkService? _spotifySdkService) =>
+      super.noSuchMethod(
+        Invocation.setter(
+          #spotifySdkService,
+          _spotifySdkService,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  String get lastWords => (super.noSuchMethod(
+        Invocation.getter(#lastWords),
+        returnValue: '',
+      ) as String);
+  @override
+  set lastWords(String? _lastWords) => super.noSuchMethod(
+        Invocation.setter(
+          #lastWords,
+          _lastWords,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  String get playlistId => (super.noSuchMethod(
+        Invocation.getter(#playlistId),
+        returnValue: '',
+      ) as String);
+  @override
+  set playlistId(String? _playlistId) => super.noSuchMethod(
+        Invocation.setter(
+          #playlistId,
+          _playlistId,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
   int get notificationId => (super.noSuchMethod(
         Invocation.getter(#notificationId),
         returnValue: 0,
@@ -177,14 +274,14 @@ class MockGoodNightUseCase extends _i1.Mock implements _i5.GoodNightUseCase {
         returnValueForMissingStub: null,
       );
   @override
-  _i6.Future<void> loadPreferences() => (super.noSuchMethod(
+  _i8.Future<void> loadPreferences() => (super.noSuchMethod(
         Invocation.method(
           #loadPreferences,
           [],
         ),
-        returnValue: _i6.Future<void>.value(),
-        returnValueForMissingStub: _i6.Future<void>.value(),
-      ) as _i6.Future<void>);
+        returnValue: _i8.Future<void>.value(),
+        returnValueForMissingStub: _i8.Future<void>.value(),
+      ) as _i8.Future<void>);
   @override
   void execute(String? trigger) => super.noSuchMethod(
         Invocation.method(
@@ -194,7 +291,7 @@ class MockGoodNightUseCase extends _i1.Mock implements _i5.GoodNightUseCase {
         returnValueForMissingStub: null,
       );
   @override
-  _i6.Future<void> schedule(
+  _i8.Future<void> schedule(
     int? hours,
     int? minutes,
   ) =>
@@ -206,17 +303,17 @@ class MockGoodNightUseCase extends _i1.Mock implements _i5.GoodNightUseCase {
             minutes,
           ],
         ),
-        returnValue: _i6.Future<void>.value(),
-        returnValueForMissingStub: _i6.Future<void>.value(),
-      ) as _i6.Future<void>);
+        returnValue: _i8.Future<void>.value(),
+        returnValueForMissingStub: _i8.Future<void>.value(),
+      ) as _i8.Future<void>);
   @override
-  _i6.Future<bool> checkTrigger() => (super.noSuchMethod(
+  _i8.Future<bool> checkTrigger() => (super.noSuchMethod(
         Invocation.method(
           #checkTrigger,
           [],
         ),
-        returnValue: _i6.Future<bool>.value(false),
-      ) as _i6.Future<bool>);
+        returnValue: _i8.Future<bool>.value(false),
+      ) as _i8.Future<bool>);
   @override
   List<String> getAllTriggerWords() => (super.noSuchMethod(
         Invocation.method(
@@ -226,13 +323,13 @@ class MockGoodNightUseCase extends _i1.Mock implements _i5.GoodNightUseCase {
         returnValue: <String>[],
       ) as List<String>);
   @override
-  void turnOffLights() => super.noSuchMethod(
+  _i8.Future<String> turnOffAllLights() => (super.noSuchMethod(
         Invocation.method(
-          #turnOffLights,
+          #turnOffAllLights,
           [],
         ),
-        returnValueForMissingStub: null,
-      );
+        returnValue: _i8.Future<String>.value(''),
+      ) as _i8.Future<String>);
   @override
   void askForSleepPlaylist() => super.noSuchMethod(
         Invocation.method(
@@ -242,13 +339,14 @@ class MockGoodNightUseCase extends _i1.Mock implements _i5.GoodNightUseCase {
         returnValueForMissingStub: null,
       );
   @override
-  void startSleepPlayList() => super.noSuchMethod(
+  _i8.Future<void> startSleepPlayList() => (super.noSuchMethod(
         Invocation.method(
           #startSleepPlayList,
           [],
         ),
-        returnValueForMissingStub: null,
-      );
+        returnValue: _i8.Future<void>.value(),
+        returnValueForMissingStub: _i8.Future<void>.value(),
+      ) as _i8.Future<void>);
   @override
   void askForWakeUpTime() => super.noSuchMethod(
         Invocation.method(
@@ -266,9 +364,9 @@ class MockGoodNightUseCase extends _i1.Mock implements _i5.GoodNightUseCase {
         returnValueForMissingStub: null,
       );
   @override
-  void wishGoodNight() => super.noSuchMethod(
+  void executeCompleteUseCase() => super.noSuchMethod(
         Invocation.method(
-          #wishGoodNight,
+          #executeCompleteUseCase,
           [],
         ),
         returnValueForMissingStub: null,

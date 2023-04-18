@@ -154,7 +154,7 @@ class _ChatPageState extends State<ChatPage> {
                   child: Text("Test Alarm DEBUG")),
               ElevatedButton(
                   onPressed: () async {
-                    GoodNightUseCase.instance.execute("turn off lights");
+                    GoodNightUseCase.instance.execute("good night");
                   },
                   child: Text("Test Good Night Use Case DEBUG")),
               ElevatedButton(

@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:luna/Services/Alarm/alarm_service.dart';
@@ -29,7 +30,6 @@ class SchedulingUseCase implements UseCase {
 
   FlutterTts flutterTts = FlutterTts();
 
-
   int notificationId = 2;
 
   SchedulingUseCase() {
@@ -37,8 +37,7 @@ class SchedulingUseCase implements UseCase {
   }
 
   /// Loads preferences from SharedPreferences.
-  Future<void> loadPreferences() async {
-  }
+  Future<void> loadPreferences() async {}
 
   @override
   void execute(String trigger) {
@@ -46,7 +45,8 @@ class SchedulingUseCase implements UseCase {
       print("triggered scheduling case");
       wishGoodNight();
       return;
-    } else if (calendarTriggerWords.any((element) => trigger.contains(element))) {
+    } else if (calendarTriggerWords
+        .any((element) => trigger.contains(element))) {
       print("triggered calendar case");
       listUpcomingEvents();
       return;
@@ -101,25 +101,24 @@ class SchedulingUseCase implements UseCase {
     final events = await getUpcomingEvents();
     if (events.isEmpty) {
       flutterTts.speak("You have no events planned today.");
-    }
-    else if (events.length == 1) {
+    } else if (events.length == 1) {
       flutterTts.speak("You have ${events.length} event planned today.");
-    }
-    else {
+    } else {
       flutterTts.speak("You have ${events.length} events planned today.");
     }
-    
+
     for (var i = 0; i < events.length; i++) {
       flutterTts.speak(
-        "From ${getTimeFromHoursMinutes(events[i].start!.hour, events[i].start!.minute)} till ${getTimeFromHoursMinutes(events[i].end!.hour, events[i].end!.minute)}.");
+          "From ${getTimeFromHoursMinutes(events[i].start!.hour, events[i].start!.minute)} till ${getTimeFromHoursMinutes(events[i].end!.hour, events[i].end!.minute)}.");
       if (events[i].description != null) {
-        flutterTts.speak("The event has following description: ${events[i].description}");
+        flutterTts.speak(
+            "The event has following description: ${events[i].description}");
       }
       if (events[i].location != null) {
-        flutterTts.speak("The event takes place in the location ${events[i].location}");
+        flutterTts.speak(
+            "The event takes place in the location ${events[i].location}");
         final travelDuration = await getTravelDuration(events[i].location!);
         flutterTts.speak("You will need an estimated time of $travelDuration");
-        
       }
     }
   }
@@ -139,12 +138,11 @@ class SchedulingUseCase implements UseCase {
       // get current location
       final position = await LocationService.instance.getCurrentLocation();
       MapsService mapsService = MapsService();
-        Map<String, dynamic> routeDetails =
-                        await mapsService.getRouteDetails(
-                            origin: position!,
-                            destination: destination,
-                            travelMode: "driving",
-                            departureTime: DateTime.now());
+      Map<String, dynamic> routeDetails = await mapsService.getRouteDetails(
+          origin: position!,
+          destination: destination,
+          travelMode: "driving",
+          departureTime: TimeOfDay.now());
       return "${routeDetails['durationAsText']}";
     } catch (e) {
       print(e);
@@ -156,14 +154,13 @@ class SchedulingUseCase implements UseCase {
     String amPm = "a.m";
     int h = hours;
     if (hours > 11) {
-      if (hours != 12) h = hours-12;
+      if (hours != 12) h = hours - 12;
       amPm = "p.m";
     }
 
     if (minutes == 0) {
       return "$h $amPm";
-    }
-    else {
+    } else {
       return "$h:$minutes $amPm";
     }
   }

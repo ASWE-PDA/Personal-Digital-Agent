@@ -203,6 +203,13 @@ class NewsUseCase extends ChangeNotifier implements UseCase {
   Future<bool> checkTrigger() async {
     return false;
   }
+
+  @override
+  Future<String> listenForSpeech(Duration duration) async {
+    return "";
+  }
+
+  @override Future<void> textToSpeechOutput(String output) async {  }
 }
 
 

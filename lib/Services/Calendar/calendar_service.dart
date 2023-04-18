@@ -1,6 +1,6 @@
-import 'package:device_calendar/device_calendar.dart';
-import 'package:timezone/data/latest.dart' as tzdata;
-import 'package:timezone/timezone.dart' as tz;
+import "package:device_calendar/device_calendar.dart";
+import "package:timezone/data/latest.dart" as tzdata;
+import "package:timezone/timezone.dart" as tz;
 
 Future<List<Event>> getUpcomingEvents() async {
   final calendarPlugin = await requestCalendarPermissions();
@@ -31,13 +31,13 @@ Future<void> createCalendarEvent(DateTime date, String name, int durationInMin) 
   final calendarId = calendarListResult.data?.isNotEmpty ?? false ? calendarListResult.data?.first.id : null;
 
   if (calendarId == null) {
-    print('Unable to find default calendar');
+    print("Unable to find default calendar");
     return;
   }
 
   // Create the event
   tzdata.initializeTimeZones();
-  final location = tz.getLocation('Europe/Berlin');
+  final location = tz.getLocation("Europe/Berlin");
   final start = tz.TZDateTime.from(date, location);
   final end = tz.TZDateTime.from(date.add(Duration(minutes: durationInMin)), location);
   final event = Event(calendarId, title: name, start: start, end: end);
@@ -45,13 +45,13 @@ Future<void> createCalendarEvent(DateTime date, String name, int durationInMin) 
   final createResult = await calendarPlugin.createOrUpdateEvent(event);
 
   if (createResult == null) {
-    print('Error creating event result = null');
+    print("Error creating event result = null");
     return;
   }
   if (createResult.isSuccess && createResult.data != null) {
-    print('Event created successfully');
+    print("Event created successfully");
   } else {
-    print('Error creating event');
+    print("Error creating event");
   }
 }
 

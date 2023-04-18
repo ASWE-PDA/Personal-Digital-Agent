@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:luna/Screens/connect_bridge_screen.dart';
-import 'package:luna/Services/SmartHome/bridge_model.dart';
-import 'package:luna/Services/notification_service.dart';
-import 'package:luna/UseCases/good_night_model.dart';
-import 'package:luna/UseCases/good_night_use_case.dart';
-import 'package:provider/provider.dart';
+import "package:flutter/material.dart";
+import "package:flutter_local_notifications/flutter_local_notifications.dart";
+import "package:luna/Screens/connect_bridge_screen.dart";
+import "package:luna/Services/SmartHome/bridge_model.dart";
+import "package:luna/Services/notification_service.dart";
+import "package:luna/UseCases/good_night_model.dart";
+import "package:luna/UseCases/good_night_use_case.dart";
+import "package:provider/provider.dart";
 
 /// Screen to enter a new time for the good night use case.
 class GoodNightScheduleScreen extends StatefulWidget {
@@ -82,7 +82,7 @@ class _GoodNightScheduleScreen extends State<GoodNightScheduleScreen> {
                     vertical: 24.0, horizontal: 16.0),
                 child: TextFormField(
                   controller: _textController,
-                  decoration: const InputDecoration(hintText: '22:00'),
+                  decoration: const InputDecoration(hintText: "22:00"),
                   onChanged: (value) {
                     setState(() {});
                   },

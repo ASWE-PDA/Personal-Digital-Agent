@@ -1,5 +1,5 @@
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import "package:http/http.dart" as http;
+import "dart:convert";
 
 class Article {
   String title;
@@ -12,34 +12,34 @@ class Article {
 
   factory Article.fromNYTJson(Map<String, dynamic> json) {
     return Article(
-      title: json['title'],
-      summary: json['abstract'] ?? [],
-      categories: json['des_facet'] != null
-          ? List<String>.from(json['des_facet'])
+      title: json["title"],
+      summary: json["abstract"] ?? [],
+      categories: json["des_facet"] != null
+          ? List<String>.from(json["des_facet"])
           : [],
-      link: json['short_url'],
+      link: json["short_url"],
     );
   }
 
   factory Article.fromGermanJson(Map<String, dynamic> json) {
     return Article(
-      title: json['title'],
-      summary: json['description'] ?? '',
-      categories: json['des_facet'] != null
-          ? List<String>.from(json['des_facet'])
+      title: json["title"],
+      summary: json["description"] ?? "",
+      categories: json["des_facet"] != null
+          ? List<String>.from(json["des_facet"])
           : [],
-      link: json['url'],
+      link: json["url"],
     );
   }
 
   factory Article.fromFinancialJson(Map<String, dynamic> json) {
     return Article(
-      title: json['title'],
-      summary: json['description'] ?? [],
-      categories: json['keywords'] != null
-          ? List<String>.from(json['keywords'])
+      title: json["title"],
+      summary: json["description"] ?? [],
+      categories: json["keywords"] != null
+          ? List<String>.from(json["keywords"])
           : [],
-      link: json['url'],
+      link: json["url"],
     );
   }
 

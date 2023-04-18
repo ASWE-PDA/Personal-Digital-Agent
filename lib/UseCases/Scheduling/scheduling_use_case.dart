@@ -1,19 +1,17 @@
-import 'dart:async';
+import "dart:async";
+import "package:flutter_local_notifications/flutter_local_notifications.dart";
+import "package:geolocator/geolocator.dart";
+import "package:luna/Services/Calendar/calendar_service.dart";
+import "package:luna/Services/Movies/movie_service.dart";
+import "package:luna/Services/maps_service.dart";
+import "package:luna/UseCases/use_case.dart";
+import "package:flutter_tts/flutter_tts.dart";
+import "package:speech_to_text/speech_to_text.dart" as stt;
+import "../../Services/location_service.dart";
 
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:luna/Services/Calendar/calendar_service.dart';
-import 'package:luna/Services/Movies/movie_service.dart';
-import 'package:luna/Services/maps_service.dart';
-import 'package:luna/UseCases/use_case.dart';
-import 'package:flutter_tts/flutter_tts.dart';
-import 'package:speech_to_text/speech_to_text.dart' as stt;
-
-import '../../Services/location_service.dart';
-
-@pragma('vm:entry-point')
+@pragma("vm:entry-point")
 void onNotificationTap(NotificationResponse response) {
-  print('notificationTap');
+  print("notificationTap");
 }
 
 class SchedulingUseCase implements UseCase {
@@ -113,7 +111,7 @@ class SchedulingUseCase implements UseCase {
                             destination: destination,
                             travelMode: "driving",
                             departureTime: DateTime.now());
-      return "${routeDetails['durationAsText']}";
+      return "${routeDetails["durationAsText"]}";
     } catch (e) {
       print(e);
     }

@@ -1,5 +1,5 @@
-import 'package:tmdb_api/tmdb_api.dart';
-import 'package:luna/environment.dart';
+import "package:tmdb_api/tmdb_api.dart";
+import "package:luna/environment.dart";
 
 Future<List<dynamic>> getPopularMovies() async {
   // Initialize a new instance of the Tmdb class with API key

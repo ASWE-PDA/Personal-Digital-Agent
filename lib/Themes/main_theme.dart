@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import "package:flutter/material.dart";
 
 /// Class that contains the default colors and themes of the app.
 class MyThemes {

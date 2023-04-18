@@ -1,11 +1,11 @@
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-import 'package:luna/Services/SmartHome/smart_home_model.dart';
-import 'package:luna/Services/SmartHome/bridge_service.dart';
+import "dart:convert";
+import "package:http/http.dart" as http;
+import "package:luna/Services/SmartHome/smart_home_model.dart";
+import "package:luna/Services/SmartHome/bridge_service.dart";
 
 // Get all lights
 Future<dynamic> getLights(ip, user) async {
-  var url = Uri.parse('http://$ip/api/$user/lights');
+  var url = Uri.parse("http://$ip/api/$user/lights");
   try {
     var response = await http.get(url);
     final responseMap = json.decode(response.body);
@@ -40,7 +40,7 @@ Future<dynamic> turnOffAllLights(ip, user) async {
 turnOffLight(Light light, ip, user) async {
   if (light.on) {
     print("turning off light: ${light.name}");
-    var url = Uri.parse('http://$ip/api/$user/lights/${light.id}/state');
+    var url = Uri.parse("http://$ip/api/$user/lights/${light.id}/state");
     try {
       var response = await http.put(url, body: '{"on": false}');
     } catch (e) {

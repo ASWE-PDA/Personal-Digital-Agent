@@ -1,12 +1,12 @@
-import 'dart:io';
-import 'package:alarm/alarm.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:timezone/data/latest_all.dart' as tz;
-import 'package:timezone/timezone.dart' as tz;
+import "dart:io";
+import "package:alarm/alarm.dart";
+import "package:flutter_local_notifications/flutter_local_notifications.dart";
+import "package:timezone/data/latest_all.dart" as tz;
+import "package:timezone/timezone.dart" as tz;
 
-@pragma('vm:entry-point')
+@pragma("vm:entry-point")
 void notificationTap(NotificationResponse response) {
-  print('notificationTap');
+  print("notificationTap");
 }
 
 /// The purpose of this class is to show a notification to the user
@@ -24,7 +24,7 @@ class NotificationService {
   /// Adds configuration for local notifications and initialize service.
   Future<void> init(onNotificationClick) async {
     const initializationSettingsAndroid =
-        AndroidInitializationSettings('@mipmap/ic_launcher');
+        AndroidInitializationSettings("@mipmap/ic_launcher");
     const initializationSettingsIOS = DarwinInitializationSettings(
       requestAlertPermission: false,
       requestBadgePermission: false,
@@ -97,9 +97,9 @@ class NotificationService {
     );
 
     const androidPlatformChannelSpecifics = AndroidNotificationDetails(
-      'Luna',
-      'Luna_Plugin',
-      channelDescription: 'Luna plugin',
+      "Luna",
+      "Luna_Plugin",
+      channelDescription: "Luna plugin",
       importance: Importance.max,
       priority: Priority.max,
       enableLights: true,
@@ -121,7 +121,7 @@ class NotificationService {
 
     final hasPermission = await requestPermission();
     if (!hasPermission) {
-      alarmPrint('Notification permission not granted');
+      alarmPrint("Notification permission not granted");
       return;
     }
 
@@ -138,15 +138,15 @@ class NotificationService {
         // daily alarm
         matchDateTimeComponents: DateTimeComponents.time,
       );
-      alarmPrint('Notification with id $id scheduled successfuly at $zdt');
+      alarmPrint("Notification with id $id scheduled successfuly at $zdt");
     } catch (e) {
-      alarmPrint('Schedule notification with id $id error: $e');
+      alarmPrint("Schedule notification with id $id error: $e");
     }
   }
 
   /// Cancels notification with the given [id].
   Future<void> cancel(int id) async {
     await localNotif.cancel(id);
-    alarmPrint('Notification with id $id canceled');
+    alarmPrint("Notification with id $id canceled");
   }
 }

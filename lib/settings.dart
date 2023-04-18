@@ -1,15 +1,15 @@
-import 'package:flutter/material.dart';
-import 'package:luna/Dialogs/delete_dialog.dart';
-import 'package:luna/Screens/good_night_schedule_screen.dart';
-import 'package:luna/Screens/news_preferences_screen.dart';
-import 'package:luna/Screens/philips_hue_screen.dart';
-import 'package:luna/Services/SmartHome/bridge_model.dart';
-import 'package:luna/Themes/theme_model.dart';
-import 'package:luna/UseCases/good_night_model.dart';
-import 'package:luna/UseCases/news/news_use_case.dart';
-import 'package:luna/Widgets/settings_section.dart';
-import 'package:luna/Widgets/settings_widget.dart';
-import 'package:provider/provider.dart';
+import "package:flutter/material.dart";
+import "package:luna/Dialogs/delete_dialog.dart";
+import "package:luna/Screens/good_night_schedule_screen.dart";
+import "package:luna/Screens/news_preferences_screen.dart";
+import "package:luna/Screens/philips_hue_screen.dart";
+import "package:luna/Services/SmartHome/bridge_model.dart";
+import "package:luna/Themes/theme_model.dart";
+import "package:luna/UseCases/good_night_model.dart";
+import "package:luna/UseCases/news/news_use_case.dart";
+import "package:luna/Widgets/settings_section.dart";
+import "package:luna/Widgets/settings_widget.dart";
+import "package:provider/provider.dart";
 
 class SettingsPage extends StatefulWidget {
   @override

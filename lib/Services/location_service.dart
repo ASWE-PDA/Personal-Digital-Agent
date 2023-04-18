@@ -1,4 +1,4 @@
-import 'package:geolocator/geolocator.dart';
+import "package:geolocator/geolocator.dart";
 
 class LocationService {
   static LocationService? _instance;

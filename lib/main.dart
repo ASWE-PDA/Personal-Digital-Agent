@@ -1,14 +1,13 @@
-import 'package:flutter/material.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:luna/Services/SmartHome/bridge_model.dart';
-import 'package:luna/Themes/main_theme.dart';
-import 'package:luna/Themes/theme_model.dart';
-import 'package:luna/UseCases/good_night_model.dart';
-import 'package:provider/provider.dart';
-import 'package:alarm/alarm.dart';
-
-import 'settings.dart';
-import 'chat.dart';
+import "package:flutter/material.dart";
+import "package:google_nav_bar/google_nav_bar.dart";
+import "package:luna/Services/SmartHome/bridge_model.dart";
+import "package:luna/Themes/main_theme.dart";
+import "package:luna/Themes/theme_model.dart";
+import "package:luna/UseCases/good_night_model.dart";
+import "package:provider/provider.dart";
+import "package:alarm/alarm.dart";
+import "settings.dart";
+import "chat.dart";
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,7 +31,7 @@ class MyApp extends StatelessWidget {
         create: (context) => ThemeModel(),
         child: Consumer(builder: (context, ThemeModel themeNotifier, child) {
           return MaterialApp(
-            title: 'Luna',
+            title: "Luna",
             darkTheme: MyThemes.darkTheme,
             themeMode: themeNotifier.currentTheme(),
             theme: MyThemes.lightTheme,
@@ -61,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
         page = SettingsPage();
         break;
       default:
-        throw UnimplementedError('no widget for $selectedIndex');
+        throw UnimplementedError("no widget for $selectedIndex");
     }
 
     return LayoutBuilder(builder: (context, constraints) {
@@ -94,8 +93,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 });
               },
               tabs: [
-                GButton(icon: Icons.chat, text: 'Chat'),
-                GButton(icon: Icons.settings, text: 'Settings'),
+                GButton(icon: Icons.chat, text: "Chat"),
+                GButton(icon: Icons.settings, text: "Settings"),
               ],
             ),
           ),

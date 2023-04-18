@@ -1,7 +1,7 @@
-import 'package:statemachine/statemachine.dart';
-import '../UseCases/good_night_use_case.dart';
-import '../UseCases/use_case.dart';
-import 'idle_service.dart';
+import "package:statemachine/statemachine.dart";
+import "../UseCases/good_night_use_case.dart";
+import "../UseCases/use_case.dart";
+import "idle_service.dart";
 
 /// Controller for the Personal Digital Agent.
 /// Contains and runs the state [machine] to automatically detect and activate the use cases.
@@ -36,14 +36,14 @@ class Controller {
 class StateMachine {
   static final machine = Machine<String>();
   final useCaseCheck = UseCaseCheck();
-  static final idleState = machine.newState('idle'); // start state
+  static final idleState = machine.newState("idle"); // start state
   static final goodMorningState =
-      machine.newState('good_morning'); // state for good morning use case
+      machine.newState("good_morning"); // state for good morning use case
   static final eventPlanningState =
-      machine.newState('event_planning'); // state for event planning use case
-  static final newsState = machine.newState('news'); // state for news use case
+      machine.newState("event_planning"); // state for event planning use case
+  static final newsState = machine.newState("news"); // state for news use case
   static final goodNightState =
-      machine.newState('good_night'); // state for good night use case
+      machine.newState("good_night"); // state for good night use case
   
   //static UseCase goodMorningUseCase = TODO link good morning use case;
   //static UseCase eventPlanningUseCase = TODO link event planning use case;
@@ -122,15 +122,15 @@ class StateMachine {
   void start() {
     // define transitions
     idleState.onEntry(() => runIdleState());
-    idleState.onExit(() => print('leaving idle state'));
-    goodMorningState.onEntry(() => print('entering good morning state'));
-    goodMorningState.onExit(() => print('leaving good morning state'));
-    eventPlanningState.onEntry(() => print('entering event planning state'));
-    eventPlanningState.onExit(() => print('leaving event planning state'));
-    newsState.onEntry(() => print('entering news state'));
-    newsState.onExit(() => print('leaving news state'));
-    goodNightState.onEntry(() => print('entering good night state'));
-    goodNightState.onExit(() => print('leaving good night state'));
+    idleState.onExit(() => print("leaving idle state"));
+    goodMorningState.onEntry(() => print("entering good morning state"));
+    goodMorningState.onExit(() => print("leaving good morning state"));
+    eventPlanningState.onEntry(() => print("entering event planning state"));
+    eventPlanningState.onExit(() => print("leaving event planning state"));
+    newsState.onEntry(() => print("entering news state"));
+    newsState.onExit(() => print("leaving news state"));
+    goodNightState.onEntry(() => print("entering good night state"));
+    goodNightState.onExit(() => print("leaving good night state"));
 
     machine.start();
   }

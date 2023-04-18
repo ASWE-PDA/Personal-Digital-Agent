@@ -1,9 +1,8 @@
-import 'dart:async';
-import 'dart:convert';
-import 'dart:io';
-
-import 'package:luna/Services/SmartHome/smart_home_model.dart';
-import 'package:http/http.dart' as http;
+import "dart:async";
+import "dart:convert";
+import "dart:io";
+import "package:luna/Services/SmartHome/smart_home_model.dart";
+import "package:http/http.dart" as http;
 
 class BridgeService {
   BridgeService();
@@ -22,7 +21,7 @@ class BridgeService {
   }
 
   Future<List<Bridge>> getBridges() async {
-    var url = Uri.parse('https://discovery.meethue.com');
+    var url = Uri.parse("https://discovery.meethue.com");
     try {
       var response = await http.get(url);
       if (response.body.isEmpty) {
@@ -72,7 +71,7 @@ class BridgeService {
     print("creating user");
     try {
       var user = "";
-      var url = Uri.parse('http://$ip/api/');
+      var url = Uri.parse("http://$ip/api/");
       var response = await http
           .post(url, body: json.encode({"devicetype": "luna"}))
           .timeout(Duration(seconds: 3));

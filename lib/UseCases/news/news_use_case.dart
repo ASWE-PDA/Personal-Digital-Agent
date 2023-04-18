@@ -1,15 +1,15 @@
-import 'dart:math';
-import 'package:flutter/foundation.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:luna/Services/Alarm/alarm_service.dart';
-import 'package:luna/UseCases/use_case.dart';
-import 'package:flutter_tts/flutter_tts.dart';
-import 'package:luna/Services/notification_service.dart';
-import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
-import 'news_model.dart';
-import 'news_api.dart';
-import 'package:luna/chat.dart';
+import "dart:math";
+import "package:flutter/foundation.dart";
+import "package:flutter_local_notifications/flutter_local_notifications.dart";
+import "package:luna/Services/Alarm/alarm_service.dart";
+import "package:luna/UseCases/use_case.dart";
+import "package:flutter_tts/flutter_tts.dart";
+import "package:luna/Services/notification_service.dart";
+import "package:http/http.dart" as http;
+import "package:shared_preferences/shared_preferences.dart";
+import "news_model.dart";
+import "news_api.dart";
+import "package:luna/chat.dart";
 
 /// Use case for the News feature.
 class NewsUseCase extends ChangeNotifier implements UseCase {
@@ -36,7 +36,7 @@ class NewsUseCase extends ChangeNotifier implements UseCase {
 
   int notificationId = 2;
   List<String>? _preferences;
-  final List<String> debugPreferences = ['sports', 'technology'];
+  final List<String> debugPreferences = ["sports", "technology"];
 
   bool _showNews = false;
 
@@ -54,12 +54,12 @@ class NewsUseCase extends ChangeNotifier implements UseCase {
   /// Loads preferences from SharedPreferences.
   Future<void> loadPreferences() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    _preferences = sharedPreferences.getStringList('preferences') ?? [];
+    _preferences = sharedPreferences.getStringList("preferences") ?? [];
   }
 
   Future<void> deletePreferences() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    await sharedPreferences.setStringList('preferences', []);
+    await sharedPreferences.setStringList("preferences", []);
   }
 
   @override
@@ -90,30 +90,30 @@ class NewsUseCase extends ChangeNotifier implements UseCase {
     int score = 0;
     _preferences ??= [];
 
-    if (_preferences!.contains('German News')) {
+    if (_preferences!.contains("German News")) {
       germanArticles = await germanNews.fetchNews();
       germanArticles = prepareList(germanArticles);
       completeList.addAll(germanArticles);
 
     }
-    if(_preferences!.contains('Finances')) {
+    if(_preferences!.contains("Finances")) {
       financeArticles = await financeNews.fetchNews();
       financeArticles = prepareList(financeArticles);
       completeList.addAll(financeArticles);
     }
-    if(_preferences!.contains('Technology')) {
+    if(_preferences!.contains("Technology")) {
       techArticles = await techNews.fetchNews();
       techArticles = prepareList(techArticles);
       completeList.addAll(techArticles);
     }
-    if(_preferences!.contains('US politics')) {
-      nYTArticles = await newYorkTimesNews.fetchSection('politics');
+    if(_preferences!.contains("US politics")) {
+      nYTArticles = await newYorkTimesNews.fetchSection("politics");
       nYTArticles = prepareList(nYTArticles);
       completeList.addAll(nYTArticles);
     }
     // generic articles can always be fetched
     if (true) {
-      genericArticles = await newYorkTimesNews.fetchSection('home');
+      genericArticles = await newYorkTimesNews.fetchSection("home");
       genericArticles = prepareList(genericArticles);
       completeList.addAll(genericArticles);
 

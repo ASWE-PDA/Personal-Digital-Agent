@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:luna/Themes/theme_preferences.dart';
+import "package:flutter/material.dart";
+import "package:luna/Themes/theme_preferences.dart";
 
 /// Class that stores the current theme and notifies the app.
 class ThemeModel extends ChangeNotifier {

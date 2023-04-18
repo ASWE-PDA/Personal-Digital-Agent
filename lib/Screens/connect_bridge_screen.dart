@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:luna/Services/SmartHome/bridge_service.dart';
-import 'package:luna/Services/SmartHome/bridge_model.dart';
-import 'package:provider/provider.dart';
+import "package:flutter/material.dart";
+import "package:luna/Services/SmartHome/bridge_service.dart";
+import "package:luna/Services/SmartHome/bridge_model.dart";
+import "package:provider/provider.dart";
 
 /// Screen that allows the user to connect to a Philips Hue bridge.
 class ConnectBrigdeScreen extends StatefulWidget {
@@ -49,7 +49,7 @@ class _ConnectBrigdeScreenState extends State<ConnectBrigdeScreen> {
               Container(
                 padding: EdgeInsets.only(top: 30),
                 child: Image.asset(
-                  'assets/images/pushlink_bridge_v2.png',
+                  "assets/images/pushlink_bridge_v2.png",
                   width: 250,
                   height: 250,
                   color: Theme.of(context).colorScheme.tertiary,

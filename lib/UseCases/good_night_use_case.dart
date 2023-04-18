@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:flutter/widgets.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -62,16 +64,14 @@ class GoodNightUseCase implements UseCase {
       return;
     } else if (lightTriggerWords.any((element) => trigger.contains(element))) {
       print("triggered light case");
-      await turnOffAllLights().then(
-        (value) {
-          flutterTts.speak(value);
-        },
-      );
+      await turnOffAllLights().then((value) {
+        flutterTts.speak(value);
+      });
       return;
     } else if (sleepPlaylistTriggerWords
         .any((element) => trigger.contains(element))) {
       print("triggered sleep playlist case");
-      startSleepPlayList();
+      await startSleepPlayList();
       return;
     } else if (alarmTriggerWords.any((element) => trigger.contains(element))) {
       print("triggered alarm case");
@@ -145,22 +145,16 @@ class GoodNightUseCase implements UseCase {
   }
 
   // TODO: implement this
-  void askForLights() async {
-    flutterTts.speak("Do you want me to turn off your lights?");
-    // await _startListening();
-
-    await checkIfAnswerIsYes(lastWords);
+  Future<void> askForLights() async {
+    await flutterTts.speak("Do you want me to turn off your lights?");
+    //await _startListening(_onSpeechResultLights);
   }
 
   // TODO: implement this
   Future<void> askForSleepPlaylist() async {
-    await flutterTts
-        .speak("Do you want me to start a sleep playlist for you?")
-        .then((value) {
-      print("Start listeniung");
-    });
-    sleep(Duration(seconds: 6));
-    await _startListening(_onSpeechResult);
+    await flutterTts.speak("Do you want me to start a sleep playlist for you?");
+    // sleep(Duration(seconds: 6));
+    // await _startListening(_onSpeechResult);
   }
 
   /// Connects to the Spotify App and starts a spotify sleeping playlist
@@ -177,35 +171,89 @@ class GoodNightUseCase implements UseCase {
 
   // TODO: implement this
   Future<void> askForWakeUpTime() async {
-    await flutterTts.speak("When do you want to wake up tomorrow?");
-    sleep(Duration(seconds: 5));
-    await _startListening(_onSpeechResultAlarm);
+    await flutterTts.speak("Do you want an alarm for tomorrow?");
 
-    print("test2: $lastWords");
+    // await _startListening(_onSpeechResultAlarm);
+
+    // print("test2: $lastWords");
   }
 
   /// Sets an alarm for a given [dateTime]
   ///
   /// Returns string that contains Lunas answer
   String setAlarm(DateTime dateTime) {
-    setAlarmByDateTime(dateTime);
+    // setAlarmByDateTime(dateTime);
     return "I set your alarm to ${dateTime.hour}:${dateTime.minute} tomorrow";
   }
 
   /// Executes the different services of the good night use case
   Future<void> wishGoodNight() async {
+    Completer<bool> completer = Completer<bool>();
     await flutterTts.speak("Good Night. Sleep Well.");
-    // askForLights();
-    String answer = await turnOffAllLights();
-    await flutterTts.speak(answer);
 
-    await askForWakeUpTime();
-    // await askForWakeUpTime();
-    await askForSleepPlaylist();
+    flutterTts.setCompletionHandler(() {
+      print("completed speaking");
+      completer.complete(true);
+    });
 
-    // await startSleepPlayList();
+    bool done = await completer.future;
 
-    // askForWakeUpTime();
+    if (done) {
+      completer = Completer();
+      await askForWakeUpTime();
+    }
+    done = await completer.future;
+    bool? listener_done;
+    if (done) {
+      completer = Completer();
+      listener_done = await _startListening();
+    }
+
+    if (listener_done != null && listener_done == true) {
+      print("listening finally done");
+      bool checkIfYes = checkIfAnswerIsYes(lastWords);
+      completer = Completer();
+      if (checkIfYes) {
+        String result = setAlarm(DateTime.now().add(Duration(seconds: 5)));
+        print(result);
+        await flutterTts.speak(result);
+      } else {
+        print("not setting alarm");
+        await flutterTts.speak("Okay, I don't set an alarm");
+      }
+    }
+
+    done = await completer.future;
+    if (done) {
+      completer = Completer();
+      print("alarm is set");
+      String answer = await turnOffAllLights();
+      flutterTts.speak(answer);
+    }
+
+    done = await completer.future;
+    if (done) {
+      completer = Completer();
+      print("turned off all lights");
+      await askForSleepPlaylist();
+    }
+
+    done = await completer.future;
+    if (done) {
+      completer = Completer();
+      listener_done = await _startListening();
+    }
+
+    if (listener_done != null && listener_done == true) {
+      print("listening finally done");
+      bool checkIfYes = checkIfAnswerIsYes(lastWords);
+      if (checkIfYes) {
+        completer = Completer();
+        await startSleepPlayList();
+      } else {
+        flutterTts.speak("Okay, I don't start a playlist. Good Night.");
+      }
+    }
   }
 
   /// Initialize speech to text, only once
@@ -213,14 +261,57 @@ class GoodNightUseCase implements UseCase {
     _speechEnabled = await _speechToText.initialize();
   }
 
+  Future<String> listenForSpeech(Duration duration) async {
+    // Check if the device supports speech recognition
+    bool isAvailable = await _speechToText.initialize();
+    if (!isAvailable) {
+      print("Speech recognition not available");
+      return "";
+    }
+
+    // Create a completer to create a future that completes with the recognized text
+    Completer<String> completer = Completer<String>();
+
+    // Start listening for speech for the specified duration
+    Timer timer = Timer(duration, () async {
+      await _speechToText.stop();
+    });
+    _speechToText.listen(
+      onResult: (result) {
+        print("Speech recognition result: ${result.recognizedWords}");
+        completer.complete(result.recognizedWords);
+      },
+      listenFor: duration,
+    );
+
+    // Wait for the future to complete and return the recognized text
+    try {
+      String recognizedText = await completer.future;
+      return recognizedText;
+    } catch (e) {
+      print("Error: $e");
+      return "";
+    } finally {
+      timer.cancel();
+    }
+  }
+
   /// Each time to start a speech recognition session
-  Future<void> _startListening(onSpeechResult) async {
+  Future<bool> _startListening() async {
+    Completer<bool> completer = Completer<bool>();
     print("listening");
     lastWords = '';
     await _speechToText.listen(
-        onResult: onSpeechResult,
+        onResult: (result) async {
+          lastWords = result.recognizedWords;
+          await _stopListening();
+          print("result: $lastWords");
+          completer.complete(true);
+        },
         listenFor: Duration(seconds: 5),
         partialResults: false);
+    bool done = await completer.future;
+    return done;
   }
 
   /// Manually stop the active speech recognition session
@@ -251,14 +342,26 @@ class GoodNightUseCase implements UseCase {
   }
 
   /// Callback that the SpeechToText plugin uses to return the recognized words
+  void _onSpeechResultLights(SpeechRecognitionResult result) async {
+    lastWords = result.recognizedWords;
+    await _stopListening();
+    print("result: $lastWords");
+    bool checkIfYes = checkIfAnswerIsYes(lastWords);
+    if (checkIfYes) {
+      print("Starting spotify playlist");
+    }
+  }
+
+  /// Callback that the SpeechToText plugin uses to return the recognized words
   void _onSpeechResultAlarm(SpeechRecognitionResult result) async {
     lastWords = result.recognizedWords;
     _stopListening();
     print("result: $lastWords");
     bool checkIfYes = checkIfAnswerIsYes(lastWords);
     if (checkIfYes) {
-      print("Starting spotify playlist");
-      await startSleepPlayList();
+      String result = setAlarm(DateTime.now().add(Duration(seconds: 5)));
+      print(result);
+      await flutterTts.speak(result);
     }
   }
 }

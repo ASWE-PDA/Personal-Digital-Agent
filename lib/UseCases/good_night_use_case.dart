@@ -30,6 +30,7 @@ class GoodNightUseCase implements UseCase {
 
   BridgeModel bridgeModel = BridgeModel();
   GoodNightModel goodNightModel = GoodNightModel();
+  SmartHomeService smartHomeService = SmartHomeService();
 
   int notificationId = 2;
 
@@ -44,14 +45,16 @@ class GoodNightUseCase implements UseCase {
   }
 
   @override
-  void execute(String trigger) {
+  void execute(String trigger) async {
     if (goodNightTriggerWords.any((element) => trigger.contains(element))) {
       print("triggered good night case");
       wishGoodNight();
       return;
     } else if (lightTriggerWords.any((element) => trigger.contains(element))) {
       print("triggered light case");
-      turnOffLights();
+      await turnOffAllLights().then((value) {
+        flutterTts.speak(value);
+      });
       return;
     } else if (sleepPlaylistTriggerWords
         .any((element) => trigger.contains(element))) {
@@ -100,22 +103,39 @@ class GoodNightUseCase implements UseCase {
     ];
   }
 
-  /// Turns off all lights.
-  void turnOffLights() async {
-    // get the ip and user from preferences
+  /// Turns off all lights using the smarthome service.
+  Future<String> turnOffAllLights() async {
     await loadPreferences();
     String ip = bridgeModel.ip;
     String user = bridgeModel.user;
     print("turning off lights: $ip, $user");
 
-    // only turn off lights if ip and user are set
-    if (ip != "" && user != "") {
-      turnOffAllLights(ip, user);
-      flutterTts.speak("Your lights are turned off. Good Night.");
-      return;
+    if (ip == "" && user == "") {
+      return "I don't know your ip address or user. Sorry I can't turn off your lights.";
+    } else {
+      try {
+        String response = "";
+        var lights = await smartHomeService.getLights(ip, user);
+        if (lights.isEmpty) {
+          return "Sorry, you don't have any lights connected.";
+        } else {
+          for (var light in lights) {
+            await smartHomeService
+                .turnOffLight(light, ip, user)
+                .then((value) {})
+                .catchError((e) {
+              print("error turning off light: $e");
+              response +=
+                  "Sorry, I couldn't turn off your light ${light.name}. ";
+            });
+          }
+          response += "Your lights are turned off. ";
+          return response;
+        }
+      } catch (_) {
+        return "Sorry, I couldn't turn off your lights.";
+      }
     }
-    flutterTts.speak(
-        "I don't know your ip address or user. Sorry I can't turn off your lights.");
   }
 
   // TODO: implement this

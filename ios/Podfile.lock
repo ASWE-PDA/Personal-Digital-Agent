@@ -31,7 +31,11 @@ PODS:
   - speech_to_text (0.0.1):
     - Flutter
     - Try
+  - spotify_sdk (0.0.1):
+    - Flutter
   - Try (2.1.1)
+  - url_launcher_ios (0.0.1):
+    - Flutter
   - vibration (1.7.5):
     - Flutter
 
@@ -48,6 +52,8 @@ DEPENDENCIES:
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/ios`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/ios`)
   - speech_to_text (from `.symlinks/plugins/speech_to_text/ios`)
+  - spotify_sdk (from `.symlinks/plugins/spotify_sdk/ios`)
+  - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
   - vibration (from `.symlinks/plugins/vibration/ios`)
 
 SPEC REPOS:
@@ -80,6 +86,10 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/shared_preferences_foundation/ios"
   speech_to_text:
     :path: ".symlinks/plugins/speech_to_text/ios"
+  spotify_sdk:
+    :path: ".symlinks/plugins/spotify_sdk/ios"
+  url_launcher_ios:
+    :path: ".symlinks/plugins/url_launcher_ios/ios"
   vibration:
     :path: ".symlinks/plugins/vibration/ios"
 
@@ -97,9 +107,11 @@ SPEC CHECKSUMS:
   path_provider_foundation: c68054786f1b4f3343858c1e1d0caaded73f0be9
   shared_preferences_foundation: 986fc17f3d3251412d18b0265f9c64113a8c2472
   speech_to_text: b43a7d99aef037bd758ed8e45d79bbac035d2dfe
+  spotify_sdk: 63cc13896c9ff93c4d023e03bb4b9b516602f355
   Try: 5ef669ae832617b3cee58cb2c6f99fb767a4ff96
+  url_launcher_ios: 08a3dfac5fb39e8759aeb0abbd5d9480f30fc8b4
   vibration: 7d883d141656a1c1a6d8d238616b2042a51a1241
 
 PODFILE CHECKSUM: ef19549a9bc3046e7bb7d2fab4d021637c0c58a3
 
-COCOAPODS: 1.12.0
+COCOAPODS: 1.11.3

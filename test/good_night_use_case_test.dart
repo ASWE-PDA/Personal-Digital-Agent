@@ -1,0 +1,136 @@
+import 'package:luna/Services/SmartHome/smart_home_model.dart';
+import 'package:luna/Services/SmartHome/smart_home_service.dart';
+import 'package:luna/UseCases/good_night_use_case.dart';
+import 'package:mockito/annotations.dart';
+import 'package:mockito/mockito.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'good_night_use_case_test.mocks.dart';
+
+@GenerateMocks([SmartHomeService])
+void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences.setMockInitialValues({});
+  var smartHomeService = MockSmartHomeService();
+  GoodNightUseCase.instance.smartHomeService = smartHomeService;
+
+  test('test light execution if no lights are connected', () async {
+    SharedPreferences.setMockInitialValues({
+      "ip_key": "127.0.0.1",
+      "user_key": "1234567890",
+    });
+
+    List<Light> lights = [];
+
+    when(smartHomeService.getLights("127.0.0.1", "1234567890"))
+        .thenAnswer((_) => Future.value(lights));
+
+    var answer = await GoodNightUseCase.instance.turnOffAllLights();
+    expect(answer, "Sorry, you don't have any lights connected.");
+  });
+
+  test('test light execution if one light is connected', () async {
+    SharedPreferences.setMockInitialValues({
+      "ip_key": "127.0.0.1",
+      "user_key": "1234567890",
+    });
+
+    List<Light> lights = [
+      Light(id: 1, name: "testlicht", on: true, reachable: true)
+    ];
+
+    when(smartHomeService.getLights("127.0.0.1", "1234567890"))
+        .thenAnswer((_) => Future.value(lights));
+
+    when(smartHomeService.turnOffLight(lights[0], "127.0.0.1", "1234567890"))
+        .thenAnswer((_) => Future.value());
+
+    var answer = await GoodNightUseCase.instance.turnOffAllLights();
+    verify(smartHomeService.getLights("127.0.0.1", "1234567890"));
+    verify(smartHomeService.turnOffLight(lights[0], "127.0.0.1", "1234567890"));
+    expect(answer, "Your lights are turned off. ");
+  });
+
+  test('test light execution if there are connection errors', () async {
+    SharedPreferences.setMockInitialValues({
+      "ip_key": "127.0.0.1",
+      "user_key": "1234567890",
+    });
+
+    List<Light> lights = [
+      Light(id: 1, name: "testlicht", on: true, reachable: true)
+    ];
+
+    when(smartHomeService.getLights("127.0.0.1", "1234567890"))
+        .thenAnswer((_) => Future.error("Error"));
+
+    when(smartHomeService.turnOffLight(lights[0], "127.0.0.1", "1234567890"))
+        .thenAnswer((_) => Future.value());
+
+    var answer = await GoodNightUseCase.instance.turnOffAllLights();
+    verify(smartHomeService.getLights("127.0.0.1", "1234567890"));
+    verifyNever(
+        smartHomeService.turnOffLight(lights[0], "127.0.0.1", "1234567890"));
+    expect(answer, "Sorry, I couldn't turn off your lights.");
+  });
+
+  test('test light execution if there are connection errors for one light',
+      () async {
+    SharedPreferences.setMockInitialValues({
+      "ip_key": "127.0.0.1",
+      "user_key": "1234567890",
+    });
+
+    List<Light> lights = [
+      Light(id: 1, name: "testlicht1", on: true, reachable: true),
+      Light(id: 2, name: "testlicht2", on: true, reachable: true)
+    ];
+
+    when(smartHomeService.getLights("127.0.0.1", "1234567890"))
+        .thenAnswer((_) => Future.value(lights));
+
+    when(smartHomeService.turnOffLight(lights[0], "127.0.0.1", "1234567890"))
+        .thenAnswer((_) => Future.value());
+    when(smartHomeService.turnOffLight(lights[1], "127.0.0.1", "1234567890"))
+        .thenAnswer((_) => Future.error("Error"));
+
+    var answer = await GoodNightUseCase.instance.turnOffAllLights();
+
+    verify(smartHomeService.getLights("127.0.0.1", "1234567890"));
+    verify(smartHomeService.turnOffLight(lights[0], "127.0.0.1", "1234567890"));
+    verify(smartHomeService.turnOffLight(lights[1], "127.0.0.1", "1234567890"));
+
+    expect(answer,
+        "Sorry, I couldn't turn off your light testlicht2. Your lights are turned off. ");
+  });
+
+  test(
+      "Check the if the light execution works correctly if no user and no ip is set",
+      () async {
+    SharedPreferences.setMockInitialValues({
+      "ip_key": "",
+      "user_key": "",
+    });
+    String response = await GoodNightUseCase.instance.turnOffAllLights();
+    verifyNever(smartHomeService.getLights("", ""));
+    verifyNever(smartHomeService.turnOffLight(any, "", ""));
+    expect(response,
+        "I don't know your ip address or user. Sorry I can't turn off your lights.");
+  });
+
+  test("Check if the preferences are set correctly", () async {
+    expect(GoodNightUseCase.instance.bridgeModel.ip, "");
+    expect(GoodNightUseCase.instance.bridgeModel.user, "");
+
+    SharedPreferences.setMockInitialValues({
+      "ip_key": "123.123.123.123",
+      "user_key": "1234567890",
+    });
+
+    await GoodNightUseCase.instance.loadPreferences();
+
+    expect(GoodNightUseCase.instance.bridgeModel.ip, "123.123.123.123");
+    expect(GoodNightUseCase.instance.bridgeModel.user, "1234567890");
+  });
+}

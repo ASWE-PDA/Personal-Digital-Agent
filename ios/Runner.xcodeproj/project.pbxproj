@@ -14,6 +14,7 @@
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
 		BC6A136F29E05BBA008E9929 /* audience_of_one.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = BC6A136E29E05BBA008E9929 /* audience_of_one.mp3 */; };
+		BCB43DC629ED39A4005E3DF0 /* SpotifyiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCB43DC529ED39A4005E3DF0 /* SpotifyiOS.framework */; };
 		EC3E5A8E1778F9E833CD3EC7 /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE1466329CDF26B82E9A47BB /* Pods_Runner.framework */; };
 /* End PBXBuildFile section */
 
@@ -48,6 +49,7 @@
 		97E6EAD7EBB824DBA2CF0023 /* Pods-Runner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig"; sourceTree = "<group>"; };
 		BA70FC8F044DBCAFFF1C5CB4 /* Pods-Runner.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile.xcconfig"; sourceTree = "<group>"; };
 		BC6A136E29E05BBA008E9929 /* audience_of_one.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = audience_of_one.mp3; path = ../../assets/audio/audience_of_one.mp3; sourceTree = "<group>"; };
+		BCB43DC529ED39A4005E3DF0 /* SpotifyiOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SpotifyiOS.framework; sourceTree = "<group>"; };
 		DE1466329CDF26B82E9A47BB /* Pods_Runner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -57,6 +59,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EC3E5A8E1778F9E833CD3EC7 /* Pods_Runner.framework in Frameworks */,
+				BCB43DC629ED39A4005E3DF0 /* SpotifyiOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -122,6 +125,7 @@
 		DAED14E7A1D3AE873A1D4C08 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BCB43DC529ED39A4005E3DF0 /* SpotifyiOS.framework */,
 				DE1466329CDF26B82E9A47BB /* Pods_Runner.framework */,
 			);
 			name = Frameworks;
@@ -381,6 +385,10 @@
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = XZ285KKK3X;
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = Runner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -510,6 +518,10 @@
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = XZ285KKK3X;
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = Runner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -533,6 +545,10 @@
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = XZ285KKK3X;
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = Runner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

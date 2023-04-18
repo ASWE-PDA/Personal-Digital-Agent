@@ -49,7 +49,8 @@ void main() {
       sm.start();
       expect(sm.getCurrentState(), StateMachine.idleState);
       sm.transitionToGoodNight("good night");
-      expect(sm.getCurrentState(), StateMachine.idleState); //back to idle after good night
+      expect(sm.getCurrentState(),
+          StateMachine.idleState); //back to idle after good night
     });
     test('State Machine should transition to idle state', () {
       final sm = StateMachine();
@@ -65,7 +66,8 @@ void main() {
       sm.start();
       expect(sm.getCurrentState(), StateMachine.idleState);
       sm.runIdleState();
-      expect(sm.getCurrentState(), StateMachine.idleState); //still idle, no incoming triggers
+      expect(sm.getCurrentState(),
+          StateMachine.idleState); //still idle, no incoming triggers
     });
     test('controller state machine call', () {
       final controller = Controller();
@@ -135,7 +137,19 @@ void main() {
     });
     test('positive use case good night check', () {
       final useCaseCheck = UseCaseCheck();
-      useCaseCheck.goodNightTriggerWords = ["good night", "night", "light", "lights", "turn off", "music", "playlist", "spotify", "alarm", "wake up", "wake me up"];
+      useCaseCheck.goodNightTriggerWords = [
+        "good night",
+        "night",
+        "light",
+        "lights",
+        "turn off",
+        "music",
+        "playlist",
+        "spotify",
+        "alarm",
+        "wake up",
+        "wake me up"
+      ];
       bool detected = useCaseCheck.goodNightCheck("good night");
       expect(detected, true);
       expect(useCaseCheck.triggerWord, "good night");

@@ -55,5 +55,20 @@
 	<string>This app needs access to location when open.</string>
 	<key>DART_DEFINES</key>
 	<string>$(DART_DEFINES)</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+	  <dict>
+	    <key>CFBundleURLName</key>
+	    <string>com.supercompany.luna</string>
+	    <key>CFBundleURLSchemes</key>
+	    <array>
+	      <string>luna</string>
+	    </array>
+	  </dict>
+	</array>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>spotify</string>
+	</array>
 </dict>
 </plist>

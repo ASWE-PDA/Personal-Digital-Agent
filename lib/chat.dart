@@ -4,7 +4,6 @@ import 'package:flutter_tts/flutter_tts.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:luna/Screens/newsScreen.dart';
 import 'package:luna/Services/Alarm/alarm_service.dart';
-import 'package:luna/Services/Calendar/calendar_service.dart';
 import 'package:luna/Services/location_service.dart';
 import 'package:luna/Services/maps_service.dart';
 import 'package:luna/Services/SmartHome/smart_home_service.dart';
@@ -185,6 +184,11 @@ class _ChatPageState extends State<ChatPage> {
                     pushNewsScreen();
                   },
                   child: Text("Test News Use Case DEBUG")),
+              ElevatedButton(
+                  onPressed: () async {
+                    SchedulingUseCase.instance.execute("movie");
+                  },
+                  child: Text("Test Move Service DEBUG")),
               Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: AvatarGlow(

@@ -1,11 +1,13 @@
+import 'dart:async';
+
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:luna/Services/Alarm/alarm_service.dart';
 import 'package:luna/Services/Calendar/calendar_service.dart';
+import 'package:luna/Services/Movies/movie_service.dart';
 import 'package:luna/Services/maps_service.dart';
 import 'package:luna/UseCases/use_case.dart';
 import 'package:flutter_tts/flutter_tts.dart';
-import 'package:luna/Services/notification_service.dart';
+import 'package:speech_to_text/speech_to_text.dart' as stt;
 
 import '../../Services/location_service.dart';
 
@@ -24,62 +26,29 @@ class SchedulingUseCase implements UseCase {
 
   List<String> schedulingTriggerWords = ["schedule", "scheduling"];
   List<String> calendarTriggerWords = ["calendar", "events", "plans"];
-  List<String> mailTriggerWords = ["mail", "messages"];
-  List<String> mapsTriggerWords = ["maps", "route"];
+  List<String> movieTriggerWords = ["movie", "film", "movies", "films", "show", "shows"];
 
   FlutterTts flutterTts = FlutterTts();
-
-
-  int notificationId = 2;
 
   SchedulingUseCase() {
     flutterTts.setLanguage("en-US");
   }
 
-  /// Loads preferences from SharedPreferences.
-  Future<void> loadPreferences() async {
-  }
-
   @override
   void execute(String trigger) {
-    if (schedulingTriggerWords.any((element) => trigger.contains(element))) {
-      print("triggered scheduling case");
-      wishGoodNight();
-      return;
-    } else if (calendarTriggerWords.any((element) => trigger.contains(element))) {
+    if (calendarTriggerWords.any((element) => trigger.contains(element))) {
       print("triggered calendar case");
       listUpcomingEvents();
       return;
-    } else if (mailTriggerWords.any((element) => trigger.contains(element))) {
-      print("triggered mail case");
-      startSleepPlayList();
-      return;
-    } else if (mapsTriggerWords.any((element) => trigger.contains(element))) {
-      print("triggered maps case");
-      setAlarm();
+    } else if (movieTriggerWords.any((element) => trigger.contains(element))) {
+      print("triggered movie case");
+      listMovies();
       return;
     }
     flutterTts.speak("I don't know what you want");
     return;
   }
-
-  /// Schedules a daily notification for the good night use case.
-  ///
-  /// The method cancels the old notificaion schedule and schedules a new one
-  /// at the time defined by [hours] and [minutes].
-  Future<void> schedule(int hours, int minutes) async {
-    await NotificationService.instance.init(onNotificationTap);
-
-    await NotificationService.instance.cancel(notificationId);
-
-    await NotificationService.instance.scheduleAlarmNotif(
-      id: notificationId,
-      title: "Good Night",
-      body: "It is time to go to sleep!",
-      dateTime: Time(hours, minutes, 0),
-    );
-    print("Notification scheduled for $hours:$minutes");
-  }
+  
 
   @override
   Future<bool> checkTrigger() async {
@@ -91,8 +60,7 @@ class SchedulingUseCase implements UseCase {
     return [
       ...schedulingTriggerWords,
       ...calendarTriggerWords,
-      ...mailTriggerWords,
-      ...mapsTriggerWords
+      ...movieTriggerWords,
     ];
   }
 
@@ -103,7 +71,7 @@ class SchedulingUseCase implements UseCase {
       flutterTts.speak("You have no events planned today.");
     }
     else if (events.length == 1) {
-      flutterTts.speak("You have ${events.length} event planned today.");
+      flutterTts.speak("You have ${events.length} event planned this today.");
     }
     else {
       flutterTts.speak("You have ${events.length} events planned today.");
@@ -111,7 +79,7 @@ class SchedulingUseCase implements UseCase {
     
     for (var i = 0; i < events.length; i++) {
       flutterTts.speak(
-        "From ${getTimeFromHoursMinutes(events[i].start!.hour, events[i].start!.minute)} till ${getTimeFromHoursMinutes(events[i].end!.hour, events[i].end!.minute)}.");
+        "The event ${events[i].title} takes place from ${getTimeFromHoursMinutes(events[i].start!.hour, events[i].start!.minute)} till ${getTimeFromHoursMinutes(events[i].end!.hour, events[i].end!.minute)}.");
       if (events[i].description != null) {
         flutterTts.speak("The event has following description: ${events[i].description}");
       }
@@ -168,31 +136,80 @@ class SchedulingUseCase implements UseCase {
     }
   }
 
-  // TODO: implement this
-  void askForSleepPlaylist() {
-    flutterTts.speak("Do you want me to start a sleep playlist for you?");
+  void listMovies() async{
+    final movies = await getPopularMovies();
+    flutterTts.speak("The 5 most popular movies from the movie database are:");
+    
+    for (var i = 0; i < 5; i++) {
+      final movie = movies[i];
+      flutterTts.speak(movie["title"]);
+    }
+    flutterTts.speak("Which Movie would you like to watch tonight");
+    await Future.delayed(Duration(seconds: 15));
+    String watchMovie = await listenForSpeech(Duration(seconds: 3));
+    await Future.delayed(Duration(seconds: 3));
+    print(watchMovie);
+    for (var i = 0; i < 5; i++) {
+      final movieTitle = movies[i]["title"];
+      List<String> watchMovieeSubstring = watchMovie.split(" ");
+      for (var substring in watchMovieeSubstring) {
+        print(substring);
+        print(movieTitle);
+        if (movieTitle.toLowerCase().contains(substring.toLowerCase())) {
+          print("true");
+          print("stop wait");
+          createCalendarEvent(DateTime.now(), 
+                              movieTitle, 
+                              await getMovieLength(movies[i]["id"])
+                              );
+          flutterTts.speak("I created an Event for this evening");
+          return;
+        }  
+        else {
+          print("false");
+        }
+      }
+      
+    }
+    return;
   }
 
-  // TODO: implement this
-  void startSleepPlayList() {
-    print("starting sleep playlist");
-    flutterTts.speak("I started your sleep playlist");
-  }
 
-  // TODO: implement this
-  void askForWakeUpTime() {
-    flutterTts.speak("When do you want to wake up tomorrow?");
-  }
+  Future<String> listenForSpeech(Duration duration) async {
+    // Create an instance of the speech_to_text package
+    stt.SpeechToText speechToText = stt.SpeechToText();
 
-  // TODO: get user input
-  void setAlarm() {
-    DateTime dateTime = DateTime.now().add(Duration(seconds: 10));
-    setAlarmByDateTime(dateTime);
-    flutterTts.speak(
-        "I set your alarm to ${dateTime.hour}:${dateTime.minute} tomorrow");
-  }
+    // Check if the device supports speech recognition
+    bool isAvailable = await speechToText.initialize();
+    if (!isAvailable) {
+      print("Speech recognition not available");
+      return "";
+    }
 
-  void wishGoodNight() {
-    flutterTts.speak("Good Night. Sleep Well.");
+    // Create a completer to create a future that completes with the recognized text
+    Completer<String> completer = Completer<String>();
+
+    // Start listening for speech for the specified duration
+    Timer timer = Timer(duration, () async{
+      await speechToText.stop();
+    });
+    speechToText.listen(
+      onResult: (result) {
+        print("Speech recognition result: ${result.recognizedWords}");
+        completer.complete(result.recognizedWords);
+      },
+      listenFor: duration,
+    );
+
+    // Wait for the future to complete and return the recognized text
+    try {
+      String recognizedText = await completer.future;
+      return recognizedText;
+    } catch (e) {
+      print("Error: $e");
+      return "";
+    } finally {
+      timer.cancel();
+    }
   }
 }

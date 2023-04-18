@@ -4,49 +4,35 @@ import '../UseCases/use_case.dart';
 import 'idle_service.dart';
 
 /// Controller for the Personal Digital Agent.
-/// Contains and runs the state machine to automatically detect and activate the use cases.
-/// Parameters:
-/// - machine: the state machine
-/// Methods:
-/// - getCurrentState: return current state of the state machine
-/// - start: start state machine. machine automatically runs use case checks and transitions to appropriate state
+/// Contains and runs the state [machine] to automatically detect and activate the use cases.
 class Controller {
   static StateMachine machine = StateMachine();
 
+  /// return current state of the state [machine]
   State<String>? getCurrentState() {
-    // return current state of the state machine
     return machine.getCurrentState();
   }
 
+  /// update the state [machine] with speech [input]
   void update(String input) {
-    // update state machine with input
     machine.update(input);
     machine.runIdleState();
   }
 
+  /// start the state [machine]
   void start() {
     machine
-        .start(); // start state machine. machine automatically runs use case checks and transitions to appropriate state
+        .start();
   }
 }
 
 /// State machine for the Personal Digital Agent.
-/// Parameters:
-///  - machine: the state machine
-/// - idleState: the idle state
-/// - goodMorningState: the good morning state
-/// - eventPlanningState: the event planning state
-/// - newsState: the news state
-/// - goodNightState: the good night state
-/// Methods:
-/// - transitionToIdle: leave current state and transition to idle state
-/// - transitionToGoodMorning: leave current state and transition to good morning state
-/// - transitionToEventPlanning: leave current state and transition to event planning state
-/// - transitionToNews: leave current state and transition to news state
-/// - transitionToGoodNight: leave current state and transition to good night state
-/// - getCurrentState: return current state
-/// - runIdleState: check for use cases and transition to appropriate state
-/// - start: start state machine. machine automatically runs use case checks and transitions to appropriate state
+/// The states of the state [machine] are as follows:
+/// - the [idleState] runs use case checks and transitions to appropriate state
+/// - the [goodMorningState] runs the good morning use case
+/// - the [eventPlanningState] runs the event planning use case
+/// - the [newsState] runs the news use case
+/// - the [goodNightState] runs the good night use case
 class StateMachine {
   static final machine = Machine<String>();
   final useCaseCheck = UseCaseCheck();
@@ -59,60 +45,57 @@ class StateMachine {
   static final goodNightState =
       machine.newState('good_night'); // state for good night use case
   
-  //static UseCase goodMorningUseCase;
-  //static UseCase eventPlanningUseCase;
-  //static UseCase newsUseCase;
+  //static UseCase goodMorningUseCase = TODO link good morning use case;
+  //static UseCase eventPlanningUseCase = TODO link event planning use case;
+  //static UseCase newsUseCase = TODO link news use case;
   static UseCase _goodNightUseCase = GoodNightUseCase.instance;
 
   set goodNightUseCase(UseCase instance){
     _goodNightUseCase = instance;
   }
 
+  /// leave current state and transition to [idleState]
   void transitionToIdle() {
-    // leave current state and transition to idle state
     print("transitioning to idle state");
     idleState.enter();
   }
 
+  /// leave current state and transition to [goodMorningState]
   void transitionToGoodMorning(String trigger) {
-    // leave current state and transition to good morning state
     print("transitioning to good morning state");
     goodMorningState.enter();
     // TODO link to good morning state main and transition back to idle afterwards
   }
 
+  /// leave current state and transition to [eventPlanningState]
   void transitionToEventPlanning(String trigger) {
-    // leave current state and transition to event planning state
     print("transitioning to event planning state");
     eventPlanningState.enter();
     // TODO link to event planning state main and transition back to idle afterwards
   }
 
+  /// leave current state and transition to [newsState]
   void transitionToNews(String trigger) {
-    // leave current state and transition to news state
     print("transitioning to news state");
     newsState.enter();
     // TODO link to news state main and transition back to idle afterwards
   }
 
+  /// leave current state and transition to [goodNightState]
   void transitionToGoodNight(String trigger) {
-    // leave current state and transition to good night state
     print("transitioning to good night state");
     goodNightState.enter();
     _goodNightUseCase.execute(trigger);
     transitionToIdle();
-    //goodNightState.onFuture(GoodNightUseCase.instance.execute("good night"), (value) => idleState.enter());
   }
 
+  /// return current state of the state [machine]
   State<String>? getCurrentState() {
-    // return current state
     return machine.current;
   }
 
+  /// check for use cases and transition to appropriate state
   void runIdleState() {
-    // check for use cases and transition to appropriate state
-    // someState.onStream(element.onClick, (value) => anotherState.enter());
-    // idleState.onStream(value.activate, (value) => transitionToGoodNight());
     print("entered idle state");
       int state = useCaseCheck.activate;
       if (state > 0) {
@@ -135,6 +118,7 @@ class StateMachine {
       }
   }
 
+  /// start the state [machine], which automatically runs use case checks in the [idleState]
   void start() {
     // define transitions
     idleState.onEntry(() => runIdleState());
@@ -148,22 +132,11 @@ class StateMachine {
     goodNightState.onEntry(() => print('entering good night state'));
     goodNightState.onExit(() => print('leaving good night state'));
 
-    /*
-    final goodMorningCheck = GoodMorningCheck();
-    final eventPlanningCheck = EventPlanningCheck();
-    final newsCheck = NewsCheck();
-    final goodNightCheck = GoodNightCheck();
-    idleState.onStream(goodMorningCheck, (value) => transitionToGoodMorning());
-    idleState.onStream(eventPlanningCheck, (value) => transitionToEventPlanning());
-    idleState.onStream(newsCheck, (value) => transitionToNews());
-    idleState.onStream(goodNightCheck, (value) => transitionToGoodNight());
-*/
-
     machine.start();
   }
 
+  /// update state [machine] with new speech input
   void update(String input) {
-    // update state machine with new input
     useCaseCheck.monitor(input);
   }
 }

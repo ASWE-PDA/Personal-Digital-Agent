@@ -145,18 +145,22 @@ class SchedulingUseCase implements UseCase {
     }
 
     output += ". Would you like to watch on of those Movies today? ";
+    Completer<bool> completer = Completer<bool>();
     flutterTts.speak(output);
     flutterTts.setCompletionHandler(() {
+      completer.complete(true);
       print("=======================================\n\n\COMPLETION HANDLER DONE\n\n\n====================================");
     });
+    bool isComplete = await completer.future;
 
     print("=======================================\n\n\nDONETALKING NOW LISTENING\n\n\n====================================");
     String watchMovie = await listenForSpeech(Duration(seconds: 3));
     if (!watchMovie.toLowerCase().contains("yes")) {
+      print("=======================================\n\n\n No YES DETECTED got $watchMovie \n\n\n====================================");
       return;
     }
 
-    flutterTts.speak("Which Movie would you like to watch tonight");
+    await flutterTts.speak("Which Movie would you like to watch tonight");
     flutterTts.setCompletionHandler(() {
       print("=======================================\n\n\COMPLETION HANDLER DONE\n\n\n====================================");
     });
@@ -176,12 +180,10 @@ class SchedulingUseCase implements UseCase {
                               movieTitle, 
                               await getMovieLength(movies[i]["id"])
                               );
-          flutterTts.speak("I created an Event for this evening for the movie $movieTitle.");
+          await flutterTts.speak("I created an Event for this evening for the movie $movieTitle.");
           flutterTts.setCompletionHandler(() {
             print("=======================================\n\n\COMPLETION HANDLER DONE\n\n\n====================================");
           });
-
-          print("=======================================\n\n\nDONETALKING NOW LISTENING\n\n\n====================================");
           return;
         }
       }  

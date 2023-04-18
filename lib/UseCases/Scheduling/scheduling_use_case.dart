@@ -142,38 +142,34 @@ class SchedulingUseCase implements UseCase {
       final movie = movies[i];
       flutterTts.speak(movie["title"]);
     }
-    flutterTts.speak("Which Movie would you like to watch tonight");
-    await Future.delayed(Duration(seconds: 20));
-    print("----------------------------------------");
-    print("----------------------------------------");
-    print("----------------------------------------");
-    print("----------------------------------------");
-    print("----------------------------------------");
-    print("start talking");
+
+    flutterTts.speak("Would you like to watch on of those Movies today?");
+    await Future.delayed(Duration(seconds: 16));
     String watchMovie = await listenForSpeech(Duration(seconds: 3));
+    if (!watchMovie.toLowerCase().contains("yes")) {
+      return;
+    }
+
+    flutterTts.speak("Which Movie would you like to watch tonight");
+    String movieToWatch = await listenForSpeech(Duration(seconds: 3));
     await Future.delayed(Duration(seconds: 7));
-    print(watchMovie);
+    
     for (var i = 0; i < 5; i++) {
       final movieTitle = movies[i]["title"];
-      List<String> watchMovieeSubstring = watchMovie.split(" ");
-      for (var substring in watchMovieeSubstring) {
-        print(substring);
-        print(movieTitle);
+      List<String> movieToWatcheSubstring = movieToWatch.split(" ");
+
+      for (var substring in movieToWatcheSubstring) {
+
         if (movieTitle.toLowerCase().contains(substring.toLowerCase())) {
-          print("true");
-          print("stop wait");
+
           createCalendarEvent(DateTime.now(), 
                               movieTitle, 
                               await getMovieLength(movies[i]["id"])
                               );
           flutterTts.speak("I created an Event for this evening");
           return;
-        }  
-        else {
-          print("false");
         }
-      }
-      
+      }  
     }
     return;
   }

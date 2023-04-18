@@ -5,7 +5,7 @@ import 'package:luna/Services/Movies/movie_service.dart';
 import 'package:luna/Services/maps_service.dart';
 import 'package:luna/UseCases/use_case.dart';
 import 'package:flutter_tts/flutter_tts.dart';
-import 'package:luna/Services/notification_service.dart';
+import 'package:speech_to_text/speech_to_text.dart' as stt;
 
 import '../../Services/location_service.dart';
 
@@ -142,7 +142,42 @@ class SchedulingUseCase implements UseCase {
       final movie = movies[i];
       flutterTts.speak(movie["title"]);
     }
-    
-    createCalendarEvent(DateTime.now(), movies[0]["title"], await getMovieLength(movies[0]["id"]));
+    flutterTts.speak("Do you want to watch any of those movies tonight?");
+    String result = await listenForSpeech(Duration(seconds: 5));
+    //createCalendarEvent(DateTime.now(), movies[0]["title"], await getMovieLength(movies[0]["id"]));
   }
+
+
+  Future<String> listenForSpeech(Duration duration) async {
+    // Create an instance of the speech_to_text package
+    stt.SpeechToText speechToText = stt.SpeechToText();
+
+    // Check if the device supports speech recognition
+    bool isAvailable = await speechToText.initialize();
+    if (!isAvailable) {
+      print("Speech recognition not available");
+      return "";
+    }
+
+    // Start listening for speech for the specified duration
+    bool isListening = await speechToText.listen(
+      onResult: (result) {
+        print("Speech recognition result: ${result.recognizedWords}");
+      },
+      listenFor: duration,
+    );
+
+    // If speech was recognized, return it as a string
+    if (isListening) {
+      await speechToText.stop();
+      String result = speechToText.lastRecognizedWords;
+      print(result);
+      return result;
+    }
+
+    // If no speech was recognized, return an empty string
+    print("nothing");
+    return "";
+  }
+
 }

@@ -1,4 +1,4 @@
-import 'package:luna/UseCases/good_night_use_case.dart';
+import "package:luna/UseCases/good_night_use_case.dart";
 
 /// This class is used to check if a use case is triggered. 
 /// It signals which use case to [activate] and contains the detected [triggerWord]s. 

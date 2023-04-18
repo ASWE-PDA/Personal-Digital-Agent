@@ -15,9 +15,9 @@ class Light {
   factory Light.fromJson(Map<String, dynamic> json, int id) {
     return Light(
       id: id,
-      name: json['name'],
-      on: json['state']['on'],
-      reachable: json['state']['reachable'],
+      name: json["name"],
+      on: json["state"]["on"],
+      reachable: json["state"]["reachable"],
     );
   }
 }
@@ -36,9 +36,9 @@ class Bridge {
 
   factory Bridge.fromJson(Map<String, dynamic> json) {
     return Bridge(
-      id: json['id'],
-      internalipaddress: json['internalipaddress'],
-      port: json['port'],
+      id: json["id"],
+      internalipaddress: json["internalipaddress"],
+      port: json["port"],
     );
   }
 }

@@ -1,15 +1,15 @@
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:luna/Services/Alarm/alarm_service.dart';
-import 'package:luna/Services/SmartHome/bridge_model.dart';
-import 'package:luna/Services/SmartHome/smart_home_service.dart';
-import 'package:luna/UseCases/good_night_model.dart';
-import 'package:luna/UseCases/use_case.dart';
-import 'package:flutter_tts/flutter_tts.dart';
-import 'package:luna/Services/notification_service.dart';
+import "package:flutter_local_notifications/flutter_local_notifications.dart";
+import "package:luna/Services/Alarm/alarm_service.dart";
+import "package:luna/Services/SmartHome/bridge_model.dart";
+import "package:luna/Services/SmartHome/smart_home_service.dart";
+import "package:luna/UseCases/good_night_model.dart";
+import "package:luna/UseCases/use_case.dart";
+import "package:flutter_tts/flutter_tts.dart";
+import "package:luna/Services/notification_service.dart";
 
-@pragma('vm:entry-point')
+@pragma("vm:entry-point")
 void onNotificationTap(NotificationResponse response) {
-  print('notificationTap');
+  print("notificationTap");
 }
 
 /// Use case for the Good Night feature.

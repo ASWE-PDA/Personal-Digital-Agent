@@ -1,9 +1,9 @@
-import 'package:shared_preferences/shared_preferences.dart';
+import "package:shared_preferences/shared_preferences.dart";
 
 /// Class that is responsible for loading and updating the shared preferences for the bridge configuration.
 class BridgePreferences {
-  static const userKey = 'user_key';
-  static const ipKey = 'ip_key';
+  static const userKey = "user_key";
+  static const ipKey = "ip_key";
 
   /// Updates the [value] of the user.
   Future<void> setUser(String value) async {

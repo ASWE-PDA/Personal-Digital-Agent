@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:luna/Screens/connect_bridge_screen.dart';
-import 'package:luna/Services/SmartHome/bridge_model.dart';
-import 'package:provider/provider.dart';
+import "package:flutter/material.dart";
+import "package:luna/Screens/connect_bridge_screen.dart";
+import "package:luna/Services/SmartHome/bridge_model.dart";
+import "package:provider/provider.dart";
 
 // Screen to enter a new ip address and store the value locally.
 class SmartHomeSettingsScreen extends StatefulWidget {
@@ -72,7 +72,7 @@ class _SmartHomeSettingsScreen extends State<SmartHomeSettingsScreen> {
                 child: TextFormField(
                   controller: _ipController,
                   decoration: const InputDecoration(
-                      hintText: 'Enter IP address of bridge'),
+                      hintText: "Enter IP address of bridge"),
                   onChanged: (value) {
                     setState(() {});
                   },

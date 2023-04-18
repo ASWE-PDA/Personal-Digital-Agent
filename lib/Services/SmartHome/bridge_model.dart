@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:luna/Services/SmartHome/bridge_preferences.dart';
+import "package:flutter/material.dart";
+import "package:luna/Services/SmartHome/bridge_preferences.dart";
 
 /// Class that stores an the philips hue bridge configuration and notifies the app.
 class BridgeModel extends ChangeNotifier {

@@ -3,13 +3,12 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i6;
-
-import 'package:flutter_tts/flutter_tts.dart' as _i2;
-import 'package:luna/Services/SmartHome/bridge_model.dart' as _i3;
-import 'package:luna/UseCases/good_night_model.dart' as _i4;
-import 'package:luna/UseCases/good_night_use_case.dart' as _i5;
-import 'package:mockito/mockito.dart' as _i1;
+import "dart:async" as _i6;
+import "package:flutter_tts/flutter_tts.dart" as _i2;
+import "package:luna/Services/SmartHome/bridge_model.dart" as _i3;
+import "package:luna/UseCases/good_night_model.dart" as _i4;
+import "package:luna/UseCases/good_night_use_case.dart" as _i5;
+import "package:mockito/mockito.dart" as _i1;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values

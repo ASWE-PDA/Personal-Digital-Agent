@@ -1,9 +1,9 @@
-import 'package:shared_preferences/shared_preferences.dart';
+import "package:shared_preferences/shared_preferences.dart";
 
 /// Class that is responsible for loading and updating the shared preferences for the bridge configuration.
 class GoodNightPreferences {
-  static const hoursKey = 'hours_key';
-  static const minutesKey = 'minutes_key';
+  static const hoursKey = "hours_key";
+  static const minutesKey = "minutes_key";
 
   /// Updates the [hours] and [minutes] of the good night schedule time.
   Future<void> setHours(int hours) async {

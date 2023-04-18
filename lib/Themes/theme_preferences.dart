@@ -1,8 +1,8 @@
-import 'package:shared_preferences/shared_preferences.dart';
+import "package:shared_preferences/shared_preferences.dart";
 
 /// Class that is responsible for loading and updating the theme preference.
 class ThemePreferences {
-  static const themeKey = 'theme_key';
+  static const themeKey = "theme_key";
 
   /// Updates the [value] of the theme.
   setTheme(bool value) async {

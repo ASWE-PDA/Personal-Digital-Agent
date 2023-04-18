@@ -190,8 +190,8 @@ class SchedulingUseCase implements UseCase {
     Completer<String> completer = Completer<String>();
 
     // Start listening for speech for the specified duration
-    Timer timer = Timer(duration, () {
-      speechToText.stop();
+    Timer timer = Timer(duration, () async{
+      await speechToText.stop();
     });
     speechToText.listen(
       onResult: (result) {

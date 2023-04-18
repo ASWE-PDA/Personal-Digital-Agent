@@ -167,8 +167,8 @@ class _ChatPageState extends State<ChatPage> {
                   child: Text("Get Maps Info DEBUG")),
               ElevatedButton(
                   onPressed: () async {
-                    SchedulingUseCase.instance.execute("calendar");
-                    
+                    //SchedulingUseCase.instance.execute("calendar");
+                    controller.update("calendar");
                   },
                   child: Text("Test Calendar Usecase DEBUG")),
               ElevatedButton(

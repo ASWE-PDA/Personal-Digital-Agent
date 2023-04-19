@@ -7,6 +7,8 @@ import "package:luna/Services/Movies/movie_service.dart";
 import "package:luna/Services/maps_service.dart";
 import "package:luna/UseCases/use_case.dart";
 import '../../Services/location_service.dart';
+import 'package:intl/intl.dart';
+import 'package:timezone/timezone.dart' as tz;
 
 @pragma("vm:entry-point")
 void onNotificationTap(NotificationResponse response) {
@@ -131,6 +133,32 @@ class EventPlanningUseCase extends UseCase {
     }
   }
 
+  DateTime? parseSpokenTime(String spokenTime) {
+    final RegExp timePattern = RegExp(r'(\d{1,2})(\d{2})\s*(am|pm)');
+    final RegExpMatch? match = timePattern.firstMatch(spokenTime.toLowerCase());
+    if (match == null) return null;
+
+    try {
+      int hour = int.parse(match.group(1)!);
+      int minute = int.parse(match.group(2)!);
+      String amPm = match.group(3)!;
+      if (hour == 12) {
+        hour = 0;
+      }
+      if (amPm == 'pm') {
+        hour += 12;
+      }
+      final DateTime now = DateTime.now();
+      final DateTime timeOfDay = DateTime(now.year, now.month, now.day, hour, minute);
+      final String timeZoneName = tz.local.name;
+      final tz.Location location = tz.getLocation(timeZoneName);
+      return tz.TZDateTime.from(timeOfDay, location);
+    } catch (e) {
+      return null;
+    }
+    
+  }
+
   void listMovies() async{
     final movies = await getPopularMovies();
     String output = "The 5 most popular movies from the movie database are: ";
@@ -162,12 +190,19 @@ class EventPlanningUseCase extends UseCase {
       for (var substring in movieToWatcheSubstring) {
 
         if (movieTitle.toLowerCase().contains(substring.toLowerCase())) {
+          
+          await textToSpeechOutput("When would you like to watch the movie? An example answer would be eigth zero zero pm.");
+          String movieTimeInput = await listenForSpeech(Duration(seconds: 3));
+          DateTime? movieTime = parseSpokenTime(movieTimeInput);
+          if (movieTime == null) {
+            return;
+          }
 
-          createCalendarEvent(DateTime.now(), 
+          createCalendarEvent(movieTime, 
                               movieTitle, 
                               await getMovieLength(movies[i]["id"])
                               );
-          await textToSpeechOutput("I created an Event for this evening for the movie $movieTitle.");
+          await textToSpeechOutput("I created an Event for the movie $movieTitle at ${getTimeFromHoursMinutes(movieTime.hour, movieTime.minute)}.");
           return;
         }
       }  

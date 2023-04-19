@@ -38,7 +38,7 @@ void main() {
       sm.eventPlanningUseCase = MockEventPlanningUseCase();
       sm.start();
       expect(sm.getCurrentState(), StateMachine.idleState);
-      sm.transitionToEventPlanning("event");
+      sm.transitionToEventPlanning("events");
       expect(sm.getCurrentState(), StateMachine.idleState);
     });
     test('State Machine should transition to news state', () {
@@ -75,6 +75,31 @@ void main() {
       final controller = Controller();
       controller.start();
       expect(controller.getCurrentState(), StateMachine.idleState);
+    });
+    test('state machine update input string', () {
+      final sm = StateMachine();
+      sm.start();
+      expect(sm.getCurrentState(), StateMachine.idleState);
+      sm.useCaseCheck.goodMorningTriggerWords = ["good morning"]; // mock the trigger words
+      sm.useCaseCheck.eventPlanningTriggerWords = ["events"];
+      sm.useCaseCheck.goodNightTriggerWords = ["good night"];
+      sm.update("luna");
+      expect(sm.getCurrentState(), StateMachine.idleState);
+    });
+    test('controller update input string', () {
+      final controller = Controller();
+      controller.start();
+      expect(controller.getCurrentState(), StateMachine.idleState);
+      controller.update("luna");
+      expect(controller.getCurrentState(), StateMachine.idleState);
+    });
+    test('State Machine check leads to transition to good morning state', () {
+      final sm = StateMachine();
+      sm.goodMorningUseCase = MockGoodMorningUseCase();
+      sm.start();
+      expect(sm.getCurrentState(), StateMachine.idleState);
+      sm.update("good morning");
+      expect(sm.getCurrentState(), StateMachine.idleState);
     });
   });
   group('State Machine Use Case Checks', () {

@@ -3,4 +3,9 @@ class Environment {
   static const openWeatherApiKey =
       String.fromEnvironment("OPENWEATHER_API_KEY");
   static const spotifyClientId = String.fromEnvironment("SPOTIFY_CLIENT_ID");
+  static const tmbdApiKey = String.fromEnvironment("TMBD_API_KEY");
+  static const tmdbApiReadAccessTokenV4 = String.fromEnvironment("TMDB_API_READ_ACCESS_TOKEN_V4");
+  static const newYorkTimesKey = String.fromEnvironment("NEW_YORK_TIMES_KEY");
+  static const newsapiKey = String.fromEnvironment("NEWSAPI_KEY");
+  static const marketauxApiKey = String.fromEnvironment("MARKETAUX_KEY");
 }

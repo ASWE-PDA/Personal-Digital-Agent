@@ -32,6 +32,7 @@ dependencies:
   weather: ^2.0.1
   intl: ^0.18.0
   flutter_typeahead: ^4.3.7
+  tmdb_api: ^2.1.4
   
   
 dev_dependencies:

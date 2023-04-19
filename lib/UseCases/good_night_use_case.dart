@@ -19,7 +19,7 @@ void onNotificationTap(NotificationResponse response) {
 }
 
 /// Use case for the Good Night feature.
-class GoodNightUseCase implements UseCase {
+class GoodNightUseCase extends UseCase {
   /// Singleton instance of [GoodNightUseCase].
   static final instance = GoodNightUseCase._();
 

@@ -4,7 +4,7 @@ import 'package:flutter_tts/flutter_tts.dart';
 import 'package:luna/Screens/newsScreen.dart';
 import 'package:luna/Services/Alarm/alarm_service.dart';
 import 'package:luna/Services/SmartHome/bridge_model.dart';
-import 'package:luna/UseCases/Scheduling/scheduling_use_case.dart';
+import 'package:luna/UseCases/EventPlanning/event_planning_use_case.dart';
 import 'package:luna/UseCases/good_morning_use_case.dart';
 import 'package:luna/UseCases/good_night_use_case.dart';
 import 'package:luna/UseCases/news/news_use_case.dart';
@@ -129,7 +129,7 @@ class _ChatPageState extends State<ChatPage> {
                   child: Text("Test Good Morning Use Case DEBUG")),
               ElevatedButton(
                   onPressed: () async {
-                    SchedulingUseCase.instance.execute("calendar");
+                    EventPlanningUseCase.instance.execute("calendar");
                   },
                   child: Text("Test Calendar Usecase DEBUG")),
               ElevatedButton(

@@ -16,7 +16,7 @@ void onNotificationTap(NotificationResponse response) {
 }
 
 /// Use case for the Good Morning feature.
-class GoodMorningUseCase implements UseCase {
+class GoodMorningUseCase extends UseCase {
   /// Singleton instance of [GoodMorningUseCase].
   static final instance = GoodMorningUseCase._();
 

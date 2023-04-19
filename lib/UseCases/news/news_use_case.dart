@@ -223,6 +223,12 @@ class NewsUseCase extends ChangeNotifier implements UseCase {
       //...alarmTriggerWords
     ];
   }
+  @override
+  Future<String> listenForSpeech(Duration duration) async {
+    return "";
+  }
+
+  @override Future<void> textToSpeechOutput(String output) async {  }
 }
 
 

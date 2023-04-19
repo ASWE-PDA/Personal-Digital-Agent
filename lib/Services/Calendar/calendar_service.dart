@@ -17,8 +17,8 @@ Future<List<Event>> getUpcomingEvents() async {
   
   if (calendarId != null) {
     final now = DateTime.now();
-    final start = DateTime(now.year, now.month, now.day).toUtc();
-    final end = DateTime(now.year, now.month, now.day).toUtc();
+    final start = DateTime(now.year, now.month, now.day, 0).toUtc();
+    final end = DateTime(now.year, now.month, now.day, 24).toUtc();
     
     final eventsResult = await calendarPlugin.retrieveEvents(
         calendarId, RetrieveEventsParams(startDate: start, endDate: end));

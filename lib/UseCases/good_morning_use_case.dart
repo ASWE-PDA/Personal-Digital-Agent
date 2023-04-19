@@ -3,6 +3,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:luna/Services/location_service.dart';
 import 'package:luna/Services/maps_service.dart';
 import 'package:luna/Services/notification_service.dart';
+import 'package:luna/Services/quote_service.dart';
 import 'package:luna/Services/weather_service.dart';
 import 'package:luna/UseCases/use_case.dart';
 import 'package:luna/UseCases/good_morning_model.dart';
@@ -124,6 +125,16 @@ class GoodMorningUseCase extends UseCase {
           }
         }
       }
+
+      // Quote of the day
+      QuoteData? quoteData = await getQuoteOfTheDay();
+      if (quoteData == null) {
+        output += "Sorry, I couldn't get a quote for you. ";
+      } else {
+        output += "Here's a quote for you: ${quoteData.quote} ";
+        output += "This was by ${quoteData.author}. ";
+      }
+
       output += "Have a great day!";
       textToSpeechOutput(output);
       return;

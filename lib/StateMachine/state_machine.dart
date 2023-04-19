@@ -7,49 +7,29 @@ import '../UseCases/use_case.dart';
 import 'idle_service.dart';
 
 /// Controller for the Personal Digital Agent.
-/// Contains and runs the state machine to automatically detect and activate the use cases.
-/// Parameters:
-/// - machine: the state machine
-/// Methods:
-/// - getCurrentState: return current state of the state machine
-/// - start: start state machine. machine automatically runs use case checks and transitions to appropriate state
+/// Contains and runs the state [machine] to automatically detect and activate the use cases.
 class Controller {
   static StateMachine machine = StateMachine();
 
+  /// Returns the current state of the state machine.
   State<String>? getCurrentState() {
-    // return current state of the state machine
     return machine.getCurrentState();
   }
 
+  /// Updates the state machine with the [input] and runs the idle state.
   void update(String input) {
-    // update state machine with input
     machine.update(input);
     machine.runIdleState();
   }
 
+  /// Starts the state machine.
   void start() {
     machine
         .start(); // start state machine. machine automatically runs use case checks and transitions to appropriate state
   }
 }
 
-/// State machine for the Personal Digital Agent.
-/// Parameters:
-///  - machine: the state machine
-/// - idleState: the idle state
-/// - goodMorningState: the good morning state
-/// - eventPlanningState: the event planning state
-/// - newsState: the news state
-/// - goodNightState: the good night state
-/// Methods:
-/// - transitionToIdle: leave current state and transition to idle state
-/// - transitionToGoodMorning: leave current state and transition to good morning state
-/// - transitionToEventPlanning: leave current state and transition to event planning state
-/// - transitionToNews: leave current state and transition to news state
-/// - transitionToGoodNight: leave current state and transition to good night state
-/// - getCurrentState: return current state
-/// - runIdleState: check for use cases and transition to appropriate state
-/// - start: start state machine. machine automatically runs use case checks and transitions to appropriate state
+/// This class represents the state machine.
 class StateMachine {
   static final machine = Machine<String>();
   final useCaseCheck = UseCaseCheck();
@@ -62,8 +42,6 @@ class StateMachine {
   static final goodNightState =
       machine.newState('good_night'); // state for good night use case
 
-  //static UseCase goodMorningUseCase;
-  //static UseCase newsUseCase;
   static UseCase _goodMorningUseCase = GoodMorningUseCase.instance;
   set goodMorningUseCase(UseCase instance) {
     _goodMorningUseCase = instance;
@@ -84,53 +62,50 @@ class StateMachine {
     _eventPlanningUseCase = instance;
   }
 
+  /// Leaves the current state and transitions to the idle state.
   void transitionToIdle() {
-    // leave current state and transition to idle state
     print("transitioning to idle state");
     idleState.enter();
   }
 
+  /// Transitions to the good morning state with the [trigger] words.
   void transitionToGoodMorning(String trigger) {
-    // leave current state and transition to good morning state
     print("transitioning to good morning state");
     goodMorningState.enter();
     _goodMorningUseCase.execute(trigger);
     transitionToIdle();
   }
 
+  /// Transitions to the event planning state with the [trigger] words.
   void transitionToEventPlanning(String trigger) {
-    // leave current state and transition to event planning state
     eventPlanningState.enter();
     _eventPlanningUseCase.execute(trigger);
     transitionToIdle();
   }
 
+  /// Transitions to the news state with the [trigger] words.
   void transitionToNews(String trigger) {
-    // leave current state and transition to news state
     print("transitioning to news state");
     newsState.enter();
     _newsUseCase.execute(trigger);
     transitionToIdle();
   }
 
+  /// Transitions to the good night state with the [trigger] words.
   void transitionToGoodNight(String trigger) {
-    // leave current state and transition to good night state
     print("transitioning to good night state");
     goodNightState.enter();
     _goodNightUseCase.execute(trigger);
     transitionToIdle();
-    //goodNightState.onFuture(GoodNightUseCase.instance.execute("good night"), (value) => idleState.enter());
   }
 
+  /// Returns the current state of the state machine.
   State<String>? getCurrentState() {
-    // return current state
     return machine.current;
   }
 
+  /// Runs the idle state. Checks for use cases and transitions to appropriate state.
   void runIdleState() {
-    // check for use cases and transition to appropriate state
-    // someState.onStream(element.onClick, (value) => anotherState.enter());
-    // idleState.onStream(value.activate, (value) => transitionToGoodNight());
     print("entered idle state");
     int state = useCaseCheck.activate;
     if (state > 0) {
@@ -153,6 +128,7 @@ class StateMachine {
     }
   }
 
+  /// Starts the state machine.
   void start() {
     // define transitions
     idleState.onEntry(() => runIdleState());
@@ -165,23 +141,11 @@ class StateMachine {
     newsState.onExit(() => print('leaving news state'));
     goodNightState.onEntry(() => print('entering good night state'));
     goodNightState.onExit(() => print('leaving good night state'));
-
-    /*
-    final goodMorningCheck = GoodMorningCheck();
-    final eventPlanningCheck = EventPlanningCheck();
-    final newsCheck = NewsCheck();
-    final goodNightCheck = GoodNightCheck();
-    idleState.onStream(goodMorningCheck, (value) => transitionToGoodMorning());
-    idleState.onStream(eventPlanningCheck, (value) => transitionToEventPlanning());
-    idleState.onStream(newsCheck, (value) => transitionToNews());
-    idleState.onStream(goodNightCheck, (value) => transitionToGoodNight());
-*/
-
     machine.start();
   }
 
+  /// Updates the state machine with the [input].
   void update(String input) {
-    // update state machine with new input
     useCaseCheck.monitor(input);
   }
 }

@@ -3,7 +3,7 @@ import 'package:luna/Screens/connect_bridge_screen.dart';
 import 'package:luna/Services/SmartHome/bridge_model.dart';
 import 'package:provider/provider.dart';
 
-// Screen to enter a new ip address and store the value locally.
+// Screen to enter a new [ip] address and store the value locally.
 class SmartHomeSettingsScreen extends StatefulWidget {
   final String? ip;
   const SmartHomeSettingsScreen({super.key, this.ip});

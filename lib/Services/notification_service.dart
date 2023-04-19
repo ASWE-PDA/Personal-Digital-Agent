@@ -6,12 +6,14 @@ import 'package:timezone/timezone.dart' as tz;
 
 @pragma('vm:entry-point')
 void notificationTap(NotificationResponse response) {
+  // TODO: implement notificationTap
   print('notificationTap');
 }
 
 /// The purpose of this class is to show a notification to the user
 /// The user can tap the notification to open directly the app.
 class NotificationService {
+  /// Private constructor for the [NotificationService] class.
   NotificationService._();
 
   /// Singleton instance of the [NotificationService] class.

@@ -2,10 +2,12 @@ import 'package:flutter/services.dart';
 import 'package:luna/environment.dart';
 import 'package:spotify_sdk/spotify_sdk.dart';
 
-/// Class that uses the spoitfy sdk to communicate with the spotify remote app on the device-
+/// Class that uses the spoitfy sdk to communicate with the spotify remote app
+/// on the device.
 class SpotifySdkService {
   String clientId = "";
   SpotifySdkService() {
+    // Get the spotify client id from the environment variables.
     clientId = Environment.spotifyClientId;
   }
 

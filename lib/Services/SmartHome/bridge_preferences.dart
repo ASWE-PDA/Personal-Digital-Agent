@@ -12,13 +12,13 @@ class BridgePreferences {
   }
 
   /// Deletes the user name.
-  deleteUser() async {
+  Future<void> deleteUser() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.remove(userKey);
   }
 
   /// Loads the value of the stored user.
-  getUser() async {
+  Future<String?> getUser() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     return sharedPreferences.getString(userKey);
   }
@@ -30,13 +30,13 @@ class BridgePreferences {
   }
 
   /// Deletes the ip address.
-  deleteIpAddress() async {
+  Future<void> deleteIpAddress() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.remove(ipKey);
   }
 
   /// Loads the value of the ip address.
-  getIpAddress() async {
+  Future<String?> getIpAddress() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     return sharedPreferences.getString(ipKey);
   }

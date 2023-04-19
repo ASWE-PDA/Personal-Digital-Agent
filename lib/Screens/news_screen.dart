@@ -3,6 +3,7 @@ import "package:luna/UseCases/news/article.dart";
 import "package:luna/UseCases/news/news_use_case.dart";
 import "package:url_launcher/url_launcher.dart";
 
+/// Widget to display the news cards.
 class MyNewsCardsWidget extends StatefulWidget {
   MyNewsCardsWidget();
 
@@ -15,8 +16,8 @@ class _MyNewsCardsWidgetState extends State<MyNewsCardsWidget> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    // load the news articles
     article = NewsUseCase.instance.articles.future;
   }
 
@@ -80,6 +81,7 @@ class _MyNewsCardsWidgetState extends State<MyNewsCardsWidget> {
             }));
   }
 
+  /// Launches the url in the browser.
   Future<void> _launchInBrowser(Uri url) async {
     if (!await launchUrl(
       url,

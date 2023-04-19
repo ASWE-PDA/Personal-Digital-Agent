@@ -5,7 +5,7 @@ import 'package:luna/Services/maps_service.dart';
 import 'package:luna/UseCases/good_morning_model.dart';
 import 'package:provider/provider.dart';
 
-/// Screen to enter a new time for the good morning use case.
+/// Screen to enter a new [time] for the good morning use case.
 class GoodMorningScheduleScreen extends StatefulWidget {
   final String? time;
   const GoodMorningScheduleScreen({super.key, this.time});
@@ -36,6 +36,7 @@ class _GoodMorningScheduleScreen extends State<GoodMorningScheduleScreen> {
     _loadPreferences();
   }
 
+  /// Loads the preferences from the [GoodMorningModel].
   Future<void> _loadPreferences() async {
     _goodMorningModel = await GoodMorningModel.loadPreferences();
     _wakeUpTime = await _goodMorningModel.wakeUpTime;
@@ -105,23 +106,6 @@ class _GoodMorningScheduleScreen extends State<GoodMorningScheduleScreen> {
                       ),
                       SizedBox(height: 16),
                       _buildWorkAddressAutocomplete(),
-                      // SizedBox(height: 16),
-                      // Text("Preferred Transport Mode"),
-                      // DropdownButtonFormField<String>(
-                      //   value: _transportMode,
-                      //   onChanged: (value) {
-                      //     setState(() {
-                      //       _transportMode = value!;
-                      //       _hasUnsavedChanges = true;
-                      //     });
-                      //   },
-                      //   items: GoodMorningModel.transportModes
-                      //       .map((method) => DropdownMenuItem(
-                      //             value: method,
-                      //             child: Text(method),
-                      //           ))
-                      //       .toList(),
-                      // ),
                       SizedBox(height: 20),
                       Container(
                         padding: EdgeInsets.symmetric(horizontal: 20.0),
@@ -171,6 +155,7 @@ class _GoodMorningScheduleScreen extends State<GoodMorningScheduleScreen> {
     return shouldDiscardChanges ?? false;
   }
 
+  /// Shows the time picker.
   Future<void> _showTimePicker(
     BuildContext context,
     TimeOfDay initialTime,
@@ -189,6 +174,7 @@ class _GoodMorningScheduleScreen extends State<GoodMorningScheduleScreen> {
     }
   }
 
+  /// Formats the [time] to a string.
   String formatTimeOfDay(TimeOfDay time) {
     final now = DateTime.now();
     final dateTime =
@@ -197,6 +183,7 @@ class _GoodMorningScheduleScreen extends State<GoodMorningScheduleScreen> {
     return formatter.format(dateTime);
   }
 
+  /// Builds the autocomplete widget for the work address.
   Widget _buildWorkAddressAutocomplete() {
     return TypeAheadField<Prediction>(
       textFieldConfiguration: TextFieldConfiguration(
@@ -224,6 +211,7 @@ class _GoodMorningScheduleScreen extends State<GoodMorningScheduleScreen> {
     );
   }
 
+  /// Saves the preferences to the [GoodMorningModel].
   void _onSaveButtonPressed(BuildContext context) {
     // Plausibility check if wake-up time is before preferred arrival time.
     // This is done by first converting the time to minutes and then comparing.

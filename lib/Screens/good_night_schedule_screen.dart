@@ -7,7 +7,7 @@ import 'package:luna/UseCases/good_night_model.dart';
 import 'package:luna/UseCases/good_night_use_case.dart';
 import 'package:provider/provider.dart';
 
-/// Screen to enter a new time for the good night use case.
+/// Screen to enter a new [time] for the good night use case.
 class GoodNightScheduleScreen extends StatefulWidget {
   final String? time;
   const GoodNightScheduleScreen({super.key, this.time});
@@ -73,7 +73,6 @@ class _GoodNightScheduleScreen extends State<GoodNightScheduleScreen> {
             ],
           ),
           // input field for the time
-          // TODO add a time picker or a input validation
           body: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

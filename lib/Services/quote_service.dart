@@ -1,6 +1,9 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+/// Gets a quote of the day from the zenquotes.io API.
+///
+/// Returns a [QuoteData] object.
 Future<QuoteData?> getQuoteOfTheDay() async {
   try {
     const String apiUrl = "https://zenquotes.io/api/today";
@@ -17,9 +20,11 @@ Future<QuoteData?> getQuoteOfTheDay() async {
   }
 }
 
+/// Data class for the [quote] of the day and the [author].
 class QuoteData {
   final String quote;
   final String author;
 
+  /// Constructor for the [QuoteData] class.
   QuoteData({required this.quote, required this.author});
 }

@@ -19,8 +19,10 @@ class GoodMorningUseCase extends UseCase {
   /// Singleton instance of [GoodMorningUseCase].
   static final instance = GoodMorningUseCase._();
 
+  /// Private constructor for [GoodMorningUseCase] class.
   GoodMorningUseCase._();
 
+  /// List of trigger words for the Good Morning feature.
   List<String> goodMorningTriggerWords = ["good morning", "morning"];
   List<String> locationTriggerWords = ["location", "where am i"];
   List<String> weatherTriggerWords = ["weather", "how's the weather"];
@@ -41,6 +43,9 @@ class GoodMorningUseCase extends UseCase {
     await goodMorningModel.getGoodMorningPreferences();
   }
 
+  /// Formats the [time] of day to a string.
+  ///
+  /// Returns a string in the format of "5:08 AM".
   String formatTimeOfDay(TimeOfDay time) {
     final now = DateTime.now();
     final dateTime =
@@ -96,6 +101,8 @@ class GoodMorningUseCase extends UseCase {
   }
 
   /// Executes the location use case.
+  ///
+  /// Returns the output string.
   Future<String> executeLocationUseCase(bool outputEnabled) async {
     String output = "";
     currentLocation = await locationService.getCurrentLocation();
@@ -109,6 +116,8 @@ class GoodMorningUseCase extends UseCase {
   }
 
   /// Executes the weather use case.
+  ///
+  /// Returns the output string.
   Future<String> executeWeatherUseCase() async {
     String output = "";
     if (currentLocation == null) {
@@ -130,6 +139,8 @@ class GoodMorningUseCase extends UseCase {
   }
 
   /// Executes the route use case.
+  ///
+  /// Returns the output string.
   Future<String> executeRouteUseCase() async {
     String output = "";
     String? workAddress = await goodMorningModel.getWorkAddress();
@@ -191,6 +202,8 @@ class GoodMorningUseCase extends UseCase {
   }
 
   /// Executes the quote use case.
+  ///
+  /// Returns the output string.
   Future<String> executeQuoteUseCase() async {
     quoteData = await getQuoteOfTheDay();
     String output = "";
@@ -203,6 +216,9 @@ class GoodMorningUseCase extends UseCase {
     return output;
   }
 
+  /// Executes the complete use case.
+  ///
+  /// Returns the output string.
   Future<String> executeCompleteUseCase() async {
     String output = "Good morning. ";
 

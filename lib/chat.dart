@@ -61,6 +61,10 @@ class _ChatPageState extends State<ChatPage> {
     setState(() {
       // State machine controller interface: push update with recognized words
       controller.update(lastWords);
+
+      if (["news", "inform me", "whats up"].any((element) => lastWords.contains(element))) {
+        pushNewsScreen();
+      }
     });
   }
 

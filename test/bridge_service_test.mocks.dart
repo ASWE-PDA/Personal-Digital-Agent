@@ -23,8 +23,8 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-class _FakeResponse_0 extends _i1.SmartFake implements _i2.Response {
-  _FakeResponse_0(
+class _FakeClient_0 extends _i1.SmartFake implements _i2.Client {
+  _FakeClient_0(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -33,9 +33,19 @@ class _FakeResponse_0 extends _i1.SmartFake implements _i2.Response {
         );
 }
 
-class _FakeStreamedResponse_1 extends _i1.SmartFake
+class _FakeResponse_1 extends _i1.SmartFake implements _i2.Response {
+  _FakeResponse_1(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeStreamedResponse_2 extends _i1.SmartFake
     implements _i2.StreamedResponse {
-  _FakeStreamedResponse_1(
+  _FakeStreamedResponse_2(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -52,6 +62,22 @@ class MockBridgeService extends _i1.Mock implements _i3.BridgeService {
     _i1.throwOnMissingStub(this);
   }
 
+  @override
+  _i2.Client get client => (super.noSuchMethod(
+        Invocation.getter(#client),
+        returnValue: _FakeClient_0(
+          this,
+          Invocation.getter(#client),
+        ),
+      ) as _i2.Client);
+  @override
+  set client(_i2.Client? _client) => super.noSuchMethod(
+        Invocation.setter(
+          #client,
+          _client,
+        ),
+        returnValueForMissingStub: null,
+      );
   @override
   _i4.Future<bool> checkBridge(String? ip) => (super.noSuchMethod(
         Invocation.method(
@@ -97,7 +123,7 @@ class MockClient extends _i1.Mock implements _i2.Client {
           [url],
           {#headers: headers},
         ),
-        returnValue: _i4.Future<_i2.Response>.value(_FakeResponse_0(
+        returnValue: _i4.Future<_i2.Response>.value(_FakeResponse_1(
           this,
           Invocation.method(
             #head,
@@ -117,7 +143,7 @@ class MockClient extends _i1.Mock implements _i2.Client {
           [url],
           {#headers: headers},
         ),
-        returnValue: _i4.Future<_i2.Response>.value(_FakeResponse_0(
+        returnValue: _i4.Future<_i2.Response>.value(_FakeResponse_1(
           this,
           Invocation.method(
             #get,
@@ -143,7 +169,7 @@ class MockClient extends _i1.Mock implements _i2.Client {
             #encoding: encoding,
           },
         ),
-        returnValue: _i4.Future<_i2.Response>.value(_FakeResponse_0(
+        returnValue: _i4.Future<_i2.Response>.value(_FakeResponse_1(
           this,
           Invocation.method(
             #post,
@@ -173,7 +199,7 @@ class MockClient extends _i1.Mock implements _i2.Client {
             #encoding: encoding,
           },
         ),
-        returnValue: _i4.Future<_i2.Response>.value(_FakeResponse_0(
+        returnValue: _i4.Future<_i2.Response>.value(_FakeResponse_1(
           this,
           Invocation.method(
             #put,
@@ -203,7 +229,7 @@ class MockClient extends _i1.Mock implements _i2.Client {
             #encoding: encoding,
           },
         ),
-        returnValue: _i4.Future<_i2.Response>.value(_FakeResponse_0(
+        returnValue: _i4.Future<_i2.Response>.value(_FakeResponse_1(
           this,
           Invocation.method(
             #patch,
@@ -233,7 +259,7 @@ class MockClient extends _i1.Mock implements _i2.Client {
             #encoding: encoding,
           },
         ),
-        returnValue: _i4.Future<_i2.Response>.value(_FakeResponse_0(
+        returnValue: _i4.Future<_i2.Response>.value(_FakeResponse_1(
           this,
           Invocation.method(
             #delete,
@@ -280,7 +306,7 @@ class MockClient extends _i1.Mock implements _i2.Client {
           [request],
         ),
         returnValue:
-            _i4.Future<_i2.StreamedResponse>.value(_FakeStreamedResponse_1(
+            _i4.Future<_i2.StreamedResponse>.value(_FakeStreamedResponse_2(
           this,
           Invocation.method(
             #send,

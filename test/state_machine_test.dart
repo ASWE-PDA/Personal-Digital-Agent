@@ -35,7 +35,7 @@ void main() {
     });
     test('State Machine should transition to event planning state', () {
       final sm = StateMachine();
-      //sm.eventPlanningUseCase = MockEventPlanningUseCase();
+      sm.eventPlanningUseCase = MockEventPlanningUseCase();
       sm.start();
       expect(sm.getCurrentState(), StateMachine.idleState);
       sm.transitionToEventPlanning("event");
@@ -43,7 +43,7 @@ void main() {
     });
     test('State Machine should transition to news state', () {
       final sm = StateMachine();
-      // sm.newsUseCase = MockNewsUseCase();
+      sm.newsUseCase = MockNewsUseCase();
       sm.start();
       expect(sm.getCurrentState(), StateMachine.idleState);
       sm.transitionToNews("news");

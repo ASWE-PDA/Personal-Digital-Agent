@@ -67,15 +67,16 @@ Future<DeviceCalendarPlugin?> requestCalendarPermissions() async{
 
   try {
     var permissionsGranted = await calendarPlugin.hasPermissions();
-    if (permissionsGranted.data != null) {
+    if (permissionsGranted.data == null) return null;
 
-      if (permissionsGranted.isSuccess && !permissionsGranted.data!) {
-        permissionsGranted = await calendarPlugin.requestPermissions();
-        if (!permissionsGranted.isSuccess || !permissionsGranted.data!) return null;
-      }
+    if (permissionsGranted.isSuccess && !permissionsGranted.data!) {
+      permissionsGranted = await calendarPlugin.requestPermissions();
+      if (!permissionsGranted.isSuccess || !permissionsGranted.data!) return null;
     }
-  }
-  catch (e) { print("error in permission req ");}
+    return calendarPlugin;
 
-  return calendarPlugin;
+  } catch (e) { 
+    print("error in permission req ");
+    return null;  
+  }
 }

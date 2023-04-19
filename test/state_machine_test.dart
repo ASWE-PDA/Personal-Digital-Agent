@@ -103,6 +103,7 @@ void main() {
     });
     test('positive use case event planning check', () {
       final useCaseCheck = UseCaseCheck();
+      useCaseCheck.eventPlanningTriggerWords = ["scheduling", "events"];
       bool detected = useCaseCheck.eventPlanningCheck("scheduling");
       expect(detected, true);
       expect(useCaseCheck.triggerWord, "scheduling");

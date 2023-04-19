@@ -134,29 +134,34 @@ class EventPlanningUseCase extends UseCase {
   }
 
   DateTime? parseSpokenTime(String spokenTime) {
-    final RegExp timePattern = RegExp(r'(\d{1,2})(\d{2})\s*(am|pm)');
-    final RegExpMatch? match = timePattern.firstMatch(spokenTime.toLowerCase());
-    if (match == null) return null;
+    RegExp regExp = RegExp(r"(\d{1,2}):?(\d{2})?\s*(a.?m.?|p.?m.?)", caseSensitive: false);
+    RegExpMatch? match = regExp.firstMatch(spokenTime);
 
+    if (match == null) {
+      return null;
+    }
     try {
       int hour = int.parse(match.group(1)!);
-      int minute = int.parse(match.group(2)!);
-      String amPm = match.group(3)!;
+      int minute = int.parse(match.group(2) ?? "0");
+      String period = match.group(3)!.toLowerCase();
+
       if (hour == 12) {
-        hour = 0;
+      hour = 0;
       }
-      if (amPm == 'pm') {
+
+      if (period.contains("p")) {
         hour += 12;
       }
-      final DateTime now = DateTime.now();
-      final DateTime timeOfDay = DateTime(now.year, now.month, now.day, hour, minute);
-      final String timeZoneName = tz.local.name;
-      final tz.Location location = tz.getLocation(timeZoneName);
-      return tz.TZDateTime.from(timeOfDay, location);
+
+      if (hour > 23 || minute > 59) {
+        return null;
+      }
+
+      return DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, hour, minute);
+
     } catch (e) {
       return null;
     }
-    
   }
 
   void listMovies() async{
@@ -177,35 +182,44 @@ class EventPlanningUseCase extends UseCase {
       print("=======================================\n\n\n No YES DETECTED got $watchMovie \n\n\n====================================");
       return;
     }
+    var tryAgain = true;
+    while (tryAgain) {
+      print("which movie u want sir?");
+      await textToSpeechOutput("Which Movie would you like to watch tonight");
 
-    await textToSpeechOutput("Which Movie would you like to watch tonight");
+      print("=======================================\n\n\nDONE Asking NOW LISTENING\n\n\n====================================");
+      String movieToWatch = await listenForSpeech(Duration(seconds: 3));
+      for (var i = 0; i < 5; i++) {
+        final movieTitle = movies[i]["title"];
+        List<String> movieToWatcheSubstring = movieToWatch.split(" ");
 
-    print("=======================================\n\n\nDONE Asking NOW LISTENING\n\n\n====================================");
-    String movieToWatch = await listenForSpeech(Duration(seconds: 3));
-    
-    for (var i = 0; i < 5; i++) {
-      final movieTitle = movies[i]["title"];
-      List<String> movieToWatcheSubstring = movieToWatch.split(" ");
+        for (var substring in movieToWatcheSubstring) {
 
-      for (var substring in movieToWatcheSubstring) {
+          if (movieTitle.toLowerCase().contains(substring.toLowerCase())) {
+            while(tryAgain) {
+              await Future.delayed(Duration(seconds: 2));
+              await textToSpeechOutput("When would you like to watch the movie? An example answer would be eigth zero zero pm.");
+              String movieTimeInput = await listenForSpeech(Duration(seconds: 5));
+              DateTime? movieTime = parseSpokenTime(movieTimeInput);
+              if (movieTime == null) {
+                await textToSpeechOutput("I didn't get that right. Do you want to try again?");
+                tryAgain = (await listenForSpeech(Duration(seconds: 3))).toLowerCase().contains("yes");
+                continue;
+              }
 
-        if (movieTitle.toLowerCase().contains(substring.toLowerCase())) {
-          
-          await textToSpeechOutput("When would you like to watch the movie? An example answer would be eigth zero zero pm.");
-          String movieTimeInput = await listenForSpeech(Duration(seconds: 3));
-          DateTime? movieTime = parseSpokenTime(movieTimeInput);
-          if (movieTime == null) {
-            return;
+              createCalendarEvent(movieTime, 
+                                  movieTitle, 
+                                  await getMovieLength(movies[i]["id"])
+                                  );
+              await textToSpeechOutput("I created an Event for the movie $movieTitle at ${getTimeFromHoursMinutes(movieTime.hour, movieTime.minute)}.");
+              return;
+            }
           }
-
-          createCalendarEvent(movieTime, 
-                              movieTitle, 
-                              await getMovieLength(movies[i]["id"])
-                              );
-          await textToSpeechOutput("I created an Event for the movie $movieTitle at ${getTimeFromHoursMinutes(movieTime.hour, movieTime.minute)}.");
-          return;
-        }
-      }  
+        } 
+      } 
+      await textToSpeechOutput("I couldn't find the movie $movieToWatch. Would you like to try again?");
+      tryAgain = (await listenForSpeech(Duration(seconds: 3))).toLowerCase().contains("yes");
+      print(tryAgain);
     }
     return;
   }

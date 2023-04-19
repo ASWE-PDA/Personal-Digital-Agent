@@ -56,7 +56,7 @@ abstract class UseCase {
   }
 
   Future<void> textToSpeechOutput(String output) async {
-
+    await Future.delayed(Duration(seconds: 1, milliseconds: 200));
     Completer<bool> completer = Completer<bool>();
     flutterTts.speak(output);
     flutterTts.setCompletionHandler(() {

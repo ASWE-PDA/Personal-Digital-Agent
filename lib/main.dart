@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
             themeMode: themeNotifier.currentTheme(),
             theme: MyThemes.lightTheme,
             home: MyHomePage(),
-            // debugShowCheckedModeBanner: false,
+            debugShowCheckedModeBanner: false,
           );
         }));
   }

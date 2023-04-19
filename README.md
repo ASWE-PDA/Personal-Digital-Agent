@@ -1,2 +1,2 @@
 # luna
-![coverage.png](asstes/images/coverage.png)
+![coverage.png](assets/images/coverage.png)

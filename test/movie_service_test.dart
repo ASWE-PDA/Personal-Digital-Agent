@@ -106,7 +106,7 @@ void main() {
       when(mockV3.movies).thenReturn(mockMovies);
       when(mockMovies.getPopular()).thenAnswer((_) async => movieData);
 
-      final result = await movieService.getPopularMovies();
+      final result = await movieService.getPopularMovies(); 
       expect(result, isA<List<dynamic>>());
       expect(result.length, greaterThan(0));
     });

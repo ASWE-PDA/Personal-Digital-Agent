@@ -69,7 +69,8 @@ class EventPlanningUseCase extends UseCase {
 
   /// Lists all upcoming events
   void listUpcomingEvents() async {
-    final events = await getUpcomingEvents();
+    CalendarService calendar = CalendarService();
+    final events = await calendar.getUpcomingEvents();
     if (events.isEmpty) {
       await textToSpeechOutput("You have no events planned today.");
     } else if (events.length == 1) {
@@ -126,7 +127,7 @@ class EventPlanningUseCase extends UseCase {
       String eventDurationInput = await listenForSpeech(Duration(seconds: 3));
       try {
         int eventDuration = int.parse(eventDurationInput);
-        createCalendarEvent(eventTime, eventTitle, eventDuration);
+        calendar.createCalendarEvent(eventTime, eventTitle, eventDuration);
         await Future.delayed(Duration(seconds: 1));
         await textToSpeechOutput(
             "I created the event $eventTitle for today starting at ${getTimeFromHoursMinutes(eventTime.hour, eventTime.minute)}.");
@@ -216,7 +217,8 @@ class EventPlanningUseCase extends UseCase {
   }
 
   void listMovies() async {
-    final movies = await getPopularMovies();
+    MovieService movieService = MovieService();
+    final movies = await movieService.getPopularMovies();
     String output = "The 5 most popular movies from the movie database are: ";
 
     for (var i = 0; i < 5; i++) {
@@ -264,9 +266,9 @@ class EventPlanningUseCase extends UseCase {
                     .contains("yes");
                 continue;
               }
-
-              createCalendarEvent(
-                  movieTime, movieTitle, await getMovieLength(movies[i]["id"]));
+              CalendarService calendar = CalendarService();
+              calendar.createCalendarEvent(
+                  movieTime, movieTitle, await movieService.getMovieLength(movies[i]["id"]));
               await textToSpeechOutput(
                   "I created an Event for the movie $movieTitle at ${getTimeFromHoursMinutes(movieTime.hour, movieTime.minute)}.");
               return;

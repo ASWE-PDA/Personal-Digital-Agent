@@ -2,19 +2,51 @@ import "package:device_calendar/device_calendar.dart";
 import "package:timezone/data/latest.dart" as tzdata;
 import "package:timezone/timezone.dart" as tz;
 
+
 class CalendarService {
-  Future<List<Event>> getUpcomingEvents() async {
-    final calendarPlugin = await requestCalendarPermissions();
-    if (calendarPlugin == null) return [];
-    
+  final DeviceCalendarPlugin calendarPlugin;
+
+  CalendarService({DeviceCalendarPlugin? calendarPlugin})
+    : calendarPlugin = calendarPlugin ?? DeviceCalendarPlugin();
+
+  Future<String?> getCalendarId() async {
+    final calendarPlugin = await requestCalendarPermissions(this.calendarPlugin);
+    if (calendarPlugin == null) return null;
+
     final calendarListResult = await calendarPlugin.retrieveCalendars();
     String? calendarId;
     for (var calendar in calendarListResult.data!) {
       final defaultCalendar = calendar.isDefault!;
       if (defaultCalendar) {
         calendarId = calendar.id!;
+        return calendarId;
       }
     }
+    return null;
+  }
+
+  Future<DeviceCalendarPlugin?> requestCalendarPermissions(
+      DeviceCalendarPlugin calendarPlugin) async {
+    try {
+      var permissionsGranted = await calendarPlugin.hasPermissions();
+      if (permissionsGranted.data == null) return null;
+
+      if (permissionsGranted.isSuccess && !permissionsGranted.data!) {
+        permissionsGranted = await calendarPlugin.requestPermissions();
+        if (!permissionsGranted.isSuccess || !permissionsGranted.data!) return null;
+      }
+      return calendarPlugin;
+    } catch (e) {
+      print("error in permission req ");
+      return null;
+    }
+  }
+
+  Future<List<Event>> getUpcomingEvents() async {
+    final calendarPlugin = await requestCalendarPermissions(this.calendarPlugin);
+    if (calendarPlugin == null) return [];
+    
+    String? calendarId = await getCalendarId();
     
     if (calendarId != null) {
       final now = DateTime.now();
@@ -29,19 +61,13 @@ class CalendarService {
     }
   }
 
+
   Future<void> createCalendarEvent(DateTime date, String name, int durationInMin) async {
     // Get the default calendar
-    final calendarPlugin = await requestCalendarPermissions();
+    final calendarPlugin = await requestCalendarPermissions(this.calendarPlugin);
     if (calendarPlugin == null) return;
     
-    final calendarListResult = await calendarPlugin.retrieveCalendars();
-    String? calendarId;
-    for (var calendar in calendarListResult.data!) {
-      final defaultCalendar = calendar.isDefault!;
-      if (defaultCalendar) {
-        calendarId = calendar.id!;
-      }
-    }
+    String? calendarId = await getCalendarId();
 
     // Create the event
     tzdata.initializeTimeZones();
@@ -60,25 +86,6 @@ class CalendarService {
       print("Event created successfully");
     } else {
       print("Error creating event");
-    }
-  }
-
-  Future<DeviceCalendarPlugin?> requestCalendarPermissions() async{
-    final calendarPlugin = DeviceCalendarPlugin();
-
-    try {
-      var permissionsGranted = await calendarPlugin.hasPermissions();
-      if (permissionsGranted.data == null) return null;
-
-      if (permissionsGranted.isSuccess && !permissionsGranted.data!) {
-        permissionsGranted = await calendarPlugin.requestPermissions();
-        if (!permissionsGranted.isSuccess || !permissionsGranted.data!) return null;
-      }
-      return calendarPlugin;
-
-    } catch (e) { 
-      print("error in permission req ");
-      return null;  
     }
   }
 }

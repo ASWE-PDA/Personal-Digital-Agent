@@ -1,13 +1,16 @@
 import 'package:luna/StateMachine/idle_service.dart';
 import 'package:luna/StateMachine/state_machine.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:luna/UseCases/EventPlanning/event_planning_use_case.dart';
+import 'package:luna/UseCases/good_morning_use_case.dart';
 import 'package:luna/UseCases/good_night_use_case.dart';
+import 'package:luna/UseCases/news/news_use_case.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mockito/annotations.dart';
 
 import 'state_machine_test.mocks.dart';
 
-@GenerateMocks([GoodNightUseCase])
+@GenerateMocks([GoodNightUseCase, GoodMorningUseCase, EventPlanningUseCase, NewsUseCase])
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   Map<String, Object> values = <String, Object>{
@@ -24,6 +27,7 @@ void main() {
     });
     test('State Machine should transition to good morning state', () {
       final sm = StateMachine();
+      sm.goodMorningUseCase = MockGoodMorningUseCase();
       sm.start();
       expect(sm.getCurrentState(), StateMachine.idleState);
       sm.transitionToGoodMorning("good morning");
@@ -31,6 +35,7 @@ void main() {
     });
     test('State Machine should transition to event planning state', () {
       final sm = StateMachine();
+      //sm.eventPlanningUseCase = MockEventPlanningUseCase();
       sm.start();
       expect(sm.getCurrentState(), StateMachine.idleState);
       sm.transitionToEventPlanning("event");
@@ -38,6 +43,7 @@ void main() {
     });
     test('State Machine should transition to news state', () {
       final sm = StateMachine();
+      // sm.newsUseCase = MockNewsUseCase();
       sm.start();
       expect(sm.getCurrentState(), StateMachine.idleState);
       sm.transitionToNews("news");

@@ -3,15 +3,28 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i9;
+import 'dart:async' as _i12;
+import 'dart:ui' as _i21;
 
-import 'package:flutter_tts/flutter_tts.dart' as _i2;
-import 'package:luna/Services/SmartHome/bridge_model.dart' as _i3;
-import 'package:luna/Services/SmartHome/smart_home_service.dart' as _i5;
-import 'package:luna/Services/spotify_service.dart' as _i6;
-import 'package:luna/UseCases/good_morning_model.dart' as _i7;
-import 'package:luna/UseCases/good_night_model.dart' as _i4;
-import 'package:luna/UseCases/good_night_use_case.dart' as _i8;
+import 'package:flutter/material.dart' as _i17;
+import 'package:flutter_tts/flutter_tts.dart' as _i7;
+import 'package:geolocator/geolocator.dart' as _i15;
+import 'package:luna/Services/location_service.dart' as _i8;
+import 'package:luna/Services/maps_service.dart' as _i10;
+import 'package:luna/Services/quote_service.dart' as _i16;
+import 'package:luna/Services/SmartHome/bridge_model.dart' as _i2;
+import 'package:luna/Services/SmartHome/smart_home_service.dart' as _i4;
+import 'package:luna/Services/spotify_service.dart' as _i5;
+import 'package:luna/Services/weather_service.dart' as _i9;
+import 'package:luna/UseCases/EventPlanning/event_planning_use_case.dart'
+    as _i18;
+import 'package:luna/UseCases/good_morning_model.dart' as _i6;
+import 'package:luna/UseCases/good_morning_use_case.dart' as _i14;
+import 'package:luna/UseCases/good_night_model.dart' as _i3;
+import 'package:luna/UseCases/good_night_use_case.dart' as _i13;
+import 'package:luna/UseCases/news/article.dart' as _i20;
+import 'package:luna/UseCases/news/news_api.dart' as _i11;
+import 'package:luna/UseCases/news/news_use_case.dart' as _i19;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -25,8 +38,8 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-class _FakeFlutterTts_0 extends _i1.SmartFake implements _i2.FlutterTts {
-  _FakeFlutterTts_0(
+class _FakeBridgeModel_0 extends _i1.SmartFake implements _i2.BridgeModel {
+  _FakeBridgeModel_0(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -35,8 +48,9 @@ class _FakeFlutterTts_0 extends _i1.SmartFake implements _i2.FlutterTts {
         );
 }
 
-class _FakeBridgeModel_1 extends _i1.SmartFake implements _i3.BridgeModel {
-  _FakeBridgeModel_1(
+class _FakeGoodNightModel_1 extends _i1.SmartFake
+    implements _i3.GoodNightModel {
+  _FakeGoodNightModel_1(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -45,9 +59,9 @@ class _FakeBridgeModel_1 extends _i1.SmartFake implements _i3.BridgeModel {
         );
 }
 
-class _FakeGoodNightModel_2 extends _i1.SmartFake
-    implements _i4.GoodNightModel {
-  _FakeGoodNightModel_2(
+class _FakeSmartHomeService_2 extends _i1.SmartFake
+    implements _i4.SmartHomeService {
+  _FakeSmartHomeService_2(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -56,9 +70,9 @@ class _FakeGoodNightModel_2 extends _i1.SmartFake
         );
 }
 
-class _FakeSmartHomeService_3 extends _i1.SmartFake
-    implements _i5.SmartHomeService {
-  _FakeSmartHomeService_3(
+class _FakeSpotifySdkService_3 extends _i1.SmartFake
+    implements _i5.SpotifySdkService {
+  _FakeSpotifySdkService_3(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -67,9 +81,9 @@ class _FakeSmartHomeService_3 extends _i1.SmartFake
         );
 }
 
-class _FakeSpotifySdkService_4 extends _i1.SmartFake
-    implements _i6.SpotifySdkService {
-  _FakeSpotifySdkService_4(
+class _FakeGoodMorningModel_4 extends _i1.SmartFake
+    implements _i6.GoodMorningModel {
+  _FakeGoodMorningModel_4(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -78,9 +92,91 @@ class _FakeSpotifySdkService_4 extends _i1.SmartFake
         );
 }
 
-class _FakeGoodMorningModel_5 extends _i1.SmartFake
-    implements _i7.GoodMorningModel {
-  _FakeGoodMorningModel_5(
+class _FakeFlutterTts_5 extends _i1.SmartFake implements _i7.FlutterTts {
+  _FakeFlutterTts_5(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeLocationService_6 extends _i1.SmartFake
+    implements _i8.LocationService {
+  _FakeLocationService_6(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeWeatherService_7 extends _i1.SmartFake
+    implements _i9.WeatherService {
+  _FakeWeatherService_7(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeMapsService_8 extends _i1.SmartFake implements _i10.MapsService {
+  _FakeMapsService_8(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeNewYorkTimesNews_9 extends _i1.SmartFake
+    implements _i11.NewYorkTimesNews {
+  _FakeNewYorkTimesNews_9(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeGermanNews_10 extends _i1.SmartFake implements _i11.GermanNews {
+  _FakeGermanNews_10(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeFinanceNews_11 extends _i1.SmartFake implements _i11.FinanceNews {
+  _FakeFinanceNews_11(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeTechNews_12 extends _i1.SmartFake implements _i11.TechNews {
+  _FakeTechNews_12(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeCompleter_13<T> extends _i1.SmartFake implements _i12.Completer<T> {
+  _FakeCompleter_13(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -92,7 +188,7 @@ class _FakeGoodMorningModel_5 extends _i1.SmartFake
 /// A class which mocks [GoodNightUseCase].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockGoodNightUseCase extends _i1.Mock implements _i8.GoodNightUseCase {
+class MockGoodNightUseCase extends _i1.Mock implements _i13.GoodNightUseCase {
   MockGoodNightUseCase() {
     _i1.throwOnMissingStub(this);
   }
@@ -165,31 +261,15 @@ class MockGoodNightUseCase extends _i1.Mock implements _i8.GoodNightUseCase {
         returnValueForMissingStub: null,
       );
   @override
-  _i2.FlutterTts get flutterTts => (super.noSuchMethod(
-        Invocation.getter(#flutterTts),
-        returnValue: _FakeFlutterTts_0(
-          this,
-          Invocation.getter(#flutterTts),
-        ),
-      ) as _i2.FlutterTts);
-  @override
-  set flutterTts(_i2.FlutterTts? _flutterTts) => super.noSuchMethod(
-        Invocation.setter(
-          #flutterTts,
-          _flutterTts,
-        ),
-        returnValueForMissingStub: null,
-      );
-  @override
-  _i3.BridgeModel get bridgeModel => (super.noSuchMethod(
+  _i2.BridgeModel get bridgeModel => (super.noSuchMethod(
         Invocation.getter(#bridgeModel),
-        returnValue: _FakeBridgeModel_1(
+        returnValue: _FakeBridgeModel_0(
           this,
           Invocation.getter(#bridgeModel),
         ),
-      ) as _i3.BridgeModel);
+      ) as _i2.BridgeModel);
   @override
-  set bridgeModel(_i3.BridgeModel? _bridgeModel) => super.noSuchMethod(
+  set bridgeModel(_i2.BridgeModel? _bridgeModel) => super.noSuchMethod(
         Invocation.setter(
           #bridgeModel,
           _bridgeModel,
@@ -197,15 +277,15 @@ class MockGoodNightUseCase extends _i1.Mock implements _i8.GoodNightUseCase {
         returnValueForMissingStub: null,
       );
   @override
-  _i4.GoodNightModel get goodNightModel => (super.noSuchMethod(
+  _i3.GoodNightModel get goodNightModel => (super.noSuchMethod(
         Invocation.getter(#goodNightModel),
-        returnValue: _FakeGoodNightModel_2(
+        returnValue: _FakeGoodNightModel_1(
           this,
           Invocation.getter(#goodNightModel),
         ),
-      ) as _i4.GoodNightModel);
+      ) as _i3.GoodNightModel);
   @override
-  set goodNightModel(_i4.GoodNightModel? _goodNightModel) => super.noSuchMethod(
+  set goodNightModel(_i3.GoodNightModel? _goodNightModel) => super.noSuchMethod(
         Invocation.setter(
           #goodNightModel,
           _goodNightModel,
@@ -213,15 +293,15 @@ class MockGoodNightUseCase extends _i1.Mock implements _i8.GoodNightUseCase {
         returnValueForMissingStub: null,
       );
   @override
-  _i5.SmartHomeService get smartHomeService => (super.noSuchMethod(
+  _i4.SmartHomeService get smartHomeService => (super.noSuchMethod(
         Invocation.getter(#smartHomeService),
-        returnValue: _FakeSmartHomeService_3(
+        returnValue: _FakeSmartHomeService_2(
           this,
           Invocation.getter(#smartHomeService),
         ),
-      ) as _i5.SmartHomeService);
+      ) as _i4.SmartHomeService);
   @override
-  set smartHomeService(_i5.SmartHomeService? _smartHomeService) =>
+  set smartHomeService(_i4.SmartHomeService? _smartHomeService) =>
       super.noSuchMethod(
         Invocation.setter(
           #smartHomeService,
@@ -230,15 +310,15 @@ class MockGoodNightUseCase extends _i1.Mock implements _i8.GoodNightUseCase {
         returnValueForMissingStub: null,
       );
   @override
-  _i6.SpotifySdkService get spotifySdkService => (super.noSuchMethod(
+  _i5.SpotifySdkService get spotifySdkService => (super.noSuchMethod(
         Invocation.getter(#spotifySdkService),
-        returnValue: _FakeSpotifySdkService_4(
+        returnValue: _FakeSpotifySdkService_3(
           this,
           Invocation.getter(#spotifySdkService),
         ),
-      ) as _i6.SpotifySdkService);
+      ) as _i5.SpotifySdkService);
   @override
-  set spotifySdkService(_i6.SpotifySdkService? _spotifySdkService) =>
+  set spotifySdkService(_i5.SpotifySdkService? _spotifySdkService) =>
       super.noSuchMethod(
         Invocation.setter(
           #spotifySdkService,
@@ -247,15 +327,15 @@ class MockGoodNightUseCase extends _i1.Mock implements _i8.GoodNightUseCase {
         returnValueForMissingStub: null,
       );
   @override
-  _i7.GoodMorningModel get goodMorningModel => (super.noSuchMethod(
+  _i6.GoodMorningModel get goodMorningModel => (super.noSuchMethod(
         Invocation.getter(#goodMorningModel),
-        returnValue: _FakeGoodMorningModel_5(
+        returnValue: _FakeGoodMorningModel_4(
           this,
           Invocation.getter(#goodMorningModel),
         ),
-      ) as _i7.GoodMorningModel);
+      ) as _i6.GoodMorningModel);
   @override
-  set goodMorningModel(_i7.GoodMorningModel? _goodMorningModel) =>
+  set goodMorningModel(_i6.GoodMorningModel? _goodMorningModel) =>
       super.noSuchMethod(
         Invocation.setter(
           #goodMorningModel,
@@ -303,14 +383,30 @@ class MockGoodNightUseCase extends _i1.Mock implements _i8.GoodNightUseCase {
         returnValueForMissingStub: null,
       );
   @override
-  _i9.Future<void> loadPreferences() => (super.noSuchMethod(
+  _i7.FlutterTts get flutterTts => (super.noSuchMethod(
+        Invocation.getter(#flutterTts),
+        returnValue: _FakeFlutterTts_5(
+          this,
+          Invocation.getter(#flutterTts),
+        ),
+      ) as _i7.FlutterTts);
+  @override
+  set flutterTts(_i7.FlutterTts? _flutterTts) => super.noSuchMethod(
+        Invocation.setter(
+          #flutterTts,
+          _flutterTts,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  _i12.Future<void> loadPreferences() => (super.noSuchMethod(
         Invocation.method(
           #loadPreferences,
           [],
         ),
-        returnValue: _i9.Future<void>.value(),
-        returnValueForMissingStub: _i9.Future<void>.value(),
-      ) as _i9.Future<void>);
+        returnValue: _i12.Future<void>.value(),
+        returnValueForMissingStub: _i12.Future<void>.value(),
+      ) as _i12.Future<void>);
   @override
   void execute(String? trigger) => super.noSuchMethod(
         Invocation.method(
@@ -320,7 +416,7 @@ class MockGoodNightUseCase extends _i1.Mock implements _i8.GoodNightUseCase {
         returnValueForMissingStub: null,
       );
   @override
-  _i9.Future<void> schedule(
+  _i12.Future<void> schedule(
     int? hours,
     int? minutes,
   ) =>
@@ -332,17 +428,17 @@ class MockGoodNightUseCase extends _i1.Mock implements _i8.GoodNightUseCase {
             minutes,
           ],
         ),
-        returnValue: _i9.Future<void>.value(),
-        returnValueForMissingStub: _i9.Future<void>.value(),
-      ) as _i9.Future<void>);
+        returnValue: _i12.Future<void>.value(),
+        returnValueForMissingStub: _i12.Future<void>.value(),
+      ) as _i12.Future<void>);
   @override
-  _i9.Future<bool> checkTrigger() => (super.noSuchMethod(
+  _i12.Future<bool> checkTrigger() => (super.noSuchMethod(
         Invocation.method(
           #checkTrigger,
           [],
         ),
-        returnValue: _i9.Future<bool>.value(false),
-      ) as _i9.Future<bool>);
+        returnValue: _i12.Future<bool>.value(false),
+      ) as _i12.Future<bool>);
   @override
   List<String> getAllTriggerWords() => (super.noSuchMethod(
         Invocation.method(
@@ -352,57 +448,57 @@ class MockGoodNightUseCase extends _i1.Mock implements _i8.GoodNightUseCase {
         returnValue: <String>[],
       ) as List<String>);
   @override
-  _i9.Future<String> turnOffAllLights() => (super.noSuchMethod(
+  _i12.Future<String> turnOffAllLights() => (super.noSuchMethod(
         Invocation.method(
           #turnOffAllLights,
           [],
         ),
-        returnValue: _i9.Future<String>.value(''),
-      ) as _i9.Future<String>);
+        returnValue: _i12.Future<String>.value(''),
+      ) as _i12.Future<String>);
   @override
-  _i9.Future<void> askForSleepPlaylist() => (super.noSuchMethod(
+  _i12.Future<void> askForSleepPlaylist() => (super.noSuchMethod(
         Invocation.method(
           #askForSleepPlaylist,
           [],
         ),
-        returnValue: _i9.Future<void>.value(),
-        returnValueForMissingStub: _i9.Future<void>.value(),
-      ) as _i9.Future<void>);
+        returnValue: _i12.Future<void>.value(),
+        returnValueForMissingStub: _i12.Future<void>.value(),
+      ) as _i12.Future<void>);
   @override
-  _i9.Future<void> startSleepPlayList() => (super.noSuchMethod(
+  _i12.Future<void> startSleepPlayList() => (super.noSuchMethod(
         Invocation.method(
           #startSleepPlayList,
           [],
         ),
-        returnValue: _i9.Future<void>.value(),
-        returnValueForMissingStub: _i9.Future<void>.value(),
-      ) as _i9.Future<void>);
+        returnValue: _i12.Future<void>.value(),
+        returnValueForMissingStub: _i12.Future<void>.value(),
+      ) as _i12.Future<void>);
   @override
-  _i9.Future<void> askForWakeUpTime() => (super.noSuchMethod(
+  _i12.Future<void> askForWakeUpTime() => (super.noSuchMethod(
         Invocation.method(
           #askForWakeUpTime,
           [],
         ),
-        returnValue: _i9.Future<void>.value(),
-        returnValueForMissingStub: _i9.Future<void>.value(),
-      ) as _i9.Future<void>);
+        returnValue: _i12.Future<void>.value(),
+        returnValueForMissingStub: _i12.Future<void>.value(),
+      ) as _i12.Future<void>);
   @override
-  _i9.Future<String> setAlarm() => (super.noSuchMethod(
+  _i12.Future<String> setAlarm() => (super.noSuchMethod(
         Invocation.method(
           #setAlarm,
           [],
         ),
-        returnValue: _i9.Future<String>.value(''),
-      ) as _i9.Future<String>);
+        returnValue: _i12.Future<String>.value(''),
+      ) as _i12.Future<String>);
   @override
-  _i9.Future<void> executeCompleteUseCase() => (super.noSuchMethod(
+  _i12.Future<void> executeCompleteUseCase() => (super.noSuchMethod(
         Invocation.method(
           #executeCompleteUseCase,
           [],
         ),
-        returnValue: _i9.Future<void>.value(),
-        returnValueForMissingStub: _i9.Future<void>.value(),
-      ) as _i9.Future<void>);
+        returnValue: _i12.Future<void>.value(),
+        returnValueForMissingStub: _i12.Future<void>.value(),
+      ) as _i12.Future<void>);
   @override
   bool checkIfAnswerIsYes(String? answer) => (super.noSuchMethod(
         Invocation.method(
@@ -412,11 +508,816 @@ class MockGoodNightUseCase extends _i1.Mock implements _i8.GoodNightUseCase {
         returnValue: false,
       ) as bool);
   @override
-  _i9.Future<String> listenForSpeech(Duration? duration) => (super.noSuchMethod(
+  _i12.Future<String> listenForSpeech(Duration? duration) =>
+      (super.noSuchMethod(
         Invocation.method(
           #listenForSpeech,
           [duration],
         ),
-        returnValue: _i9.Future<String>.value(''),
-      ) as _i9.Future<String>);
+        returnValue: _i12.Future<String>.value(''),
+      ) as _i12.Future<String>);
+  @override
+  _i12.Future<void> textToSpeechOutput(String? output) => (super.noSuchMethod(
+        Invocation.method(
+          #textToSpeechOutput,
+          [output],
+        ),
+        returnValue: _i12.Future<void>.value(),
+        returnValueForMissingStub: _i12.Future<void>.value(),
+      ) as _i12.Future<void>);
+}
+
+/// A class which mocks [GoodMorningUseCase].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockGoodMorningUseCase extends _i1.Mock
+    implements _i14.GoodMorningUseCase {
+  MockGoodMorningUseCase() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  List<String> get goodMorningTriggerWords => (super.noSuchMethod(
+        Invocation.getter(#goodMorningTriggerWords),
+        returnValue: <String>[],
+      ) as List<String>);
+  @override
+  set goodMorningTriggerWords(List<String>? _goodMorningTriggerWords) =>
+      super.noSuchMethod(
+        Invocation.setter(
+          #goodMorningTriggerWords,
+          _goodMorningTriggerWords,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  List<String> get locationTriggerWords => (super.noSuchMethod(
+        Invocation.getter(#locationTriggerWords),
+        returnValue: <String>[],
+      ) as List<String>);
+  @override
+  set locationTriggerWords(List<String>? _locationTriggerWords) =>
+      super.noSuchMethod(
+        Invocation.setter(
+          #locationTriggerWords,
+          _locationTriggerWords,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  List<String> get weatherTriggerWords => (super.noSuchMethod(
+        Invocation.getter(#weatherTriggerWords),
+        returnValue: <String>[],
+      ) as List<String>);
+  @override
+  set weatherTriggerWords(List<String>? _weatherTriggerWords) =>
+      super.noSuchMethod(
+        Invocation.setter(
+          #weatherTriggerWords,
+          _weatherTriggerWords,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  List<String> get routeTriggerWords => (super.noSuchMethod(
+        Invocation.getter(#routeTriggerWords),
+        returnValue: <String>[],
+      ) as List<String>);
+  @override
+  set routeTriggerWords(List<String>? _routeTriggerWords) => super.noSuchMethod(
+        Invocation.setter(
+          #routeTriggerWords,
+          _routeTriggerWords,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  List<String> get quoteTriggerWords => (super.noSuchMethod(
+        Invocation.getter(#quoteTriggerWords),
+        returnValue: <String>[],
+      ) as List<String>);
+  @override
+  set quoteTriggerWords(List<String>? _quoteTriggerWords) => super.noSuchMethod(
+        Invocation.setter(
+          #quoteTriggerWords,
+          _quoteTriggerWords,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  _i6.GoodMorningModel get goodMorningModel => (super.noSuchMethod(
+        Invocation.getter(#goodMorningModel),
+        returnValue: _FakeGoodMorningModel_4(
+          this,
+          Invocation.getter(#goodMorningModel),
+        ),
+      ) as _i6.GoodMorningModel);
+  @override
+  set goodMorningModel(_i6.GoodMorningModel? _goodMorningModel) =>
+      super.noSuchMethod(
+        Invocation.setter(
+          #goodMorningModel,
+          _goodMorningModel,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  _i8.LocationService get locationService => (super.noSuchMethod(
+        Invocation.getter(#locationService),
+        returnValue: _FakeLocationService_6(
+          this,
+          Invocation.getter(#locationService),
+        ),
+      ) as _i8.LocationService);
+  @override
+  set locationService(_i8.LocationService? _locationService) =>
+      super.noSuchMethod(
+        Invocation.setter(
+          #locationService,
+          _locationService,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  _i9.WeatherService get weatherService => (super.noSuchMethod(
+        Invocation.getter(#weatherService),
+        returnValue: _FakeWeatherService_7(
+          this,
+          Invocation.getter(#weatherService),
+        ),
+      ) as _i9.WeatherService);
+  @override
+  set weatherService(_i9.WeatherService? _weatherService) => super.noSuchMethod(
+        Invocation.setter(
+          #weatherService,
+          _weatherService,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  _i10.MapsService get mapsService => (super.noSuchMethod(
+        Invocation.getter(#mapsService),
+        returnValue: _FakeMapsService_8(
+          this,
+          Invocation.getter(#mapsService),
+        ),
+      ) as _i10.MapsService);
+  @override
+  set mapsService(_i10.MapsService? _mapsService) => super.noSuchMethod(
+        Invocation.setter(
+          #mapsService,
+          _mapsService,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  set currentLocation(_i15.Position? _currentLocation) => super.noSuchMethod(
+        Invocation.setter(
+          #currentLocation,
+          _currentLocation,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  set weatherData(_i9.WeatherData? _weatherData) => super.noSuchMethod(
+        Invocation.setter(
+          #weatherData,
+          _weatherData,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  Map<String, dynamic> get routeDetails => (super.noSuchMethod(
+        Invocation.getter(#routeDetails),
+        returnValue: <String, dynamic>{},
+      ) as Map<String, dynamic>);
+  @override
+  set routeDetails(Map<String, dynamic>? _routeDetails) => super.noSuchMethod(
+        Invocation.setter(
+          #routeDetails,
+          _routeDetails,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  set quoteData(_i16.QuoteData? _quoteData) => super.noSuchMethod(
+        Invocation.setter(
+          #quoteData,
+          _quoteData,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  _i7.FlutterTts get flutterTts => (super.noSuchMethod(
+        Invocation.getter(#flutterTts),
+        returnValue: _FakeFlutterTts_5(
+          this,
+          Invocation.getter(#flutterTts),
+        ),
+      ) as _i7.FlutterTts);
+  @override
+  set flutterTts(_i7.FlutterTts? _flutterTts) => super.noSuchMethod(
+        Invocation.setter(
+          #flutterTts,
+          _flutterTts,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  _i12.Future<void> loadPreferences() => (super.noSuchMethod(
+        Invocation.method(
+          #loadPreferences,
+          [],
+        ),
+        returnValue: _i12.Future<void>.value(),
+        returnValueForMissingStub: _i12.Future<void>.value(),
+      ) as _i12.Future<void>);
+  @override
+  String formatTimeOfDay(_i17.TimeOfDay? time) => (super.noSuchMethod(
+        Invocation.method(
+          #formatTimeOfDay,
+          [time],
+        ),
+        returnValue: '',
+      ) as String);
+  @override
+  _i12.Future<void> execute(String? trigger) => (super.noSuchMethod(
+        Invocation.method(
+          #execute,
+          [trigger],
+        ),
+        returnValue: _i12.Future<void>.value(),
+        returnValueForMissingStub: _i12.Future<void>.value(),
+      ) as _i12.Future<void>);
+  @override
+  _i12.Future<bool> checkTrigger() => (super.noSuchMethod(
+        Invocation.method(
+          #checkTrigger,
+          [],
+        ),
+        returnValue: _i12.Future<bool>.value(false),
+      ) as _i12.Future<bool>);
+  @override
+  List<String> getAllTriggerWords() => (super.noSuchMethod(
+        Invocation.method(
+          #getAllTriggerWords,
+          [],
+        ),
+        returnValue: <String>[],
+      ) as List<String>);
+  @override
+  _i12.Future<String> executeLocationUseCase(bool? outputEnabled) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #executeLocationUseCase,
+          [outputEnabled],
+        ),
+        returnValue: _i12.Future<String>.value(''),
+      ) as _i12.Future<String>);
+  @override
+  _i12.Future<String> executeWeatherUseCase() => (super.noSuchMethod(
+        Invocation.method(
+          #executeWeatherUseCase,
+          [],
+        ),
+        returnValue: _i12.Future<String>.value(''),
+      ) as _i12.Future<String>);
+  @override
+  _i12.Future<String> executeRouteUseCase() => (super.noSuchMethod(
+        Invocation.method(
+          #executeRouteUseCase,
+          [],
+        ),
+        returnValue: _i12.Future<String>.value(''),
+      ) as _i12.Future<String>);
+  @override
+  _i12.Future<String> executeQuoteUseCase() => (super.noSuchMethod(
+        Invocation.method(
+          #executeQuoteUseCase,
+          [],
+        ),
+        returnValue: _i12.Future<String>.value(''),
+      ) as _i12.Future<String>);
+  @override
+  _i12.Future<String> executeCompleteUseCase() => (super.noSuchMethod(
+        Invocation.method(
+          #executeCompleteUseCase,
+          [],
+        ),
+        returnValue: _i12.Future<String>.value(''),
+      ) as _i12.Future<String>);
+  @override
+  _i12.Future<String> listenForSpeech(Duration? duration) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #listenForSpeech,
+          [duration],
+        ),
+        returnValue: _i12.Future<String>.value(''),
+      ) as _i12.Future<String>);
+  @override
+  _i12.Future<void> textToSpeechOutput(String? output) => (super.noSuchMethod(
+        Invocation.method(
+          #textToSpeechOutput,
+          [output],
+        ),
+        returnValue: _i12.Future<void>.value(),
+        returnValueForMissingStub: _i12.Future<void>.value(),
+      ) as _i12.Future<void>);
+}
+
+/// A class which mocks [EventPlanningUseCase].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockEventPlanningUseCase extends _i1.Mock
+    implements _i18.EventPlanningUseCase {
+  MockEventPlanningUseCase() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  List<String> get schedulingTriggerWords => (super.noSuchMethod(
+        Invocation.getter(#schedulingTriggerWords),
+        returnValue: <String>[],
+      ) as List<String>);
+  @override
+  set schedulingTriggerWords(List<String>? _schedulingTriggerWords) =>
+      super.noSuchMethod(
+        Invocation.setter(
+          #schedulingTriggerWords,
+          _schedulingTriggerWords,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  List<String> get calendarTriggerWords => (super.noSuchMethod(
+        Invocation.getter(#calendarTriggerWords),
+        returnValue: <String>[],
+      ) as List<String>);
+  @override
+  set calendarTriggerWords(List<String>? _calendarTriggerWords) =>
+      super.noSuchMethod(
+        Invocation.setter(
+          #calendarTriggerWords,
+          _calendarTriggerWords,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  List<String> get movieTriggerWords => (super.noSuchMethod(
+        Invocation.getter(#movieTriggerWords),
+        returnValue: <String>[],
+      ) as List<String>);
+  @override
+  set movieTriggerWords(List<String>? _movieTriggerWords) => super.noSuchMethod(
+        Invocation.setter(
+          #movieTriggerWords,
+          _movieTriggerWords,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  _i7.FlutterTts get flutterTts => (super.noSuchMethod(
+        Invocation.getter(#flutterTts),
+        returnValue: _FakeFlutterTts_5(
+          this,
+          Invocation.getter(#flutterTts),
+        ),
+      ) as _i7.FlutterTts);
+  @override
+  set flutterTts(_i7.FlutterTts? _flutterTts) => super.noSuchMethod(
+        Invocation.setter(
+          #flutterTts,
+          _flutterTts,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  void execute(String? trigger) => super.noSuchMethod(
+        Invocation.method(
+          #execute,
+          [trigger],
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  _i12.Future<bool> checkTrigger() => (super.noSuchMethod(
+        Invocation.method(
+          #checkTrigger,
+          [],
+        ),
+        returnValue: _i12.Future<bool>.value(false),
+      ) as _i12.Future<bool>);
+  @override
+  List<String> getAllTriggerWords() => (super.noSuchMethod(
+        Invocation.method(
+          #getAllTriggerWords,
+          [],
+        ),
+        returnValue: <String>[],
+      ) as List<String>);
+  @override
+  void listUpcomingEvents() => super.noSuchMethod(
+        Invocation.method(
+          #listUpcomingEvents,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  _i12.Future<String> getTravelDuration(String? destination) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getTravelDuration,
+          [destination],
+        ),
+        returnValue: _i12.Future<String>.value(''),
+      ) as _i12.Future<String>);
+  @override
+  String getTimeFromHoursMinutes(
+    int? hours,
+    int? minutes,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getTimeFromHoursMinutes,
+          [
+            hours,
+            minutes,
+          ],
+        ),
+        returnValue: '',
+      ) as String);
+  @override
+  DateTime? parseSpokenTime(String? spokenTime) =>
+      (super.noSuchMethod(Invocation.method(
+        #parseSpokenTime,
+        [spokenTime],
+      )) as DateTime?);
+  @override
+  void listMovies() => super.noSuchMethod(
+        Invocation.method(
+          #listMovies,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  _i12.Future<String> listenForSpeech(Duration? duration) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #listenForSpeech,
+          [duration],
+        ),
+        returnValue: _i12.Future<String>.value(''),
+      ) as _i12.Future<String>);
+  @override
+  _i12.Future<void> textToSpeechOutput(String? output) => (super.noSuchMethod(
+        Invocation.method(
+          #textToSpeechOutput,
+          [output],
+        ),
+        returnValue: _i12.Future<void>.value(),
+        returnValueForMissingStub: _i12.Future<void>.value(),
+      ) as _i12.Future<void>);
+}
+
+/// A class which mocks [NewsUseCase].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockNewsUseCase extends _i1.Mock implements _i19.NewsUseCase {
+  MockNewsUseCase() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  List<String> get NewsTriggerWords => (super.noSuchMethod(
+        Invocation.getter(#NewsTriggerWords),
+        returnValue: <String>[],
+      ) as List<String>);
+  @override
+  set NewsTriggerWords(List<String>? _NewsTriggerWords) => super.noSuchMethod(
+        Invocation.setter(
+          #NewsTriggerWords,
+          _NewsTriggerWords,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  _i7.FlutterTts get flutterTts => (super.noSuchMethod(
+        Invocation.getter(#flutterTts),
+        returnValue: _FakeFlutterTts_5(
+          this,
+          Invocation.getter(#flutterTts),
+        ),
+      ) as _i7.FlutterTts);
+  @override
+  set flutterTts(_i7.FlutterTts? _flutterTts) => super.noSuchMethod(
+        Invocation.setter(
+          #flutterTts,
+          _flutterTts,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  _i11.NewYorkTimesNews get newYorkTimesNews => (super.noSuchMethod(
+        Invocation.getter(#newYorkTimesNews),
+        returnValue: _FakeNewYorkTimesNews_9(
+          this,
+          Invocation.getter(#newYorkTimesNews),
+        ),
+      ) as _i11.NewYorkTimesNews);
+  @override
+  set newYorkTimesNews(_i11.NewYorkTimesNews? _newYorkTimesNews) =>
+      super.noSuchMethod(
+        Invocation.setter(
+          #newYorkTimesNews,
+          _newYorkTimesNews,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  _i11.GermanNews get germanNews => (super.noSuchMethod(
+        Invocation.getter(#germanNews),
+        returnValue: _FakeGermanNews_10(
+          this,
+          Invocation.getter(#germanNews),
+        ),
+      ) as _i11.GermanNews);
+  @override
+  set germanNews(_i11.GermanNews? _germanNews) => super.noSuchMethod(
+        Invocation.setter(
+          #germanNews,
+          _germanNews,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  _i11.FinanceNews get financeNews => (super.noSuchMethod(
+        Invocation.getter(#financeNews),
+        returnValue: _FakeFinanceNews_11(
+          this,
+          Invocation.getter(#financeNews),
+        ),
+      ) as _i11.FinanceNews);
+  @override
+  set financeNews(_i11.FinanceNews? _financeNews) => super.noSuchMethod(
+        Invocation.setter(
+          #financeNews,
+          _financeNews,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  _i11.TechNews get techNews => (super.noSuchMethod(
+        Invocation.getter(#techNews),
+        returnValue: _FakeTechNews_12(
+          this,
+          Invocation.getter(#techNews),
+        ),
+      ) as _i11.TechNews);
+  @override
+  set techNews(_i11.TechNews? _techNews) => super.noSuchMethod(
+        Invocation.setter(
+          #techNews,
+          _techNews,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  int get notificationId => (super.noSuchMethod(
+        Invocation.getter(#notificationId),
+        returnValue: 0,
+      ) as int);
+  @override
+  set notificationId(int? _notificationId) => super.noSuchMethod(
+        Invocation.setter(
+          #notificationId,
+          _notificationId,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  _i12.Completer<List<_i20.Article>> get articles => (super.noSuchMethod(
+        Invocation.getter(#articles),
+        returnValue: _FakeCompleter_13<List<_i20.Article>>(
+          this,
+          Invocation.getter(#articles),
+        ),
+      ) as _i12.Completer<List<_i20.Article>>);
+  @override
+  set articles(_i12.Completer<List<_i20.Article>>? _articles) =>
+      super.noSuchMethod(
+        Invocation.setter(
+          #articles,
+          _articles,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  bool get showNews => (super.noSuchMethod(
+        Invocation.getter(#showNews),
+        returnValue: false,
+      ) as bool);
+  @override
+  set showNews(bool? value) => super.noSuchMethod(
+        Invocation.setter(
+          #showNews,
+          value,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  List<_i20.Article> get cardArticles => (super.noSuchMethod(
+        Invocation.getter(#cardArticles),
+        returnValue: <_i20.Article>[],
+      ) as List<_i20.Article>);
+  @override
+  bool get hasListeners => (super.noSuchMethod(
+        Invocation.getter(#hasListeners),
+        returnValue: false,
+      ) as bool);
+  @override
+  _i12.Future<void> loadPreferences() => (super.noSuchMethod(
+        Invocation.method(
+          #loadPreferences,
+          [],
+        ),
+        returnValue: _i12.Future<void>.value(),
+        returnValueForMissingStub: _i12.Future<void>.value(),
+      ) as _i12.Future<void>);
+  @override
+  _i12.Future<void> deletePreferences() => (super.noSuchMethod(
+        Invocation.method(
+          #deletePreferences,
+          [],
+        ),
+        returnValue: _i12.Future<void>.value(),
+        returnValueForMissingStub: _i12.Future<void>.value(),
+      ) as _i12.Future<void>);
+  @override
+  void execute(String? trigger) => super.noSuchMethod(
+        Invocation.method(
+          #execute,
+          [trigger],
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  _i12.Future<bool> newsRoutine() => (super.noSuchMethod(
+        Invocation.method(
+          #newsRoutine,
+          [],
+        ),
+        returnValue: _i12.Future<bool>.value(false),
+      ) as _i12.Future<bool>);
+  @override
+  _i12.Future<void> fetchArticles() => (super.noSuchMethod(
+        Invocation.method(
+          #fetchArticles,
+          [],
+        ),
+        returnValue: _i12.Future<void>.value(),
+        returnValueForMissingStub: _i12.Future<void>.value(),
+      ) as _i12.Future<void>);
+  @override
+  List<_i20.Article> prepareList(List<_i20.Article>? inputList) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #prepareList,
+          [inputList],
+        ),
+        returnValue: <_i20.Article>[],
+      ) as List<_i20.Article>);
+  @override
+  List<_i20.Article> trimListByVal(
+    List<_i20.Article>? inputList, [
+    int? n = 5,
+  ]) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #trimListByVal,
+          [
+            inputList,
+            n,
+          ],
+        ),
+        returnValue: <_i20.Article>[],
+      ) as List<_i20.Article>);
+  @override
+  List<_i20.Article> rankArticlesInList(List<_i20.Article>? inputList) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #rankArticlesInList,
+          [inputList],
+        ),
+        returnValue: <_i20.Article>[],
+      ) as List<_i20.Article>);
+  @override
+  void setShowNews(bool? value) => super.noSuchMethod(
+        Invocation.method(
+          #setShowNews,
+          [value],
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  void displayNews() => super.noSuchMethod(
+        Invocation.method(
+          #displayNews,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  List<_i20.Article> sortArticleAlgorithm(List<_i20.Article>? allArticles) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #sortArticleAlgorithm,
+          [allArticles],
+        ),
+        returnValue: <_i20.Article>[],
+      ) as List<_i20.Article>);
+  @override
+  void readNewsHeadlines() => super.noSuchMethod(
+        Invocation.method(
+          #readNewsHeadlines,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  _i12.Future<void> schedule(
+    int? hours,
+    int? minutes,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #schedule,
+          [
+            hours,
+            minutes,
+          ],
+        ),
+        returnValue: _i12.Future<void>.value(),
+        returnValueForMissingStub: _i12.Future<void>.value(),
+      ) as _i12.Future<void>);
+  @override
+  _i12.Future<bool> checkTrigger() => (super.noSuchMethod(
+        Invocation.method(
+          #checkTrigger,
+          [],
+        ),
+        returnValue: _i12.Future<bool>.value(false),
+      ) as _i12.Future<bool>);
+  @override
+  _i12.Future<String> listenForSpeech(Duration? duration) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #listenForSpeech,
+          [duration],
+        ),
+        returnValue: _i12.Future<String>.value(''),
+      ) as _i12.Future<String>);
+  @override
+  _i12.Future<void> textToSpeechOutput(String? output) => (super.noSuchMethod(
+        Invocation.method(
+          #textToSpeechOutput,
+          [output],
+        ),
+        returnValue: _i12.Future<void>.value(),
+        returnValueForMissingStub: _i12.Future<void>.value(),
+      ) as _i12.Future<void>);
+  @override
+  void addListener(_i21.VoidCallback? listener) => super.noSuchMethod(
+        Invocation.method(
+          #addListener,
+          [listener],
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  void removeListener(_i21.VoidCallback? listener) => super.noSuchMethod(
+        Invocation.method(
+          #removeListener,
+          [listener],
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  void dispose() => super.noSuchMethod(
+        Invocation.method(
+          #dispose,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  void notifyListeners() => super.noSuchMethod(
+        Invocation.method(
+          #notifyListeners,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
 }

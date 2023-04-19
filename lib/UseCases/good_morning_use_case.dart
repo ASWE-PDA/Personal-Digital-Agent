@@ -1,4 +1,3 @@
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:luna/Services/location_service.dart';
 import 'package:luna/Services/maps_service.dart';
@@ -8,11 +7,6 @@ import 'package:luna/UseCases/use_case.dart';
 import 'package:luna/UseCases/good_morning_model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
-@pragma('vm:entry-point')
-void onNotificationTap(NotificationResponse response) {
-  print("notificationTap");
-}
 
 /// Use case for the Good Morning feature.
 class GoodMorningUseCase extends UseCase {
@@ -32,6 +26,7 @@ class GoodMorningUseCase extends UseCase {
   GoodMorningModel goodMorningModel = GoodMorningModel();
   LocationService locationService = LocationService.instance;
   WeatherService weatherService = WeatherService();
+  QuoteService quoteService = QuoteService();
   MapsService mapsService = MapsService();
   Position? currentLocation;
   WeatherData? weatherData;
@@ -205,7 +200,7 @@ class GoodMorningUseCase extends UseCase {
   ///
   /// Returns the output string.
   Future<String> executeQuoteUseCase() async {
-    quoteData = await getQuoteOfTheDay();
+    quoteData = await quoteService.getQuoteOfTheDay();
     String output = "";
     if (quoteData == null) {
       output += "Sorry, I couldn't get a quote for you. ";

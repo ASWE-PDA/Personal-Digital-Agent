@@ -150,6 +150,16 @@ void main() {
   });
 
   test(
+      "Check if no playlist is started if the spoitfy remote connection does not work",
+      () async {
+    when(spotifySdkService.connect()).thenAnswer((_) => Future.error("error"));
+    await GoodNightUseCase.instance.startSleepPlayList();
+    verify(spotifySdkService.connect());
+    verifyNever(spotifySdkService.playPlaylist(any));
+    verifyNever(spotifySdkService.setRepeatMode(any));
+  });
+
+  test(
       "Check if playlist is started if the spoitfy remote connection does work",
       () async {
     when(spotifySdkService.connect()).thenAnswer((_) => Future.value(true));
@@ -169,5 +179,10 @@ void main() {
   test("Check if answer is not in yes trigger words", () {
     bool check = GoodNightUseCase.instance.checkIfAnswerIsYes("no");
     expect(check, false);
+  });
+
+  test("Get all trigger words", () {
+    var words = GoodNightUseCase.instance.getAllTriggerWords();
+    expect(words.length, 11);
   });
 }

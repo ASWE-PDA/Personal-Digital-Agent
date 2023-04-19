@@ -18,10 +18,6 @@ class EventPlanningUseCase extends UseCase {
     flutterTts.setLanguage("en-US");
   }
 
-  EventPlanningUseCase() {
-    flutterTts.setLanguage("en-US");
-  }
-
   List<String> schedulingTriggerWords = ["schedule", "scheduling"];
   List<String> calendarTriggerWords = ["calendar", "events", "plans"];
   List<String> movieTriggerWords = [

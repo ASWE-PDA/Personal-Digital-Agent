@@ -10,11 +10,6 @@ import '../../Services/location_service.dart';
 import 'package:intl/intl.dart';
 import 'package:timezone/timezone.dart' as tz;
 
-@pragma("vm:entry-point")
-void onNotificationTap(NotificationResponse response) {
-  print("notificationTap");
-}
-
 class EventPlanningUseCase extends UseCase {
   /// Singleton instance of [GoodNightUseCase].
   static final instance = EventPlanningUseCase._();
@@ -267,8 +262,8 @@ class EventPlanningUseCase extends UseCase {
                 continue;
               }
               CalendarService calendar = CalendarService();
-              calendar.createCalendarEvent(
-                  movieTime, movieTitle, await movieService.getMovieLength(movies[i]["id"]));
+              calendar.createCalendarEvent(movieTime, movieTitle,
+                  await movieService.getMovieLength(movies[i]["id"]));
               await textToSpeechOutput(
                   "I created an Event for the movie $movieTitle at ${getTimeFromHoursMinutes(movieTime.hour, movieTime.minute)}.");
               return;

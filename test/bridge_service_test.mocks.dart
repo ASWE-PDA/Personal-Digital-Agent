@@ -45,27 +45,11 @@ class MockBridgeService extends _i1.Mock implements _i2.BridgeService {
         returnValue: _i3.Future<List<_i4.Bridge>>.value(<_i4.Bridge>[]),
       ) as _i3.Future<List<_i4.Bridge>>);
   @override
-  _i3.Future<List<_i4.Bridge>> getBridgesDebug() => (super.noSuchMethod(
-        Invocation.method(
-          #getBridgesDebug,
-          [],
-        ),
-        returnValue: _i3.Future<List<_i4.Bridge>>.value(<_i4.Bridge>[]),
-      ) as _i3.Future<List<_i4.Bridge>>);
-  @override
-  _i3.Future<String> createUserDebug(String? ip) => (super.noSuchMethod(
-        Invocation.method(
-          #createUserDebug,
-          [ip],
-        ),
-        returnValue: _i3.Future<String>.value(''),
-      ) as _i3.Future<String>);
-  @override
-  _i3.Future<dynamic> createUser(String? ip) => (super.noSuchMethod(
+  _i3.Future<String> createUser(String? ip) => (super.noSuchMethod(
         Invocation.method(
           #createUser,
           [ip],
         ),
-        returnValue: _i3.Future<dynamic>.value(),
-      ) as _i3.Future<dynamic>);
+        returnValue: _i3.Future<String>.value(''),
+      ) as _i3.Future<String>);
 }

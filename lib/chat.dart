@@ -178,7 +178,7 @@ class _ChatPageState extends State<ChatPage> {
                   child: Text("Test News Use Case DEBUG")),
               ElevatedButton(
                   onPressed: () async {
-                    SchedulingUseCase.instance.execute("movie");
+                    EventPlanningUseCase.instance.execute("movie");
                   },
                   child: Text("Test Move Service DEBUG")),
               Padding(

@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:luna/UseCases/news/news_use_case.dart';
-import 'package:url_launcher/url_launcher.dart';
+import "package:flutter/material.dart";
+import "package:luna/UseCases/news/news_use_case.dart";
+import "package:url_launcher/url_launcher.dart";
 
 
 class MyNewsCardsWidget extends StatefulWidget {
@@ -17,7 +17,7 @@ class _MyNewsCardsWidgetState extends State<MyNewsCardsWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('My News'),
+        title: Text("My News"),
         actions: [],
       ),
       body: ListView.builder(
@@ -67,7 +67,7 @@ class _MyNewsCardsWidgetState extends State<MyNewsCardsWidget> {
       url,
       mode: LaunchMode.externalApplication,
     )) {
-      throw Exception('Could not launch $url');
+      throw Exception("Could not launch $url");
     }
   }
 }

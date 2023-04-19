@@ -1,7 +1,7 @@
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
-import 'package:luna/Screens/newsScreen.dart';
+import 'package:luna/Screens/news_screen.dart';
 import 'package:luna/Services/Alarm/alarm_service.dart';
 import 'package:luna/Services/SmartHome/bridge_model.dart';
 import 'package:luna/UseCases/EventPlanning/event_planning_use_case.dart';

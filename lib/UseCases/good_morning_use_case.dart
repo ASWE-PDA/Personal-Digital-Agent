@@ -36,8 +36,6 @@ class GoodMorningUseCase extends UseCase {
   late Map<String, dynamic> routeDetails;
   QuoteData? quoteData;
 
-  int notificationId = 3;
-
   /// Loads preferences from SharedPreferences.
   Future<void> loadPreferences() async {
     await goodMorningModel.getGoodMorningPreferences();
@@ -148,16 +146,13 @@ class GoodMorningUseCase extends UseCase {
       } else {
         TimeOfDay preferredArrivalTime0 =
             await goodMorningModel.getPreferredArrivalTime();
-        String transportMode0 = (await goodMorningModel.getTransportMode())!;
 
         print("currentLocation: $currentLocation");
         print("workAddress: $workAddress");
-        print("travelMode: $transportMode0");
         print("arrivalTime: $preferredArrivalTime0");
         routeDetails = await mapsService.getRouteDetails(
           origin: currentLocation!,
           destination: workAddress!,
-          travelMode: transportMode0,
           arrivalTime: preferredArrivalTime0,
         );
 

@@ -9,8 +9,7 @@ class GoodMorningModel extends ChangeNotifier {
   TimeOfDay? _wakeUpTime;
   TimeOfDay? _preferredArrivalTime;
   String? _workAddress;
-  String? _transportMode;
-  bool? _latestDeparture;
+  // String? _transportMode;
 
   static const List<String> transportModes = [
     "Driving",
@@ -23,21 +22,19 @@ class GoodMorningModel extends ChangeNotifier {
   Future<TimeOfDay> get preferredArrivalTime async =>
       await getPreferredArrivalTime();
   Future<String?> get workAddress async => await getWorkAddress();
-  Future<String?> get transportMode async => await getTransportMode();
-  Future<bool?> get latestDeparture async => await getLatestDeparture();
+  // Future<String?> get transportMode async => await getTransportMode();
 
   /// Constructor of the [GoodMorningModel] class.
-  GoodMorningModel(
-      {TimeOfDay? wakeUpTime,
-      TimeOfDay? preferredArrivalTime,
-      String? workAddress,
-      String? transportMode,
-      bool? latestDeparture}) {
+  GoodMorningModel({
+    TimeOfDay? wakeUpTime,
+    TimeOfDay? preferredArrivalTime,
+    String? workAddress,
+  }) {
+    // String? transportMode}) {
     _wakeUpTime = wakeUpTime;
     _preferredArrivalTime = preferredArrivalTime;
     _workAddress = workAddress;
-    _transportMode = transportMode;
-    _latestDeparture = latestDeparture;
+    // _transportMode = transportMode;
     getGoodMorningPreferences();
   }
 
@@ -53,8 +50,7 @@ class GoodMorningModel extends ChangeNotifier {
         minute: prefs.getInt("preferredArrivalTimeMinute") ?? 0,
       ),
       workAddress: prefs.getString("workAddress") ?? "",
-      transportMode: prefs.getString("transportMode") ?? transportModes.first,
-      latestDeparture: prefs.getBool("latestDeparture") ?? false,
+      // transportMode: prefs.getString("transportMode") ?? transportModes.first,
     );
   }
 
@@ -63,8 +59,16 @@ class GoodMorningModel extends ChangeNotifier {
     _preferredArrivalTime =
         await goodMorningPreferences.getPreferredArrivalTime();
     _workAddress = await goodMorningPreferences.getWorkAddress();
-    _transportMode = await goodMorningPreferences.getTransportMode();
-    _latestDeparture = await goodMorningPreferences.getLatestDeparture();
+    // _transportMode = await goodMorningPreferences.getTransportMode();
+    notifyListeners();
+  }
+
+  deleteGoodMorningPreferences() async {
+    await goodMorningPreferences.deleteAll();
+    _wakeUpTime = null;
+    _preferredArrivalTime = null;
+    _workAddress = null;
+    // _transportMode = null;
     notifyListeners();
   }
 
@@ -80,15 +84,11 @@ class GoodMorningModel extends ChangeNotifier {
     return await goodMorningPreferences.getWorkAddress();
   }
 
-  Future<String?> getTransportMode() async {
-    return await goodMorningPreferences.getTransportMode();
-  }
+  // Future<String?> getTransportMode() async {
+  //   return await goodMorningPreferences.getTransportMode();
+  // }
 
-  Future<bool?> getLatestDeparture() async {
-    return await goodMorningPreferences.getLatestDeparture();
-  }
-
-  /// Updates the [value] of the wake-up time.
+  /// Updates the [value] of the wake up time.
   set setWakeUpTime(TimeOfDay value) {
     _wakeUpTime = value;
     goodMorningPreferences.setWakeUpTime(value);
@@ -110,16 +110,9 @@ class GoodMorningModel extends ChangeNotifier {
   }
 
   /// Updates the [value] of the transport mode.
-  set setTransportMode(String value) {
-    _transportMode = value;
-    goodMorningPreferences.setTransportMode(value);
-    notifyListeners();
-  }
-
-  /// Updates the [value] of the latest departure.
-  set setLatestDeparture(bool value) {
-    _latestDeparture = value;
-    goodMorningPreferences.setLatestDeparture(value);
-    notifyListeners();
-  }
+  // set setTransportMode(String value) {
+  //   _transportMode = value;
+  //   goodMorningPreferences.setTransportMode(value);
+  //   notifyListeners();
+  // }
 }

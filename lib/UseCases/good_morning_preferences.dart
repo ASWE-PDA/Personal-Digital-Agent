@@ -6,8 +6,7 @@ class GoodMorningPreferences {
   static const wakeUpTimeKey = "wakeUpTime_key";
   static const preferredArrivalTimeKey = "preferredArrivalTime_key";
   static const workAddressKey = "workAddress_key";
-  static const transportModeKey = "transportMode_key";
-  static const latestDepartureKey = "latestDeparture_key";
+  // static const transportModeKey = "transportMode_key";
 
   /// Updates the wake-up time.
   Future<void> setWakeUpTime(TimeOfDay wakeUpTime) async {
@@ -32,16 +31,10 @@ class GoodMorningPreferences {
   }
 
   /// Updates the [transportMode].
-  Future<void> setTransportMode(String transportMode) async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    sharedPreferences.setString(transportModeKey, transportMode);
-  }
-
-  /// Updates the [latestDeparture].
-  Future<void> setLatestDeparture(bool latestDeparture) async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    sharedPreferences.setBool(latestDepartureKey, latestDeparture);
-  }
+  // Future<void> setTransportMode(String transportMode) async {
+  //   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+  //   sharedPreferences.setString(transportModeKey, transportMode);
+  // }
 
   /// Loads the wake-up time.
   Future<TimeOfDay> getWakeUpTime() async {
@@ -69,14 +62,17 @@ class GoodMorningPreferences {
   }
 
   /// Loads the preferred transport mode.
-  getTransportMode() async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    return sharedPreferences.getString(transportModeKey) ?? "Driving";
-  }
+  // getTransportMode() async {
+  //   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+  //   return sharedPreferences.getString(transportModeKey) ?? "Driving";
+  // }
 
-  /// Loads the latest departure value.
-  getLatestDeparture() async {
+  /// Deletes all the shared preferences of good morning use case.
+  deleteAll() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    return sharedPreferences.getBool(latestDepartureKey);
+    sharedPreferences.remove(wakeUpTimeKey);
+    sharedPreferences.remove(preferredArrivalTimeKey);
+    sharedPreferences.remove(workAddressKey);
+    // sharedPreferences.remove(transportModeKey);
   }
 }

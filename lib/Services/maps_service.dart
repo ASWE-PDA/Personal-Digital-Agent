@@ -17,7 +17,6 @@ class MapsService {
   Future<Map<String, dynamic>> getRouteDetails({
     required Position origin,
     required String destination,
-    String travelMode = "driving",
     TimeOfDay? departureTime,
     TimeOfDay? arrivalTime,
   }) async {
@@ -26,7 +25,6 @@ class MapsService {
       baseUrl: baseUrl,
       origin: origin,
       destination: destination,
-      travelMode: travelMode,
       departureTime: departureTime,
       arrivalTime: arrivalTime,
     );
@@ -54,7 +52,6 @@ class MapsService {
     };
   }
 
-  // TODO add latest departure mode bool
   Future<List<Prediction>> getPlacePredictions(String input) async {
     var response = await http.get(
         Uri.parse("https://maps.googleapis.com/maps/api/place/autocomplete/json"
@@ -75,13 +72,11 @@ class MapsService {
     required String baseUrl,
     required Position origin,
     required String destination,
-    required String travelMode,
     TimeOfDay? departureTime,
     TimeOfDay? arrivalTime,
   }) {
     final originString = "${origin.latitude},${origin.longitude}";
     final destinationString = destination.replaceAll(" ", "+");
-    final travelModeString = travelMode;
     final timeMode = departureTime != null ? "departure_time" : "arrival_time";
 
     // Convert to DateTime objects
@@ -101,7 +96,7 @@ class MapsService {
     final url = StringBuffer(baseUrl)
       ..write("origin=$originString")
       ..write("&destination=$destinationString")
-      ..write("&mode=$travelModeString")
+      ..write("&mode=driving")
       ..write("&$timeMode=$time")
       ..write("&key=$_apiKey");
 

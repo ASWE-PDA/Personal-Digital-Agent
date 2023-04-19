@@ -29,7 +29,14 @@ class EventPlanningUseCase extends UseCase {
 
   List<String> schedulingTriggerWords = ["schedule", "scheduling"];
   List<String> calendarTriggerWords = ["calendar", "events", "plans"];
-  List<String> movieTriggerWords = ["movie", "film", "movies", "films", "show", "shows"];
+  List<String> movieTriggerWords = [
+    "movie",
+    "film",
+    "movies",
+    "films",
+    "show",
+    "shows"
+  ];
 
   @override
   void execute(String trigger) {
@@ -45,7 +52,6 @@ class EventPlanningUseCase extends UseCase {
     textToSpeechOutput("I don't know what you want");
     return;
   }
-  
 
   @override
   Future<bool> checkTrigger() async {
@@ -66,17 +72,18 @@ class EventPlanningUseCase extends UseCase {
     final events = await getUpcomingEvents();
     if (events.isEmpty) {
       await textToSpeechOutput("You have no events planned today.");
+    } else if (events.length == 1) {
+      await textToSpeechOutput(
+          "You have ${events.length} event planned today.");
+    } else {
+      await textToSpeechOutput(
+          "You have ${events.length} events planned today.");
     }
-    else if (events.length == 1) {
-      await textToSpeechOutput("You have ${events.length} event planned today.");
-    }
-    else {
-      await textToSpeechOutput("You have ${events.length} events planned today.");
-    }
-    
+
     String output = "";
     for (var i = 0; i < events.length; i++) {
-      output += "The event ${events[i].title} takes place from ${getTimeFromHoursMinutes(events[i].start!.hour, events[i].start!.minute)} till ${getTimeFromHoursMinutes(events[i].end!.hour, events[i].end!.minute)}.";
+      output +=
+          "The event ${events[i].title} takes place from ${getTimeFromHoursMinutes(events[i].start!.hour, events[i].start!.minute)} till ${getTimeFromHoursMinutes(events[i].end!.hour, events[i].end!.minute)}.";
       if (events[i].description != null) {
         output += "It following description: ${events[i].description}. ";
       }
@@ -91,7 +98,8 @@ class EventPlanningUseCase extends UseCase {
     var tryAgain = true;
     while (tryAgain) {
       await Future.delayed(Duration(seconds: 2));
-      await textToSpeechOutput("Would you like to create another Event for today?");
+      await textToSpeechOutput(
+          "Would you like to create another Event for today?");
       String answer = await listenForSpeech(Duration(seconds: 3));
       if (!answer.toLowerCase().contains("yes")) return;
 
@@ -100,13 +108,17 @@ class EventPlanningUseCase extends UseCase {
       String eventTitle = await listenForSpeech(Duration(seconds: 5));
 
       await Future.delayed(Duration(seconds: 2));
-      await textToSpeechOutput("At what time would you like this event to take place?");
+      await textToSpeechOutput(
+          "At what time would you like this event to take place?");
       String eventTimeInput = await listenForSpeech(Duration(seconds: 5));
       DateTime? eventTime = parseSpokenTime(eventTimeInput);
       if (eventTime == null) {
         await Future.delayed(Duration(seconds: 2));
-        await textToSpeechOutput("I didn't get that right. Do you want to try again?");
-        tryAgain = (await listenForSpeech(Duration(seconds: 3))).toLowerCase().contains("yes");
+        await textToSpeechOutput(
+            "I didn't get that right. Do you want to try again?");
+        tryAgain = (await listenForSpeech(Duration(seconds: 3)))
+            .toLowerCase()
+            .contains("yes");
         continue;
       }
       await Future.delayed(Duration(seconds: 2));
@@ -116,11 +128,15 @@ class EventPlanningUseCase extends UseCase {
         int eventDuration = int.parse(eventDurationInput);
         createCalendarEvent(eventTime, eventTitle, eventDuration);
         await Future.delayed(Duration(seconds: 2));
-        await textToSpeechOutput("I created the event $eventTitle for today starting at ${getTimeFromHoursMinutes(eventTime.hour, eventTime.minute)}.");
+        await textToSpeechOutput(
+            "I created the event $eventTitle for today starting at ${getTimeFromHoursMinutes(eventTime.hour, eventTime.minute)}.");
       } catch (e) {
         await Future.delayed(Duration(seconds: 2));
-        await textToSpeechOutput("I didn't get that right. Make sure that you only pass in the amount of minutes you want this event to last. Do you want to try again?");
-        tryAgain = (await listenForSpeech(Duration(seconds: 3))).toLowerCase().contains("yes");
+        await textToSpeechOutput(
+            "I didn't get that right. Make sure that you only pass in the amount of minutes you want this event to last. Do you want to try again?");
+        tryAgain = (await listenForSpeech(Duration(seconds: 3)))
+            .toLowerCase()
+            .contains("yes");
         continue;
       }
     }
@@ -141,12 +157,10 @@ class EventPlanningUseCase extends UseCase {
       // get current location
       final position = await LocationService.instance.getCurrentLocation();
       MapsService mapsService = MapsService();
-        Map<String, dynamic> routeDetails =
-                        await mapsService.getRouteDetails(
-                            origin: position!,
-                            destination: destination,
-                            travelMode: "driving",
-                            departureTime: TimeOfDay.now());
+      Map<String, dynamic> routeDetails = await mapsService.getRouteDetails(
+          origin: position!,
+          destination: destination,
+          departureTime: TimeOfDay.now());
       return "${routeDetails["durationAsText"]}";
     } catch (e) {
       print(e);
@@ -158,20 +172,20 @@ class EventPlanningUseCase extends UseCase {
     String amPm = "a.m";
     int h = hours;
     if (hours > 11) {
-      if (hours != 12) h = hours-12;
+      if (hours != 12) h = hours - 12;
       amPm = "p.m";
     }
 
     if (minutes == 0) {
       return "$h $amPm";
-    }
-    else {
+    } else {
       return "$h:$minutes $amPm";
     }
   }
 
   DateTime? parseSpokenTime(String spokenTime) {
-    RegExp regExp = RegExp(r"(\d{1,2}):?(\d{2})?\s*(a.?m.?|p.?m.?)", caseSensitive: false);
+    RegExp regExp =
+        RegExp(r"(\d{1,2}):?(\d{2})?\s*(a.?m.?|p.?m.?)", caseSensitive: false);
     RegExpMatch? match = regExp.firstMatch(spokenTime);
 
     if (match == null) {
@@ -183,7 +197,7 @@ class EventPlanningUseCase extends UseCase {
       String period = match.group(3)!.toLowerCase();
 
       if (hour == 12) {
-      hour = 0;
+        hour = 0;
       }
 
       if (period.contains("p")) {
@@ -194,17 +208,17 @@ class EventPlanningUseCase extends UseCase {
         return null;
       }
 
-      return DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, hour, minute);
-
+      return DateTime(DateTime.now().year, DateTime.now().month,
+          DateTime.now().day, hour, minute);
     } catch (e) {
       return null;
     }
   }
 
-  void listMovies() async{
+  void listMovies() async {
     final movies = await getPopularMovies();
     String output = "The 5 most popular movies from the movie database are: ";
-    
+
     for (var i = 0; i < 5; i++) {
       final movie = movies[i];
       output += "${movie["title"]}, ";
@@ -213,10 +227,12 @@ class EventPlanningUseCase extends UseCase {
     output += ". Would you like to watch on of those Movies today? ";
     await textToSpeechOutput(output);
 
-    print("=======================================\n\n\nDONE Listing NOW LISTENING\n\n\n====================================");
+    print(
+        "=======================================\n\n\nDONE Listing NOW LISTENING\n\n\n====================================");
     String watchMovie = await listenForSpeech(Duration(seconds: 3));
     if (!watchMovie.toLowerCase().contains("yes")) {
-      print("=======================================\n\n\n No YES DETECTED got $watchMovie \n\n\n====================================");
+      print(
+          "=======================================\n\n\n No YES DETECTED got $watchMovie \n\n\n====================================");
       return;
     }
     var tryAgain = true;
@@ -224,43 +240,47 @@ class EventPlanningUseCase extends UseCase {
       print("which movie u want sir?");
       await textToSpeechOutput("Which Movie would you like to watch tonight");
 
-      print("=======================================\n\n\nDONE Asking NOW LISTENING\n\n\n====================================");
+      print(
+          "=======================================\n\n\nDONE Asking NOW LISTENING\n\n\n====================================");
       String movieToWatch = await listenForSpeech(Duration(seconds: 3));
       for (var i = 0; i < 5; i++) {
         final movieTitle = movies[i]["title"];
         List<String> movieToWatcheSubstring = movieToWatch.split(" ");
 
         for (var substring in movieToWatcheSubstring) {
-
           if (movieTitle.toLowerCase().contains(substring.toLowerCase())) {
-            while(tryAgain) {
+            while (tryAgain) {
               await Future.delayed(Duration(seconds: 2));
-              await textToSpeechOutput("When would you like to watch the movie? An example answer would be eigth zero zero pm.");
-              String movieTimeInput = await listenForSpeech(Duration(seconds: 5));
+              await textToSpeechOutput(
+                  "When would you like to watch the movie? An example answer would be eigth zero zero pm.");
+              String movieTimeInput =
+                  await listenForSpeech(Duration(seconds: 5));
               DateTime? movieTime = parseSpokenTime(movieTimeInput);
               if (movieTime == null) {
-                await textToSpeechOutput("I didn't get that right. Do you want to try again?");
-                tryAgain = (await listenForSpeech(Duration(seconds: 3))).toLowerCase().contains("yes");
+                await textToSpeechOutput(
+                    "I didn't get that right. Do you want to try again?");
+                tryAgain = (await listenForSpeech(Duration(seconds: 3)))
+                    .toLowerCase()
+                    .contains("yes");
                 continue;
               }
 
-              createCalendarEvent(movieTime, 
-                                  movieTitle, 
-                                  await getMovieLength(movies[i]["id"])
-                                  );
-              await textToSpeechOutput("I created an Event for the movie $movieTitle at ${getTimeFromHoursMinutes(movieTime.hour, movieTime.minute)}.");
+              createCalendarEvent(
+                  movieTime, movieTitle, await getMovieLength(movies[i]["id"]));
+              await textToSpeechOutput(
+                  "I created an Event for the movie $movieTitle at ${getTimeFromHoursMinutes(movieTime.hour, movieTime.minute)}.");
               return;
             }
           }
-        } 
-      } 
-      await textToSpeechOutput("I couldn't find the movie $movieToWatch. Would you like to try again?");
-      tryAgain = (await listenForSpeech(Duration(seconds: 3))).toLowerCase().contains("yes");
+        }
+      }
+      await textToSpeechOutput(
+          "I couldn't find the movie $movieToWatch. Would you like to try again?");
+      tryAgain = (await listenForSpeech(Duration(seconds: 3)))
+          .toLowerCase()
+          .contains("yes");
       print(tryAgain);
     }
     return;
   }
-
-
-  
 }

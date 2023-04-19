@@ -24,8 +24,7 @@ class _GoodMorningScheduleScreen extends State<GoodMorningScheduleScreen> {
   TimeOfDay _wakeUpTime = TimeOfDay.now();
   TimeOfDay _preferredArrivalTime = TimeOfDay.now();
   String _workAddress = "";
-  String _transportMode = GoodMorningModel.transportModes.first;
-  bool _latestDeparture = true;
+  // String _transportMode = GoodMorningModel.transportModes.first;
 
   // for autocomplete work address
   MapsService _mapsService = MapsService();
@@ -42,8 +41,7 @@ class _GoodMorningScheduleScreen extends State<GoodMorningScheduleScreen> {
     _wakeUpTime = await _goodMorningModel.wakeUpTime;
     _preferredArrivalTime = await _goodMorningModel.preferredArrivalTime;
     _workAddress = await _goodMorningModel.workAddress ?? "";
-    _transportMode = await _goodMorningModel.transportMode ?? "Driving";
-    _latestDeparture = await _goodMorningModel.latestDeparture ?? true;
+    // _transportMode = await _goodMorningModel.transportMode;
     _workAddressController.text = _workAddress;
     setState(() {});
   }
@@ -60,122 +58,85 @@ class _GoodMorningScheduleScreen extends State<GoodMorningScheduleScreen> {
             ),
             body: Padding(
               padding: EdgeInsets.all(16.0),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Text("Preferred wake-up time:"),
-                        ),
-                        TextButton(
-                          onPressed: () async {
-                            _showTimePicker(
+              child: SingleChildScrollView(
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Text("Preferred wake-up time:"),
+                          ),
+                          TextButton(
+                            onPressed: () async {
+                              _showTimePicker(
+                                context,
+                                _wakeUpTime,
+                                (time) => setState(() {
+                                  _wakeUpTime = time;
+                                  _hasUnsavedChanges = true;
+                                }),
+                              );
+                            },
+                            child: Text(formatTimeOfDay(_wakeUpTime)),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 16),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Text("Preferred arrival time at work:"),
+                          ),
+                          TextButton(
+                            onPressed: () => _showTimePicker(
                               context,
-                              _wakeUpTime,
+                              _preferredArrivalTime,
                               (time) => setState(() {
-                                _wakeUpTime = time;
+                                _preferredArrivalTime = time;
                                 _hasUnsavedChanges = true;
                               }),
-                            );
-                          },
-                          child: Text(formatTimeOfDay(_wakeUpTime)),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 16),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Text("Preferred arrival time at work:"),
-                        ),
-                        TextButton(
-                          onPressed: () => _showTimePicker(
-                            context,
-                            _preferredArrivalTime,
-                            (time) => setState(() {
-                              _preferredArrivalTime = time;
-                              _hasUnsavedChanges = true;
-                            }),
+                            ),
+                            child: Text(formatTimeOfDay(_preferredArrivalTime)),
                           ),
-                          child: Text(formatTimeOfDay(_preferredArrivalTime)),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 16),
-                    _buildWorkAddressAutocomplete(),
-                    SizedBox(height: 16),
-                    Text("Preferred Transport Mode"),
-                    DropdownButtonFormField<String>(
-                      value: _transportMode,
-                      onChanged: (value) {
-                        setState(() {
-                          _transportMode = value!;
-                          _hasUnsavedChanges = true;
-                        });
-                      },
-                      items: GoodMorningModel.transportModes
-                          .map((method) => DropdownMenuItem(
-                                value: method,
-                                child: Text(method),
-                              ))
-                          .toList(),
-                    ),
-                    SizedBox(height: 16),
-                    Row(
-                      children: [
-                        Checkbox(
-                          value: _latestDeparture,
-                          onChanged: (value) {
-                            setState(() {
-                              _latestDeparture = value ?? false;
-                              _hasUnsavedChanges = true;
-                            });
-                          },
-                          activeColor: Theme.of(context).primaryColor,
-                        ),
-                        Text("Latest Possible Departure Mode"),
-                        IconButton(
-                          icon: Icon(Icons.info_outline),
-                          onPressed: () {
-                            showDialog(
-                              context: context,
-                              builder: (context) {
-                                return AlertDialog(
-                                  title: Text("Latest Possible Departure Mode"),
-                                  content: Text(
-                                      "When this mode is enabled, the app will calculate the latest possible departure time based on your preferred arrival time and the estimated travel time. If the estimated travel time is longer than usual, the app will adjust the departure time accordingly to ensure that you arrive at work on time."),
-                                  actions: [
-                                    TextButton(
-                                      child: Text("OK"),
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 20),
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: 20.0),
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(),
-                        onPressed: () {
-                          _onSaveButtonPressed(context);
-                          _hasUnsavedChanges = false;
-                        },
-                        child: Text("Save"),
+                        ],
                       ),
-                    )
-                  ],
+                      SizedBox(height: 16),
+                      _buildWorkAddressAutocomplete(),
+                      // SizedBox(height: 16),
+                      // Text("Preferred Transport Mode"),
+                      // DropdownButtonFormField<String>(
+                      //   value: _transportMode,
+                      //   onChanged: (value) {
+                      //     setState(() {
+                      //       _transportMode = value!;
+                      //       _hasUnsavedChanges = true;
+                      //     });
+                      //   },
+                      //   items: GoodMorningModel.transportModes
+                      //       .map((method) => DropdownMenuItem(
+                      //             value: method,
+                      //             child: Text(method),
+                      //           ))
+                      //       .toList(),
+                      // ),
+                      SizedBox(height: 20),
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 20.0),
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(),
+                          onPressed: () {
+                            _onSaveButtonPressed(context);
+                            _hasUnsavedChanges = false;
+                          },
+                          child: Text("Save"),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -301,7 +262,6 @@ class _GoodMorningScheduleScreen extends State<GoodMorningScheduleScreen> {
     _goodMorningModel.setWakeUpTime = _wakeUpTime;
     _goodMorningModel.setPreferredArrivalTime = _preferredArrivalTime;
     _goodMorningModel.setWorkAddress = _workAddressController.text;
-    _goodMorningModel.setTransportMode = _transportMode;
-    _goodMorningModel.setLatestDeparture = _latestDeparture;
+    // _goodMorningModel.setTransportMode = _transportMode;
   }
 }

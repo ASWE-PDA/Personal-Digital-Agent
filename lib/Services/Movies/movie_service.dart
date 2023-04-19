@@ -4,12 +4,12 @@ import "package:luna/environment.dart";
 
 class MovieService {
 
-  MovieService();
+  final TMDB tmdb;
+
+  MovieService({TMDB? tmdb})
+    : tmdb = tmdb ?? TMDB(ApiKeys(Environment.tmbdApiKey, Environment.tmdbApiReadAccessTokenV4));
 
   Future<List<dynamic>> getPopularMovies() async {
-    // Initialize a new instance of the Tmdb class with API key
-    final tmdb = TMDB(ApiKeys(Environment.tmbdApiKey, Environment.tmdbApiReadAccessTokenV4));
-
 
     // Retrieve a list of popular movies
     final response = await tmdb.v3.movies.getPopular();
@@ -18,7 +18,6 @@ class MovieService {
   }
 
   Future<int> getMovieLength(int movieId) async {
-    final tmdb = TMDB(ApiKeys(Environment.tmbdApiKey, Environment.tmdbApiReadAccessTokenV4));
 
     final response = await tmdb.v3.movies.getDetails(movieId);
     return response["runtime"];

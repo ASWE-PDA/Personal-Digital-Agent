@@ -1,6 +1,8 @@
 import 'package:alarm/alarm.dart';
 
+/// Sets an alarm for the given [dateTime].
 setAlarmByDateTime(DateTime dateTime) async {
+  // define the alarm settings
   final alarmSettings = AlarmSettings(
     id: 1,
     dateTime: dateTime,
@@ -12,10 +14,11 @@ setAlarmByDateTime(DateTime dateTime) async {
     notificationBody: 'I wish you a wonderful morning!',
     enableNotificationOnKill: true,
   );
-
+  // set the alarm
   await Alarm.set(alarmSettings: alarmSettings);
 }
 
-stopAlarm() async {
+/// Stops the alarm with the given.
+Future<void> stopAlarm() async {
   await Alarm.stop(1);
 }

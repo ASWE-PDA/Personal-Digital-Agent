@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+/// Screen to select the news preferences.
 class PreferencesScreen extends StatefulWidget {
   @override
   _PreferencesScreenState createState() => _PreferencesScreenState();
@@ -16,6 +17,7 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
     _initPreferences();
   }
 
+  /// Loads the preferences from the [SharedPreferences].
   Future<void> _initPreferences() async {
     print("init news prefs");
     _prefs = await SharedPreferences.getInstance();
@@ -24,17 +26,20 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
     });
   }
 
+  /// Deletes the preferences from the [SharedPreferences].
   Future<void> deletePreferences() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     await sharedPreferences.setStringList('preferences', []);
   }
 
+  /// Saves the preferences to the [SharedPreferences].
   Future<void> _savePreferences() async {
     await _prefs!.setStringList('preferences', _selectedPreferences);
     print("saved news prefs");
     Navigator.of(context).pop();
   }
 
+  /// Handles the selection of a preference.
   void _handlePreferenceSelect(String preference, bool isSelected) {
     setState(() {
       if (isSelected) {
@@ -45,10 +50,12 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
     });
   }
 
+  /// Builds the list of preferences.
   Widget _buildPreferenceList(List<String> preferenceList) {
     return ListView.builder(
       itemCount: preferenceList.length + 1,
       itemBuilder: (context, index) {
+        // add save button at the end
         if (index == preferenceList.length) {
           return Container(
               padding: EdgeInsets.symmetric(horizontal: 30.0),
@@ -59,7 +66,6 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
         } else {
           final preference = preferenceList[index];
           final isSelected = _selectedPreferences.contains(preference);
-
           return CheckboxListTile(
             title: Text(preference),
             value: isSelected,
@@ -75,12 +81,9 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
   Widget build(BuildContext context) {
     final preferenceList = [
       'Technology',
-      //'Business',
       'US politics',
       'German News',
-      //'Automobile',
       'Finances',
-      //'Sports'
     ];
 
     return Scaffold(

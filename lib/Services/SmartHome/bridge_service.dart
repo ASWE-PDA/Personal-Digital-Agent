@@ -5,10 +5,14 @@ import 'dart:io';
 import 'package:luna/Services/SmartHome/smart_home_model.dart';
 import 'package:http/http.dart' as http;
 
+/// Service class for the bridge.
 class BridgeService {
+  /// Constructor of the [BridgeService] class.
   BridgeService();
 
-  /// take ip address and check if bridge is available
+  /// Takes an [ip] and checks if the bridge is reachable in the local network.
+  ///
+  /// Returns true if the bridge is reachable.
   Future<bool> checkBridge(String ip) async {
     List<Bridge> bridges = await getBridges();
     for (Bridge bridge in bridges) {
@@ -21,6 +25,9 @@ class BridgeService {
     return Future.error("Bridge not found");
   }
 
+  /// Gets all bridges in the local network.
+  ///
+  /// Returns a list of [Bridge] objects.
   Future<List<Bridge>> getBridges() async {
     var url = Uri.parse('https://discovery.meethue.com');
     try {
@@ -42,33 +49,10 @@ class BridgeService {
     }
   }
 
-  // debugging function
-  Future<List<Bridge>> getBridgesDebug() async {
-    var bridges = [
-      Bridge(
-          id: "001788fffe2b3c3a",
-          internalipaddress: "192.168.178.61",
-          port: 443),
-      Bridge(
-          id: "001788fffe2b3c3b",
-          internalipaddress: "192.168.178.40",
-          port: 443),
-    ];
-
-    return Future.delayed(Duration(seconds: 2), () {
-      return bridges;
-    });
-  }
-
-  // create delayed user for debugging
-  Future<String> createUserDebug(String ip) async {
-    return Future.delayed(Duration(seconds: 3), () {
-      return "newdeveloper";
-    });
-  }
-
-  // create user
-  Future<dynamic> createUser(String ip) async {
+  /// Takes an [ip] and creates a new user.
+  ///
+  /// Returns the user name.
+  Future<String> createUser(String ip) async {
     print("creating user");
     try {
       var user = "";
@@ -92,13 +76,6 @@ class BridgeService {
         return Future.error(Exception(
             "error creating user with status code: ${response.statusCode}"));
       }
-    } on TimeoutException catch (e) {
-      return Future.error(Exception("Timeout. No connection to bridge"));
-    } on SocketException catch (e) {
-      return Future.error(
-          Exception("SocketException. No connection to bridge"));
-    } on Exception catch (e) {
-      return Future.error(Exception("Unknown error"));
     } catch (e) {
       return Future.error(Exception("Unknown error"));
     }

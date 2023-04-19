@@ -14,6 +14,9 @@ class MapsService {
   static const baseUrl =
       "https://maps.googleapis.com/maps/api/directions/json?";
 
+  /// Takes a [origin] and a [destination] and returns the duration of the route.
+  ///
+  /// Returns the duration of the route in seconds.
   Future<Map<String, dynamic>> getRouteDetails({
     required Position origin,
     required String destination,
@@ -52,6 +55,9 @@ class MapsService {
     };
   }
 
+  /// Takes an [input] and gets a list of predictions.
+  ///
+  /// Returns a list of [Prediction] objects.
   Future<List<Prediction>> getPlacePredictions(String input) async {
     var response = await http.get(
         Uri.parse("https://maps.googleapis.com/maps/api/place/autocomplete/json"
@@ -68,6 +74,10 @@ class MapsService {
     }
   }
 
+  /// Builds the URL for the Google Maps API with the given [baseUrl], [origin],
+  /// [destination], [departureTime] and [arrivalTime].
+  ///
+  /// Returns the URL as a [String].
   String _buildUrl({
     required String baseUrl,
     required Position origin,
@@ -104,12 +114,16 @@ class MapsService {
   }
 }
 
+/// The purpose of this class is to represent a prediction. A prediction contains
+/// a [description] and a [placeId].
 class Prediction {
   final String description;
   final String placeId;
 
+  /// Constructor of the [Prediction] class.
   Prediction({required this.description, required this.placeId});
 
+  /// Creates a [Prediction] object from a json object.
   factory Prediction.fromJson(Map<String, dynamic> json) {
     return Prediction(
       description: json["description"],

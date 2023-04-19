@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:luna/Services/SmartHome/bridge_preferences.dart';
 
-/// Class that stores an the philips hue bridge configuration and notifies the app.
+/// Class that stores an philips hue bridge configuration and notifies the app.
 class BridgeModel extends ChangeNotifier {
   BridgePreferences userPreferences = BridgePreferences();
   String _user = "";
   String _ip = "";
-
   String get user => _user;
   String get ip => _ip;
 
@@ -16,7 +15,7 @@ class BridgeModel extends ChangeNotifier {
   }
 
   /// Deletes the stored bridge configuration.
-  deleteBridgePreferences() async {
+  Future<void> deleteBridgePreferences() async {
     await userPreferences.deleteUser();
     await userPreferences.deleteIpAddress();
     _user = "";
@@ -25,7 +24,7 @@ class BridgeModel extends ChangeNotifier {
   }
 
   /// Loads the user name and the ip that is stored as shared preference.
-  getBridgePreferences() async {
+  Future<void> getBridgePreferences() async {
     _user = await userPreferences.getUser() ?? "";
     _ip = await userPreferences.getIpAddress() ?? "";
     notifyListeners();

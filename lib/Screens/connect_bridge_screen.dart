@@ -3,7 +3,8 @@ import 'package:luna/Services/SmartHome/bridge_service.dart';
 import 'package:luna/Services/SmartHome/bridge_model.dart';
 import 'package:provider/provider.dart';
 
-/// Screen that allows the user to connect to a Philips Hue bridge.
+/// Screen that allows the user to connect to a Philips Hue bridge
+/// with a given [ip].
 class ConnectBrigdeScreen extends StatefulWidget {
   final String ip;
   const ConnectBrigdeScreen({required this.ip});
@@ -22,9 +23,11 @@ class _ConnectBrigdeScreenState extends State<ConnectBrigdeScreen> {
   @override
   void initState() {
     super.initState();
+    // check if ip address is available in the network
     bridgeAvailable = bridgeService.checkBridge(widget.ip);
   }
 
+  /// Builds the screen if the bridge is available.
   Widget connectBridgeSection() {
     return Consumer<BridgeModel>(
         builder: (context, BridgeModel userModel, child) {
@@ -81,6 +84,7 @@ class _ConnectBrigdeScreenState extends State<ConnectBrigdeScreen> {
     });
   }
 
+  /// Builds the screen if the bridge is not available.
   Widget connectionError() {
     return Column(children: [
       Padding(
@@ -107,6 +111,7 @@ class _ConnectBrigdeScreenState extends State<ConnectBrigdeScreen> {
     ]);
   }
 
+  /// Builds the screen depending on the state of the bridge.
   Widget content() {
     return FutureBuilder(
         future: bridgeAvailable,

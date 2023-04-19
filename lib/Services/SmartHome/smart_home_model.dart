@@ -1,10 +1,14 @@
-// class that stores the lights api results of the philips hue api
+/// This file contains the model classes for the philips hue api.
+
+/// Class that stores the light api results of the philips hue api.
+/// A light consists of an unique [id], a [name], a [on] state and a [reachable] state.
 class Light {
   final int id;
   final String name;
   final bool on;
   final bool reachable;
 
+  /// Constructor of the [Light] class.
   Light({
     required this.id,
     required this.name,
@@ -12,6 +16,7 @@ class Light {
     required this.reachable,
   });
 
+  /// Creates a [Light] object from a json object.
   factory Light.fromJson(Map<String, dynamic> json, int id) {
     return Light(
       id: id,
@@ -22,41 +27,26 @@ class Light {
   }
 }
 
-// class that stores the discovery api results of the philips hue api
+/// Class that stores the discovery api results of the philips hue api.
+/// A bridge consists of an unique [id], an [internalipaddress] and a [port].
 class Bridge {
   final String id;
   final String internalipaddress;
   int port;
 
+  /// Constructor of the [Bridge] class.
   Bridge({
     required this.id,
     required this.internalipaddress,
     required this.port,
   });
 
+  /// Creates a [Bridge] object from a json object.
   factory Bridge.fromJson(Map<String, dynamic> json) {
     return Bridge(
       id: json['id'],
       internalipaddress: json['internalipaddress'],
       port: json['port'],
-    );
-  }
-}
-
-// class that stores a list of bridges
-class Bridges {
-  final List<Bridge> bridges;
-
-  Bridges({
-    required this.bridges,
-  });
-
-  factory Bridges.fromJson(List<dynamic> parsedJson) {
-    List<Bridge> bridges = <Bridge>[];
-    bridges = parsedJson.map((i) => Bridge.fromJson(i)).toList();
-
-    return Bridges(
-      bridges: bridges,
     );
   }
 }

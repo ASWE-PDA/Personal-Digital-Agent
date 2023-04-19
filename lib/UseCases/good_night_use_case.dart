@@ -22,8 +22,10 @@ class GoodNightUseCase extends UseCase {
   /// Singleton instance of [GoodNightUseCase].
   static final instance = GoodNightUseCase._();
 
+  /// Private constructor for [GoodNightUseCase] class.
   GoodNightUseCase._();
 
+  /// List of trigger words for the Good Night feature.
   List<String> goodNightTriggerWords = ["good night", "night"];
   List<String> lightTriggerWords = ["light", "lights", "turn off"];
   List<String> sleepPlaylistTriggerWords = ["music", "playlist", "spotify"];
@@ -37,9 +39,7 @@ class GoodNightUseCase extends UseCase {
   GoodMorningModel goodMorningModel = GoodMorningModel();
 
   String lastWords = '';
-  SpeechToText _speechToText = SpeechToText();
   String playlistId = "6X7wz4cCUBR6p68mzM7mZ4";
-
   int notificationId = 2;
 
   /// Loads preferences from SharedPreferences.
@@ -49,7 +49,7 @@ class GoodNightUseCase extends UseCase {
   }
 
   @override
-  void execute(String trigger) async{
+  void execute(String trigger) async {
     flutterTts.setLanguage("en-US");
     if (goodNightTriggerWords.any((element) => trigger.contains(element))) {
       print("triggered good night case");
@@ -76,7 +76,6 @@ class GoodNightUseCase extends UseCase {
   }
 
   /// Schedules a daily notification for the good night use case.
-  ///
   /// The method cancels the old notificaion schedule and schedules a new one
   /// at the time defined by [hours] and [minutes].
   Future<void> schedule(int hours, int minutes) async {
@@ -110,11 +109,13 @@ class GoodNightUseCase extends UseCase {
 
   /// Turns off all lights using the smarthome service.
   Future<String> turnOffAllLights() async {
+    // load preferences
     await loadPreferences();
     String ip = bridgeModel.ip;
     String user = bridgeModel.user;
     print("turning off lights: $ip, $user");
 
+    // check if ip and user are set
     if (ip == "" && user == "") {
       return "I don't know your ip address or user. Sorry I can't turn off your lights.";
     } else {
@@ -143,10 +144,12 @@ class GoodNightUseCase extends UseCase {
     }
   }
 
+  /// Asks the user if he wants a sleep playlist and starts it if the user
+  /// answers with yes.
   Future<void> askForSleepPlaylist() async {
-    await textToSpeechOutput("Do you want me to start a sleep playlist for you?");
-    
-    
+    await textToSpeechOutput(
+        "Do you want me to start a sleep playlist for you?");
+
     String answer = await listenForSpeech(Duration(seconds: 5));
     print("Spotify Answer is $answer");
     bool alarm = checkIfAnswerIsYes(answer);
@@ -158,7 +161,7 @@ class GoodNightUseCase extends UseCase {
     }
   }
 
-  /// Connects to the Spotify App and starts a spotify sleeping playlist
+  /// Connects to the Spotify App and starts a spotify sleeping playlist.
   Future<void> startSleepPlayList() async {
     try {
       bool result = await spotifySdkService.connect();
@@ -172,6 +175,8 @@ class GoodNightUseCase extends UseCase {
     }
   }
 
+  /// Asks the user if he wants an alarm and sets it if the user answers with yes.
+  /// The alarm is set to the time defined by the user in the good morning preferences.
   Future<void> askForWakeUpTime() async {
     await textToSpeechOutput("Do you want an alarm for tomorrow?");
     String answer = await listenForSpeech(Duration(seconds: 5));
@@ -184,9 +189,12 @@ class GoodNightUseCase extends UseCase {
     } else {
       await textToSpeechOutput("Okay, I don't set an alarm.");
       return;
-      }
+    }
   }
-  
+
+  /// Sets an alarm for the time defined by in the good morning preferences.
+  ///
+  /// Returns a string that contains the time of the alarm.
   Future<String> setAlarm() async {
     TimeOfDay timeOfDay = await goodMorningModel.getWakeUpTime();
     DateTime tomorrow = DateTime.now().add(Duration(days: 1));
@@ -196,16 +204,18 @@ class GoodNightUseCase extends UseCase {
     return "I set your alarm to ${dateTime.hour}:${dateTime.minute} tomorrow";
   }
 
+  /// Executes the complete good night use case.
   Future<void> executeCompleteUseCase() async {
-    print("\n\n\n\n\nSHEEEEEEEEEESH\n\\n\n\n\n\n");
     await textToSpeechOutput("Good Night. Sleep Well.");
-
     await askForWakeUpTime();
     String answer = await turnOffAllLights();
     await textToSpeechOutput(answer);
     await askForSleepPlaylist();
   }
 
+  /// Checks if the answer of the user contains a yes trigger word.
+  ///
+  /// Returns true if the answer contains a yes trigger word.
   bool checkIfAnswerIsYes(String answer) {
     if (yesTriggerWords.any((element) => answer.contains(element))) {
       print("answer is yes");

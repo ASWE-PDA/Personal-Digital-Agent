@@ -1,5 +1,6 @@
 import 'package:luna/UseCases/good_morning_use_case.dart';
 import 'package:luna/UseCases/good_night_use_case.dart';
+import 'package:luna/UseCases/EventPlanning/event_planning_use_case.dart';
 
 /// This class is used to check if a use case is triggered.
 /// Parameters:
@@ -30,6 +31,11 @@ class UseCaseCheck {
     _goodNightTriggerWords = goodNightTriggerWords;
   }
 
+  static List<String> _eventPlanningTriggerWords = EventPlanningUseCase.instance.getAllTriggerWords();
+  set eventPlanningTriggerWords(List<String> goodNightTriggerWords) {
+    _eventPlanningTriggerWords = goodNightTriggerWords;
+  }
+
   bool goodMorningCheck(String input) {
     bool detected = false;
 
@@ -51,28 +57,12 @@ class UseCaseCheck {
   }
 
   bool eventPlanningCheck(String input) {
-    String trigger = "";
     bool detected = false;
 
-    List<String> eventPlanningTriggerWords = [
-      "event",
-      "events",
-      "planning",
-      "plan",
-      "calendar",
-      "schedule",
-      "scheduling",
-      "schedules",
-      "agenda"
-    ];
-
-    if (eventPlanningTriggerWords.any((element) => input.contains(element))) {
-      trigger = "event";
+    if (_eventPlanningTriggerWords.any((element) => input.contains(element))) {
+      _triggerWord = input;
       detected = true;
     }
-    _triggerWord = trigger;
-
-    // return true if event planning use case is detected
     return detected;
   }
 

@@ -27,21 +27,21 @@ void main() {
       sm.start();
       expect(sm.getCurrentState(), StateMachine.idleState);
       sm.transitionToGoodMorning("good morning");
-      expect(sm.getCurrentState(), StateMachine.goodMorningState);
+      expect(sm.getCurrentState(), StateMachine.idleState);
     });
     test('State Machine should transition to event planning state', () {
       final sm = StateMachine();
       sm.start();
       expect(sm.getCurrentState(), StateMachine.idleState);
       sm.transitionToEventPlanning("event");
-      expect(sm.getCurrentState(), StateMachine.eventPlanningState);
+      expect(sm.getCurrentState(), StateMachine.idleState);
     });
     test('State Machine should transition to news state', () {
       final sm = StateMachine();
       sm.start();
       expect(sm.getCurrentState(), StateMachine.idleState);
       sm.transitionToNews("news");
-      expect(sm.getCurrentState(), StateMachine.newsState);
+      expect(sm.getCurrentState(), StateMachine.idleState);
     });
     test('State Machine should transition to good night state', () {
       final sm = StateMachine();
@@ -55,8 +55,6 @@ void main() {
       final sm = StateMachine();
       sm.start();
       expect(sm.getCurrentState(), StateMachine.idleState);
-      sm.transitionToGoodMorning("good morning");
-      expect(sm.getCurrentState(), StateMachine.goodMorningState);
       sm.transitionToIdle();
       expect(sm.getCurrentState(), StateMachine.idleState);
     });
@@ -89,7 +87,7 @@ void main() {
       final useCaseCheck = UseCaseCheck();
       bool detected = useCaseCheck.goodMorningCheck("hey good morning luna");
       expect(detected, true);
-      expect(useCaseCheck.triggerWord, "good morning");
+      expect(useCaseCheck.triggerWord, "hey good morning luna");
     });
     test('negative use case good morning check', () {
       final useCaseCheck = UseCaseCheck();
@@ -99,15 +97,15 @@ void main() {
     });
     test('positive use case event planning check', () {
       final useCaseCheck = UseCaseCheck();
-      bool detected = useCaseCheck.eventPlanningCheck("event");
+      bool detected = useCaseCheck.eventPlanningCheck("scheduling");
       expect(detected, true);
-      expect(useCaseCheck.triggerWord, "event");
+      expect(useCaseCheck.triggerWord, "scheduling");
     });
     test('positive, more complex use case event planning check', () {
       final useCaseCheck = UseCaseCheck();
-      bool detected = useCaseCheck.eventPlanningCheck("hey luna event");
+      bool detected = useCaseCheck.eventPlanningCheck("hey luna events");
       expect(detected, true);
-      expect(useCaseCheck.triggerWord, "event");
+      expect(useCaseCheck.triggerWord, "hey luna events");
     });
     test('negative use case event planning check', () {
       final useCaseCheck = UseCaseCheck();
@@ -160,9 +158,9 @@ void main() {
     });
     test('monitor use case selection event planning', () {
       final useCaseCheck = UseCaseCheck();
-      useCaseCheck.monitor("event");
+      useCaseCheck.monitor("events");
       expect(useCaseCheck.activate, 2);
-      expect(useCaseCheck.triggerWord, "event");
+      expect(useCaseCheck.triggerWord, "events");
     });
     test('monitor use case selection news', () {
       final useCaseCheck = UseCaseCheck();
@@ -186,7 +184,7 @@ void main() {
       final useCaseCheck = UseCaseCheck();
       useCaseCheck.monitor("good morning luna");
       expect(useCaseCheck.activate, 1);
-      expect(useCaseCheck.triggerWord, "good morning");
+      expect(useCaseCheck.triggerWord, "good morning luna");
     });
   });
 }

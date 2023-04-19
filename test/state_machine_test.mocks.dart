@@ -3,15 +3,15 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i12;
+import 'dart:async' as _i13;
 import 'dart:ui' as _i21;
 
 import 'package:flutter/material.dart' as _i17;
 import 'package:flutter_tts/flutter_tts.dart' as _i7;
-import 'package:geolocator/geolocator.dart' as _i15;
+import 'package:geolocator/geolocator.dart' as _i16;
 import 'package:luna/Services/location_service.dart' as _i8;
-import 'package:luna/Services/maps_service.dart' as _i10;
-import 'package:luna/Services/quote_service.dart' as _i16;
+import 'package:luna/Services/maps_service.dart' as _i11;
+import 'package:luna/Services/quote_service.dart' as _i10;
 import 'package:luna/Services/SmartHome/bridge_model.dart' as _i2;
 import 'package:luna/Services/SmartHome/smart_home_service.dart' as _i4;
 import 'package:luna/Services/spotify_service.dart' as _i5;
@@ -19,11 +19,11 @@ import 'package:luna/Services/weather_service.dart' as _i9;
 import 'package:luna/UseCases/EventPlanning/event_planning_use_case.dart'
     as _i18;
 import 'package:luna/UseCases/good_morning_model.dart' as _i6;
-import 'package:luna/UseCases/good_morning_use_case.dart' as _i14;
+import 'package:luna/UseCases/good_morning_use_case.dart' as _i15;
 import 'package:luna/UseCases/good_night_model.dart' as _i3;
-import 'package:luna/UseCases/good_night_use_case.dart' as _i13;
+import 'package:luna/UseCases/good_night_use_case.dart' as _i14;
 import 'package:luna/UseCases/news/article.dart' as _i20;
-import 'package:luna/UseCases/news/news_api.dart' as _i11;
+import 'package:luna/UseCases/news/news_api.dart' as _i12;
 import 'package:luna/UseCases/news/news_use_case.dart' as _i19;
 import 'package:mockito/mockito.dart' as _i1;
 
@@ -124,8 +124,8 @@ class _FakeWeatherService_7 extends _i1.SmartFake
         );
 }
 
-class _FakeMapsService_8 extends _i1.SmartFake implements _i10.MapsService {
-  _FakeMapsService_8(
+class _FakeQuoteService_8 extends _i1.SmartFake implements _i10.QuoteService {
+  _FakeQuoteService_8(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -134,9 +134,8 @@ class _FakeMapsService_8 extends _i1.SmartFake implements _i10.MapsService {
         );
 }
 
-class _FakeNewYorkTimesNews_9 extends _i1.SmartFake
-    implements _i11.NewYorkTimesNews {
-  _FakeNewYorkTimesNews_9(
+class _FakeMapsService_9 extends _i1.SmartFake implements _i11.MapsService {
+  _FakeMapsService_9(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -145,8 +144,9 @@ class _FakeNewYorkTimesNews_9 extends _i1.SmartFake
         );
 }
 
-class _FakeGermanNews_10 extends _i1.SmartFake implements _i11.GermanNews {
-  _FakeGermanNews_10(
+class _FakeNewYorkTimesNews_10 extends _i1.SmartFake
+    implements _i12.NewYorkTimesNews {
+  _FakeNewYorkTimesNews_10(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -155,8 +155,8 @@ class _FakeGermanNews_10 extends _i1.SmartFake implements _i11.GermanNews {
         );
 }
 
-class _FakeFinanceNews_11 extends _i1.SmartFake implements _i11.FinanceNews {
-  _FakeFinanceNews_11(
+class _FakeGermanNews_11 extends _i1.SmartFake implements _i12.GermanNews {
+  _FakeGermanNews_11(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -165,8 +165,8 @@ class _FakeFinanceNews_11 extends _i1.SmartFake implements _i11.FinanceNews {
         );
 }
 
-class _FakeTechNews_12 extends _i1.SmartFake implements _i11.TechNews {
-  _FakeTechNews_12(
+class _FakeFinanceNews_12 extends _i1.SmartFake implements _i12.FinanceNews {
+  _FakeFinanceNews_12(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -175,8 +175,18 @@ class _FakeTechNews_12 extends _i1.SmartFake implements _i11.TechNews {
         );
 }
 
-class _FakeCompleter_13<T> extends _i1.SmartFake implements _i12.Completer<T> {
-  _FakeCompleter_13(
+class _FakeTechNews_13 extends _i1.SmartFake implements _i12.TechNews {
+  _FakeTechNews_13(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeCompleter_14<T> extends _i1.SmartFake implements _i13.Completer<T> {
+  _FakeCompleter_14(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -188,7 +198,7 @@ class _FakeCompleter_13<T> extends _i1.SmartFake implements _i12.Completer<T> {
 /// A class which mocks [GoodNightUseCase].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockGoodNightUseCase extends _i1.Mock implements _i13.GoodNightUseCase {
+class MockGoodNightUseCase extends _i1.Mock implements _i14.GoodNightUseCase {
   MockGoodNightUseCase() {
     _i1.throwOnMissingStub(this);
   }
@@ -399,14 +409,14 @@ class MockGoodNightUseCase extends _i1.Mock implements _i13.GoodNightUseCase {
         returnValueForMissingStub: null,
       );
   @override
-  _i12.Future<void> loadPreferences() => (super.noSuchMethod(
+  _i13.Future<void> loadPreferences() => (super.noSuchMethod(
         Invocation.method(
           #loadPreferences,
           [],
         ),
-        returnValue: _i12.Future<void>.value(),
-        returnValueForMissingStub: _i12.Future<void>.value(),
-      ) as _i12.Future<void>);
+        returnValue: _i13.Future<void>.value(),
+        returnValueForMissingStub: _i13.Future<void>.value(),
+      ) as _i13.Future<void>);
   @override
   void execute(String? trigger) => super.noSuchMethod(
         Invocation.method(
@@ -416,7 +426,7 @@ class MockGoodNightUseCase extends _i1.Mock implements _i13.GoodNightUseCase {
         returnValueForMissingStub: null,
       );
   @override
-  _i12.Future<void> schedule(
+  _i13.Future<void> schedule(
     int? hours,
     int? minutes,
   ) =>
@@ -428,17 +438,17 @@ class MockGoodNightUseCase extends _i1.Mock implements _i13.GoodNightUseCase {
             minutes,
           ],
         ),
-        returnValue: _i12.Future<void>.value(),
-        returnValueForMissingStub: _i12.Future<void>.value(),
-      ) as _i12.Future<void>);
+        returnValue: _i13.Future<void>.value(),
+        returnValueForMissingStub: _i13.Future<void>.value(),
+      ) as _i13.Future<void>);
   @override
-  _i12.Future<bool> checkTrigger() => (super.noSuchMethod(
+  _i13.Future<bool> checkTrigger() => (super.noSuchMethod(
         Invocation.method(
           #checkTrigger,
           [],
         ),
-        returnValue: _i12.Future<bool>.value(false),
-      ) as _i12.Future<bool>);
+        returnValue: _i13.Future<bool>.value(false),
+      ) as _i13.Future<bool>);
   @override
   List<String> getAllTriggerWords() => (super.noSuchMethod(
         Invocation.method(
@@ -448,57 +458,57 @@ class MockGoodNightUseCase extends _i1.Mock implements _i13.GoodNightUseCase {
         returnValue: <String>[],
       ) as List<String>);
   @override
-  _i12.Future<String> turnOffAllLights() => (super.noSuchMethod(
+  _i13.Future<String> turnOffAllLights() => (super.noSuchMethod(
         Invocation.method(
           #turnOffAllLights,
           [],
         ),
-        returnValue: _i12.Future<String>.value(''),
-      ) as _i12.Future<String>);
+        returnValue: _i13.Future<String>.value(''),
+      ) as _i13.Future<String>);
   @override
-  _i12.Future<void> askForSleepPlaylist() => (super.noSuchMethod(
+  _i13.Future<void> askForSleepPlaylist() => (super.noSuchMethod(
         Invocation.method(
           #askForSleepPlaylist,
           [],
         ),
-        returnValue: _i12.Future<void>.value(),
-        returnValueForMissingStub: _i12.Future<void>.value(),
-      ) as _i12.Future<void>);
+        returnValue: _i13.Future<void>.value(),
+        returnValueForMissingStub: _i13.Future<void>.value(),
+      ) as _i13.Future<void>);
   @override
-  _i12.Future<void> startSleepPlayList() => (super.noSuchMethod(
+  _i13.Future<void> startSleepPlayList() => (super.noSuchMethod(
         Invocation.method(
           #startSleepPlayList,
           [],
         ),
-        returnValue: _i12.Future<void>.value(),
-        returnValueForMissingStub: _i12.Future<void>.value(),
-      ) as _i12.Future<void>);
+        returnValue: _i13.Future<void>.value(),
+        returnValueForMissingStub: _i13.Future<void>.value(),
+      ) as _i13.Future<void>);
   @override
-  _i12.Future<void> askForWakeUpTime() => (super.noSuchMethod(
+  _i13.Future<void> askForWakeUpTime() => (super.noSuchMethod(
         Invocation.method(
           #askForWakeUpTime,
           [],
         ),
-        returnValue: _i12.Future<void>.value(),
-        returnValueForMissingStub: _i12.Future<void>.value(),
-      ) as _i12.Future<void>);
+        returnValue: _i13.Future<void>.value(),
+        returnValueForMissingStub: _i13.Future<void>.value(),
+      ) as _i13.Future<void>);
   @override
-  _i12.Future<String> setAlarm() => (super.noSuchMethod(
+  _i13.Future<String> setAlarm() => (super.noSuchMethod(
         Invocation.method(
           #setAlarm,
           [],
         ),
-        returnValue: _i12.Future<String>.value(''),
-      ) as _i12.Future<String>);
+        returnValue: _i13.Future<String>.value(''),
+      ) as _i13.Future<String>);
   @override
-  _i12.Future<void> executeCompleteUseCase() => (super.noSuchMethod(
+  _i13.Future<void> executeCompleteUseCase() => (super.noSuchMethod(
         Invocation.method(
           #executeCompleteUseCase,
           [],
         ),
-        returnValue: _i12.Future<void>.value(),
-        returnValueForMissingStub: _i12.Future<void>.value(),
-      ) as _i12.Future<void>);
+        returnValue: _i13.Future<void>.value(),
+        returnValueForMissingStub: _i13.Future<void>.value(),
+      ) as _i13.Future<void>);
   @override
   bool checkIfAnswerIsYes(String? answer) => (super.noSuchMethod(
         Invocation.method(
@@ -508,30 +518,30 @@ class MockGoodNightUseCase extends _i1.Mock implements _i13.GoodNightUseCase {
         returnValue: false,
       ) as bool);
   @override
-  _i12.Future<String> listenForSpeech(Duration? duration) =>
+  _i13.Future<String> listenForSpeech(Duration? duration) =>
       (super.noSuchMethod(
         Invocation.method(
           #listenForSpeech,
           [duration],
         ),
-        returnValue: _i12.Future<String>.value(''),
-      ) as _i12.Future<String>);
+        returnValue: _i13.Future<String>.value(''),
+      ) as _i13.Future<String>);
   @override
-  _i12.Future<void> textToSpeechOutput(String? output) => (super.noSuchMethod(
+  _i13.Future<void> textToSpeechOutput(String? output) => (super.noSuchMethod(
         Invocation.method(
           #textToSpeechOutput,
           [output],
         ),
-        returnValue: _i12.Future<void>.value(),
-        returnValueForMissingStub: _i12.Future<void>.value(),
-      ) as _i12.Future<void>);
+        returnValue: _i13.Future<void>.value(),
+        returnValueForMissingStub: _i13.Future<void>.value(),
+      ) as _i13.Future<void>);
 }
 
 /// A class which mocks [GoodMorningUseCase].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockGoodMorningUseCase extends _i1.Mock
-    implements _i14.GoodMorningUseCase {
+    implements _i15.GoodMorningUseCase {
   MockGoodMorningUseCase() {
     _i1.throwOnMissingStub(this);
   }
@@ -655,15 +665,31 @@ class MockGoodMorningUseCase extends _i1.Mock
         returnValueForMissingStub: null,
       );
   @override
-  _i10.MapsService get mapsService => (super.noSuchMethod(
+  _i10.QuoteService get quoteService => (super.noSuchMethod(
+        Invocation.getter(#quoteService),
+        returnValue: _FakeQuoteService_8(
+          this,
+          Invocation.getter(#quoteService),
+        ),
+      ) as _i10.QuoteService);
+  @override
+  set quoteService(_i10.QuoteService? _quoteService) => super.noSuchMethod(
+        Invocation.setter(
+          #quoteService,
+          _quoteService,
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  _i11.MapsService get mapsService => (super.noSuchMethod(
         Invocation.getter(#mapsService),
-        returnValue: _FakeMapsService_8(
+        returnValue: _FakeMapsService_9(
           this,
           Invocation.getter(#mapsService),
         ),
-      ) as _i10.MapsService);
+      ) as _i11.MapsService);
   @override
-  set mapsService(_i10.MapsService? _mapsService) => super.noSuchMethod(
+  set mapsService(_i11.MapsService? _mapsService) => super.noSuchMethod(
         Invocation.setter(
           #mapsService,
           _mapsService,
@@ -671,7 +697,7 @@ class MockGoodMorningUseCase extends _i1.Mock
         returnValueForMissingStub: null,
       );
   @override
-  set currentLocation(_i15.Position? _currentLocation) => super.noSuchMethod(
+  set currentLocation(_i16.Position? _currentLocation) => super.noSuchMethod(
         Invocation.setter(
           #currentLocation,
           _currentLocation,
@@ -700,7 +726,7 @@ class MockGoodMorningUseCase extends _i1.Mock
         returnValueForMissingStub: null,
       );
   @override
-  set quoteData(_i16.QuoteData? _quoteData) => super.noSuchMethod(
+  set quoteData(_i10.QuoteData? _quoteData) => super.noSuchMethod(
         Invocation.setter(
           #quoteData,
           _quoteData,
@@ -724,14 +750,14 @@ class MockGoodMorningUseCase extends _i1.Mock
         returnValueForMissingStub: null,
       );
   @override
-  _i12.Future<void> loadPreferences() => (super.noSuchMethod(
+  _i13.Future<void> loadPreferences() => (super.noSuchMethod(
         Invocation.method(
           #loadPreferences,
           [],
         ),
-        returnValue: _i12.Future<void>.value(),
-        returnValueForMissingStub: _i12.Future<void>.value(),
-      ) as _i12.Future<void>);
+        returnValue: _i13.Future<void>.value(),
+        returnValueForMissingStub: _i13.Future<void>.value(),
+      ) as _i13.Future<void>);
   @override
   String formatTimeOfDay(_i17.TimeOfDay? time) => (super.noSuchMethod(
         Invocation.method(
@@ -741,22 +767,22 @@ class MockGoodMorningUseCase extends _i1.Mock
         returnValue: '',
       ) as String);
   @override
-  _i12.Future<void> execute(String? trigger) => (super.noSuchMethod(
+  _i13.Future<void> execute(String? trigger) => (super.noSuchMethod(
         Invocation.method(
           #execute,
           [trigger],
         ),
-        returnValue: _i12.Future<void>.value(),
-        returnValueForMissingStub: _i12.Future<void>.value(),
-      ) as _i12.Future<void>);
+        returnValue: _i13.Future<void>.value(),
+        returnValueForMissingStub: _i13.Future<void>.value(),
+      ) as _i13.Future<void>);
   @override
-  _i12.Future<bool> checkTrigger() => (super.noSuchMethod(
+  _i13.Future<bool> checkTrigger() => (super.noSuchMethod(
         Invocation.method(
           #checkTrigger,
           [],
         ),
-        returnValue: _i12.Future<bool>.value(false),
-      ) as _i12.Future<bool>);
+        returnValue: _i13.Future<bool>.value(false),
+      ) as _i13.Future<bool>);
   @override
   List<String> getAllTriggerWords() => (super.noSuchMethod(
         Invocation.method(
@@ -766,64 +792,64 @@ class MockGoodMorningUseCase extends _i1.Mock
         returnValue: <String>[],
       ) as List<String>);
   @override
-  _i12.Future<String> executeLocationUseCase(bool? outputEnabled) =>
+  _i13.Future<String> executeLocationUseCase(bool? outputEnabled) =>
       (super.noSuchMethod(
         Invocation.method(
           #executeLocationUseCase,
           [outputEnabled],
         ),
-        returnValue: _i12.Future<String>.value(''),
-      ) as _i12.Future<String>);
+        returnValue: _i13.Future<String>.value(''),
+      ) as _i13.Future<String>);
   @override
-  _i12.Future<String> executeWeatherUseCase() => (super.noSuchMethod(
+  _i13.Future<String> executeWeatherUseCase() => (super.noSuchMethod(
         Invocation.method(
           #executeWeatherUseCase,
           [],
         ),
-        returnValue: _i12.Future<String>.value(''),
-      ) as _i12.Future<String>);
+        returnValue: _i13.Future<String>.value(''),
+      ) as _i13.Future<String>);
   @override
-  _i12.Future<String> executeRouteUseCase() => (super.noSuchMethod(
+  _i13.Future<String> executeRouteUseCase() => (super.noSuchMethod(
         Invocation.method(
           #executeRouteUseCase,
           [],
         ),
-        returnValue: _i12.Future<String>.value(''),
-      ) as _i12.Future<String>);
+        returnValue: _i13.Future<String>.value(''),
+      ) as _i13.Future<String>);
   @override
-  _i12.Future<String> executeQuoteUseCase() => (super.noSuchMethod(
+  _i13.Future<String> executeQuoteUseCase() => (super.noSuchMethod(
         Invocation.method(
           #executeQuoteUseCase,
           [],
         ),
-        returnValue: _i12.Future<String>.value(''),
-      ) as _i12.Future<String>);
+        returnValue: _i13.Future<String>.value(''),
+      ) as _i13.Future<String>);
   @override
-  _i12.Future<String> executeCompleteUseCase() => (super.noSuchMethod(
+  _i13.Future<String> executeCompleteUseCase() => (super.noSuchMethod(
         Invocation.method(
           #executeCompleteUseCase,
           [],
         ),
-        returnValue: _i12.Future<String>.value(''),
-      ) as _i12.Future<String>);
+        returnValue: _i13.Future<String>.value(''),
+      ) as _i13.Future<String>);
   @override
-  _i12.Future<String> listenForSpeech(Duration? duration) =>
+  _i13.Future<String> listenForSpeech(Duration? duration) =>
       (super.noSuchMethod(
         Invocation.method(
           #listenForSpeech,
           [duration],
         ),
-        returnValue: _i12.Future<String>.value(''),
-      ) as _i12.Future<String>);
+        returnValue: _i13.Future<String>.value(''),
+      ) as _i13.Future<String>);
   @override
-  _i12.Future<void> textToSpeechOutput(String? output) => (super.noSuchMethod(
+  _i13.Future<void> textToSpeechOutput(String? output) => (super.noSuchMethod(
         Invocation.method(
           #textToSpeechOutput,
           [output],
         ),
-        returnValue: _i12.Future<void>.value(),
-        returnValueForMissingStub: _i12.Future<void>.value(),
-      ) as _i12.Future<void>);
+        returnValue: _i13.Future<void>.value(),
+        returnValueForMissingStub: _i13.Future<void>.value(),
+      ) as _i13.Future<void>);
 }
 
 /// A class which mocks [EventPlanningUseCase].
@@ -901,13 +927,13 @@ class MockEventPlanningUseCase extends _i1.Mock
         returnValueForMissingStub: null,
       );
   @override
-  _i12.Future<bool> checkTrigger() => (super.noSuchMethod(
+  _i13.Future<bool> checkTrigger() => (super.noSuchMethod(
         Invocation.method(
           #checkTrigger,
           [],
         ),
-        returnValue: _i12.Future<bool>.value(false),
-      ) as _i12.Future<bool>);
+        returnValue: _i13.Future<bool>.value(false),
+      ) as _i13.Future<bool>);
   @override
   List<String> getAllTriggerWords() => (super.noSuchMethod(
         Invocation.method(
@@ -925,14 +951,14 @@ class MockEventPlanningUseCase extends _i1.Mock
         returnValueForMissingStub: null,
       );
   @override
-  _i12.Future<String> getTravelDuration(String? destination) =>
+  _i13.Future<String> getTravelDuration(String? destination) =>
       (super.noSuchMethod(
         Invocation.method(
           #getTravelDuration,
           [destination],
         ),
-        returnValue: _i12.Future<String>.value(''),
-      ) as _i12.Future<String>);
+        returnValue: _i13.Future<String>.value(''),
+      ) as _i13.Future<String>);
   @override
   String getTimeFromHoursMinutes(
     int? hours,
@@ -963,23 +989,23 @@ class MockEventPlanningUseCase extends _i1.Mock
         returnValueForMissingStub: null,
       );
   @override
-  _i12.Future<String> listenForSpeech(Duration? duration) =>
+  _i13.Future<String> listenForSpeech(Duration? duration) =>
       (super.noSuchMethod(
         Invocation.method(
           #listenForSpeech,
           [duration],
         ),
-        returnValue: _i12.Future<String>.value(''),
-      ) as _i12.Future<String>);
+        returnValue: _i13.Future<String>.value(''),
+      ) as _i13.Future<String>);
   @override
-  _i12.Future<void> textToSpeechOutput(String? output) => (super.noSuchMethod(
+  _i13.Future<void> textToSpeechOutput(String? output) => (super.noSuchMethod(
         Invocation.method(
           #textToSpeechOutput,
           [output],
         ),
-        returnValue: _i12.Future<void>.value(),
-        returnValueForMissingStub: _i12.Future<void>.value(),
-      ) as _i12.Future<void>);
+        returnValue: _i13.Future<void>.value(),
+        returnValueForMissingStub: _i13.Future<void>.value(),
+      ) as _i13.Future<void>);
 }
 
 /// A class which mocks [NewsUseCase].
@@ -1020,15 +1046,15 @@ class MockNewsUseCase extends _i1.Mock implements _i19.NewsUseCase {
         returnValueForMissingStub: null,
       );
   @override
-  _i11.NewYorkTimesNews get newYorkTimesNews => (super.noSuchMethod(
+  _i12.NewYorkTimesNews get newYorkTimesNews => (super.noSuchMethod(
         Invocation.getter(#newYorkTimesNews),
-        returnValue: _FakeNewYorkTimesNews_9(
+        returnValue: _FakeNewYorkTimesNews_10(
           this,
           Invocation.getter(#newYorkTimesNews),
         ),
-      ) as _i11.NewYorkTimesNews);
+      ) as _i12.NewYorkTimesNews);
   @override
-  set newYorkTimesNews(_i11.NewYorkTimesNews? _newYorkTimesNews) =>
+  set newYorkTimesNews(_i12.NewYorkTimesNews? _newYorkTimesNews) =>
       super.noSuchMethod(
         Invocation.setter(
           #newYorkTimesNews,
@@ -1037,15 +1063,15 @@ class MockNewsUseCase extends _i1.Mock implements _i19.NewsUseCase {
         returnValueForMissingStub: null,
       );
   @override
-  _i11.GermanNews get germanNews => (super.noSuchMethod(
+  _i12.GermanNews get germanNews => (super.noSuchMethod(
         Invocation.getter(#germanNews),
-        returnValue: _FakeGermanNews_10(
+        returnValue: _FakeGermanNews_11(
           this,
           Invocation.getter(#germanNews),
         ),
-      ) as _i11.GermanNews);
+      ) as _i12.GermanNews);
   @override
-  set germanNews(_i11.GermanNews? _germanNews) => super.noSuchMethod(
+  set germanNews(_i12.GermanNews? _germanNews) => super.noSuchMethod(
         Invocation.setter(
           #germanNews,
           _germanNews,
@@ -1053,15 +1079,15 @@ class MockNewsUseCase extends _i1.Mock implements _i19.NewsUseCase {
         returnValueForMissingStub: null,
       );
   @override
-  _i11.FinanceNews get financeNews => (super.noSuchMethod(
+  _i12.FinanceNews get financeNews => (super.noSuchMethod(
         Invocation.getter(#financeNews),
-        returnValue: _FakeFinanceNews_11(
+        returnValue: _FakeFinanceNews_12(
           this,
           Invocation.getter(#financeNews),
         ),
-      ) as _i11.FinanceNews);
+      ) as _i12.FinanceNews);
   @override
-  set financeNews(_i11.FinanceNews? _financeNews) => super.noSuchMethod(
+  set financeNews(_i12.FinanceNews? _financeNews) => super.noSuchMethod(
         Invocation.setter(
           #financeNews,
           _financeNews,
@@ -1069,15 +1095,15 @@ class MockNewsUseCase extends _i1.Mock implements _i19.NewsUseCase {
         returnValueForMissingStub: null,
       );
   @override
-  _i11.TechNews get techNews => (super.noSuchMethod(
+  _i12.TechNews get techNews => (super.noSuchMethod(
         Invocation.getter(#techNews),
-        returnValue: _FakeTechNews_12(
+        returnValue: _FakeTechNews_13(
           this,
           Invocation.getter(#techNews),
         ),
-      ) as _i11.TechNews);
+      ) as _i12.TechNews);
   @override
-  set techNews(_i11.TechNews? _techNews) => super.noSuchMethod(
+  set techNews(_i12.TechNews? _techNews) => super.noSuchMethod(
         Invocation.setter(
           #techNews,
           _techNews,
@@ -1098,15 +1124,15 @@ class MockNewsUseCase extends _i1.Mock implements _i19.NewsUseCase {
         returnValueForMissingStub: null,
       );
   @override
-  _i12.Completer<List<_i20.Article>> get articles => (super.noSuchMethod(
+  _i13.Completer<List<_i20.Article>> get articles => (super.noSuchMethod(
         Invocation.getter(#articles),
-        returnValue: _FakeCompleter_13<List<_i20.Article>>(
+        returnValue: _FakeCompleter_14<List<_i20.Article>>(
           this,
           Invocation.getter(#articles),
         ),
-      ) as _i12.Completer<List<_i20.Article>>);
+      ) as _i13.Completer<List<_i20.Article>>);
   @override
-  set articles(_i12.Completer<List<_i20.Article>>? _articles) =>
+  set articles(_i13.Completer<List<_i20.Article>>? _articles) =>
       super.noSuchMethod(
         Invocation.setter(
           #articles,
@@ -1138,23 +1164,23 @@ class MockNewsUseCase extends _i1.Mock implements _i19.NewsUseCase {
         returnValue: false,
       ) as bool);
   @override
-  _i12.Future<void> loadPreferences() => (super.noSuchMethod(
+  _i13.Future<void> loadPreferences() => (super.noSuchMethod(
         Invocation.method(
           #loadPreferences,
           [],
         ),
-        returnValue: _i12.Future<void>.value(),
-        returnValueForMissingStub: _i12.Future<void>.value(),
-      ) as _i12.Future<void>);
+        returnValue: _i13.Future<void>.value(),
+        returnValueForMissingStub: _i13.Future<void>.value(),
+      ) as _i13.Future<void>);
   @override
-  _i12.Future<void> deletePreferences() => (super.noSuchMethod(
+  _i13.Future<void> deletePreferences() => (super.noSuchMethod(
         Invocation.method(
           #deletePreferences,
           [],
         ),
-        returnValue: _i12.Future<void>.value(),
-        returnValueForMissingStub: _i12.Future<void>.value(),
-      ) as _i12.Future<void>);
+        returnValue: _i13.Future<void>.value(),
+        returnValueForMissingStub: _i13.Future<void>.value(),
+      ) as _i13.Future<void>);
   @override
   void execute(String? trigger) => super.noSuchMethod(
         Invocation.method(
@@ -1164,22 +1190,22 @@ class MockNewsUseCase extends _i1.Mock implements _i19.NewsUseCase {
         returnValueForMissingStub: null,
       );
   @override
-  _i12.Future<bool> newsRoutine() => (super.noSuchMethod(
+  _i13.Future<bool> newsRoutine() => (super.noSuchMethod(
         Invocation.method(
           #newsRoutine,
           [],
         ),
-        returnValue: _i12.Future<bool>.value(false),
-      ) as _i12.Future<bool>);
+        returnValue: _i13.Future<bool>.value(false),
+      ) as _i13.Future<bool>);
   @override
-  _i12.Future<void> fetchArticles() => (super.noSuchMethod(
+  _i13.Future<void> fetchArticles() => (super.noSuchMethod(
         Invocation.method(
           #fetchArticles,
           [],
         ),
-        returnValue: _i12.Future<void>.value(),
-        returnValueForMissingStub: _i12.Future<void>.value(),
-      ) as _i12.Future<void>);
+        returnValue: _i13.Future<void>.value(),
+        returnValueForMissingStub: _i13.Future<void>.value(),
+      ) as _i13.Future<void>);
   @override
   List<_i20.Article> prepareList(List<_i20.Article>? inputList) =>
       (super.noSuchMethod(
@@ -1247,7 +1273,7 @@ class MockNewsUseCase extends _i1.Mock implements _i19.NewsUseCase {
         returnValueForMissingStub: null,
       );
   @override
-  _i12.Future<void> schedule(
+  _i13.Future<void> schedule(
     int? hours,
     int? minutes,
   ) =>
@@ -1259,35 +1285,35 @@ class MockNewsUseCase extends _i1.Mock implements _i19.NewsUseCase {
             minutes,
           ],
         ),
-        returnValue: _i12.Future<void>.value(),
-        returnValueForMissingStub: _i12.Future<void>.value(),
-      ) as _i12.Future<void>);
+        returnValue: _i13.Future<void>.value(),
+        returnValueForMissingStub: _i13.Future<void>.value(),
+      ) as _i13.Future<void>);
   @override
-  _i12.Future<bool> checkTrigger() => (super.noSuchMethod(
+  _i13.Future<bool> checkTrigger() => (super.noSuchMethod(
         Invocation.method(
           #checkTrigger,
           [],
         ),
-        returnValue: _i12.Future<bool>.value(false),
-      ) as _i12.Future<bool>);
+        returnValue: _i13.Future<bool>.value(false),
+      ) as _i13.Future<bool>);
   @override
-  _i12.Future<String> listenForSpeech(Duration? duration) =>
+  _i13.Future<String> listenForSpeech(Duration? duration) =>
       (super.noSuchMethod(
         Invocation.method(
           #listenForSpeech,
           [duration],
         ),
-        returnValue: _i12.Future<String>.value(''),
-      ) as _i12.Future<String>);
+        returnValue: _i13.Future<String>.value(''),
+      ) as _i13.Future<String>);
   @override
-  _i12.Future<void> textToSpeechOutput(String? output) => (super.noSuchMethod(
+  _i13.Future<void> textToSpeechOutput(String? output) => (super.noSuchMethod(
         Invocation.method(
           #textToSpeechOutput,
           [output],
         ),
-        returnValue: _i12.Future<void>.value(),
-        returnValueForMissingStub: _i12.Future<void>.value(),
-      ) as _i12.Future<void>);
+        returnValue: _i13.Future<void>.value(),
+        returnValueForMissingStub: _i13.Future<void>.value(),
+      ) as _i13.Future<void>);
   @override
   void addListener(_i21.VoidCallback? listener) => super.noSuchMethod(
         Invocation.method(

@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
-
 import 'package:luna/Services/SmartHome/smart_home_model.dart';
 import 'package:http/http.dart' as http;
 
 /// Service class for the bridge.
 class BridgeService {
+  http.Client client = http.Client();
+
   /// Constructor of the [BridgeService] class.
   BridgeService();
 
@@ -22,7 +22,7 @@ class BridgeService {
       }
     }
     print("Bridge not found");
-    return Future.error("Bridge not found");
+    return false;
   }
 
   /// Gets all bridges in the local network.
@@ -31,7 +31,7 @@ class BridgeService {
   Future<List<Bridge>> getBridges() async {
     var url = Uri.parse('https://discovery.meethue.com');
     try {
-      var response = await http.get(url);
+      var response = await client.get(url);
       if (response.body.isEmpty) {
         return [];
       }
@@ -57,7 +57,7 @@ class BridgeService {
     try {
       var user = "";
       var url = Uri.parse('http://$ip/api/');
-      var response = await http
+      var response = await client
           .post(url, body: json.encode({"devicetype": "luna"}))
           .timeout(Duration(seconds: 3));
 

@@ -1,3 +1,4 @@
+import "dart:async";
 import "dart:math";
 import "package:flutter/foundation.dart";
 import "package:flutter_local_notifications/flutter_local_notifications.dart";
@@ -43,6 +44,7 @@ class NewsUseCase extends ChangeNotifier implements UseCase {
     notifyListeners();
   }
 
+  Completer<List<Article>> articles = Completer();
   List<Article> _cardArticles = [];
   List<Article> get cardArticles => _cardArticles;
 
@@ -51,6 +53,7 @@ class NewsUseCase extends ChangeNotifier implements UseCase {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     _preferences = sharedPreferences.getStringList("preferences") ?? [];
   }
+
   /// deletes [preferences] from sharedPreferences, mainly used for debugging
   Future<void> deletePreferences() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
@@ -75,14 +78,24 @@ class NewsUseCase extends ChangeNotifier implements UseCase {
   /// gets called when news case is executed through [execute()]
   Future<bool> newsRoutine() async {
     await loadPreferences();
-    await fetchArticles();
+    await fetchArticles().then((_) {
+      print("articles fetched");
+      print(_cardArticles.length);
+    });
     await flutterTts.speak("The following headlines might interest you ");
     displayNews();
+    print("articles fetched");
+    print(_cardArticles.length);
+    articles.complete(_cardArticles);
     return true;
   }
 
   Future<void> fetchArticles() async {
-    dynamic germanArticles, nYTArticles, financeArticles, techArticles, genericArticles;
+    dynamic germanArticles,
+        nYTArticles,
+        financeArticles,
+        techArticles,
+        genericArticles;
     List<Article> completeList = [];
     _preferences ??= [];
 
@@ -90,19 +103,18 @@ class NewsUseCase extends ChangeNotifier implements UseCase {
       germanArticles = await germanNews.fetchNews();
       germanArticles = prepareList(germanArticles);
       completeList.addAll(germanArticles);
-
     }
-    if(_preferences!.contains("Finances")) {
+    if (_preferences!.contains("Finances")) {
       financeArticles = await financeNews.fetchNews();
       financeArticles = prepareList(financeArticles);
       completeList.addAll(financeArticles);
     }
-    if(_preferences!.contains("Technology")) {
+    if (_preferences!.contains("Technology")) {
       techArticles = await techNews.fetchNews();
       techArticles = prepareList(techArticles);
       completeList.addAll(techArticles);
     }
-    if(_preferences!.contains("US politics")) {
+    if (_preferences!.contains("US politics")) {
       nYTArticles = await newYorkTimesNews.fetchSection("politics");
       nYTArticles = prepareList(nYTArticles);
       completeList.addAll(nYTArticles);
@@ -112,7 +124,6 @@ class NewsUseCase extends ChangeNotifier implements UseCase {
       genericArticles = await newYorkTimesNews.fetchSection("home");
       genericArticles = prepareList(genericArticles);
       completeList.addAll(genericArticles);
-
     }
 
     completeList = sortArticleAlgorithm(completeList);
@@ -137,10 +148,10 @@ class NewsUseCase extends ChangeNotifier implements UseCase {
   }
 
   List<Article> rankArticlesInList(List<Article> inputList) {
-    if(_preferences == null) {
+    if (_preferences == null) {
       print("preferences are null");
     }
-    for(var element in inputList) {
+    for (var element in inputList) {
       element.calculateScore(_preferences!);
     }
     return inputList;
@@ -150,11 +161,13 @@ class NewsUseCase extends ChangeNotifier implements UseCase {
     _showNews = value;
     notifyListeners();
   }
+
   /// calls [readHeadlines] and
-  void displayNews(){
+  void displayNews() {
     readNewsHeadlines();
     setShowNews(true);
   }
+
   /// takes input list [allArticles] and sorts them via [article.score]
   /// the [score] is calculated internally for each article
   /// returns the resulting list
@@ -174,6 +187,7 @@ class NewsUseCase extends ChangeNotifier implements UseCase {
 
     return allArticles;
   }
+
   /// reads out the 5 most relevant (top) headlines of [_cardArticles]
   void readNewsHeadlines() async {
     for (var i = 0; i < min(_cardArticles.length, 5); i++) {
@@ -181,7 +195,6 @@ class NewsUseCase extends ChangeNotifier implements UseCase {
     }
     await flutterTts.awaitSpeakCompletion(true);
   }
-
 
   /// Schedules a daily notification for the good night use case.
   ///
@@ -193,7 +206,8 @@ class NewsUseCase extends ChangeNotifier implements UseCase {
     await NotificationService.instance.scheduleAlarmNotif(
       id: notificationId,
       title: "News",
-      body: "Are you interested in news updates? Go into your App and ask for news",
+      body:
+          "Are you interested in news updates? Go into your App and ask for news",
       dateTime: Time(hours, minutes, 0),
     );
     print("Notification scheduled for $hours:$minutes");
@@ -209,7 +223,6 @@ class NewsUseCase extends ChangeNotifier implements UseCase {
     return "";
   }
 
-  @override Future<void> textToSpeechOutput(String output) async {  }
+  @override
+  Future<void> textToSpeechOutput(String output) async {}
 }
-
-

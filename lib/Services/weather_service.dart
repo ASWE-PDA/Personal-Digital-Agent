@@ -14,6 +14,15 @@ class WeatherService {
 
   Future<WeatherData?> getCurrentWeather() async {
     try {
+      print("=========================");
+      print("=========================");
+      print("=========================");
+      print("=========================");
+      print(_apiKey);
+      print("=========================");
+      print("=========================");
+      print("=========================");
+      print("=========================");
       final position = await _locationService.getCurrentLocation();
       if (position == null) {
         print("Error getting current weather: position is null");

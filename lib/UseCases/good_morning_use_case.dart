@@ -1,5 +1,4 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:flutter_tts/flutter_tts.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:luna/Services/location_service.dart';
 import 'package:luna/Services/maps_service.dart';
@@ -25,7 +24,6 @@ class GoodMorningUseCase extends UseCase {
   }
 
   List<String> goodMorningTriggerWords = ["good morning", "morning"];
-  FlutterTts flutterTts = FlutterTts();
   GoodMorningModel goodMorningModel = GoodMorningModel();
   int notificationId = 3;
 
@@ -127,10 +125,10 @@ class GoodMorningUseCase extends UseCase {
         }
       }
       output += "Have a great day!";
-      flutterTts.speak(output);
+      textToSpeechOutput(output);
       return;
     }
-    flutterTts.speak("I don't know what you want");
+    textToSpeechOutput("I don't know what you want");
     return;
   }
 

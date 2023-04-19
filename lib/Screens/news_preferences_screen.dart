@@ -19,7 +19,6 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
 
   /// Loads the preferences from the [SharedPreferences].
   Future<void> _initPreferences() async {
-    print("init news prefs");
     _prefs = await SharedPreferences.getInstance();
     setState(() {
       _selectedPreferences = _prefs!.getStringList('preferences') ?? [];
@@ -35,7 +34,6 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
   /// Saves the preferences to the [SharedPreferences].
   Future<void> _savePreferences() async {
     await _prefs!.setStringList('preferences', _selectedPreferences);
-    print("saved news prefs");
     Navigator.of(context).pop();
   }
 

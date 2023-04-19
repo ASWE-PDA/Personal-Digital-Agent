@@ -1,14 +1,7 @@
 import 'dart:io';
-import 'package:alarm/alarm.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
-
-@pragma('vm:entry-point')
-void notificationTap(NotificationResponse response) {
-  // TODO: implement notificationTap
-  print('notificationTap');
-}
 
 /// The purpose of this class is to show a notification to the user
 /// The user can tap the notification to open directly the app.
@@ -122,7 +115,6 @@ class NotificationService {
 
     final hasPermission = await requestPermission();
     if (!hasPermission) {
-      alarmPrint('Notification permission not granted');
       return;
     }
 
@@ -139,15 +131,11 @@ class NotificationService {
         // daily alarm
         matchDateTimeComponents: DateTimeComponents.time,
       );
-      alarmPrint('Notification with id $id scheduled successfuly at $zdt');
-    } catch (e) {
-      alarmPrint('Schedule notification with id $id error: $e');
-    }
+    } catch (e) { }
   }
 
   /// Cancels notification with the given [id].
   Future<void> cancel(int id) async {
     await localNotif.cancel(id);
-    alarmPrint('Notification with id $id canceled');
   }
 }

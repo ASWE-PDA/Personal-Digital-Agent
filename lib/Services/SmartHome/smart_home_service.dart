@@ -18,7 +18,6 @@ class SmartHomeService {
       var lights = responseToLights(responseMap);
       return lights;
     } catch (e) {
-      print(e);
       return Future.error(e);
     }
   }
@@ -39,7 +38,6 @@ class SmartHomeService {
   /// Turns off a [light] that is connected to the bridge defined by the [ip] and [user].
   Future<void> turnOffLight(Light light, ip, user) async {
     if (light.on) {
-      print("turning off light: ${light.name}");
       var url = Uri.parse('http://$ip/api/$user/lights/${light.id}/state');
       try {
         var response = await http.put(url, body: '{"on": false}');
@@ -47,7 +45,6 @@ class SmartHomeService {
         return Future.error(e);
       }
     } else {
-      print("light already off: ${light.name}");
     }
   }
 }

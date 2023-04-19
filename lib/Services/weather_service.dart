@@ -21,7 +21,6 @@ class WeatherService {
     try {
       final position = await _locationService.getCurrentLocation();
       if (position == null) {
-        print("Error getting current weather: position is null");
         return null;
       }
 
@@ -34,7 +33,6 @@ class WeatherService {
         feelsLikeTemp: weather.tempFeelsLike?.celsius?.round(),
       );
     } catch (e) {
-      print("Error getting current weather: $e");
       return null;
     }
   }

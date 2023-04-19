@@ -108,10 +108,8 @@ class UseCaseCheck {
 
   /// Executes all checks and activates the use case based on the [input].
   void monitor(String input) {
-    print("input: $input");
     if (goodMorningCheck(input)) {
       _activate = 1;
-      print("entered goodmorning check");
       return;
     } else if (eventPlanningCheck(input)) {
       _activate = 2;

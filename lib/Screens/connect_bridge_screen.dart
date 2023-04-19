@@ -70,7 +70,6 @@ class _ConnectBrigdeScreenState extends State<ConnectBrigdeScreen> {
                   onPressed: () async {
                     username = bridgeService.createUser(widget.ip);
                     username.then((value) {
-                      print("Username: $value");
                       setState(() {
                         userModel.setUser = value.toString();
                         userCreated = true;
@@ -117,7 +116,6 @@ class _ConnectBrigdeScreenState extends State<ConnectBrigdeScreen> {
         future: bridgeAvailable,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            print("bridge available");
             return connectBridgeSection();
           } else if (snapshot.hasError) {
             return Column(children: [

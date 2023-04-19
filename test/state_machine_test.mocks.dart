@@ -442,14 +442,6 @@ class MockGoodNightUseCase extends _i1.Mock implements _i14.GoodNightUseCase {
         returnValueForMissingStub: _i13.Future<void>.value(),
       ) as _i13.Future<void>);
   @override
-  _i13.Future<bool> checkTrigger() => (super.noSuchMethod(
-        Invocation.method(
-          #checkTrigger,
-          [],
-        ),
-        returnValue: _i13.Future<bool>.value(false),
-      ) as _i13.Future<bool>);
-  @override
   List<String> getAllTriggerWords() => (super.noSuchMethod(
         Invocation.method(
           #getAllTriggerWords,
@@ -927,14 +919,6 @@ class MockEventPlanningUseCase extends _i1.Mock
         returnValueForMissingStub: null,
       );
   @override
-  _i13.Future<bool> checkTrigger() => (super.noSuchMethod(
-        Invocation.method(
-          #checkTrigger,
-          [],
-        ),
-        returnValue: _i13.Future<bool>.value(false),
-      ) as _i13.Future<bool>);
-  @override
   List<String> getAllTriggerWords() => (super.noSuchMethod(
         Invocation.method(
           #getAllTriggerWords,
@@ -1288,14 +1272,6 @@ class MockNewsUseCase extends _i1.Mock implements _i19.NewsUseCase {
         returnValue: _i13.Future<void>.value(),
         returnValueForMissingStub: _i13.Future<void>.value(),
       ) as _i13.Future<void>);
-  @override
-  _i13.Future<bool> checkTrigger() => (super.noSuchMethod(
-        Invocation.method(
-          #checkTrigger,
-          [],
-        ),
-        returnValue: _i13.Future<bool>.value(false),
-      ) as _i13.Future<bool>);
   @override
   _i13.Future<String> listenForSpeech(Duration? duration) =>
       (super.noSuchMethod(

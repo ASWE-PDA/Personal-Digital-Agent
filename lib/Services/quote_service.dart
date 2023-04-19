@@ -18,9 +18,7 @@ class QuoteService {
         Map<String, dynamic> quoteData = jsonData[0];
         return QuoteData(quote: quoteData['q'], author: quoteData['a']);
       }
-    } catch (e) {
-      print("Failed to fetch quote: $e");
-    }
+    } catch (e) {}
   }
 }
 

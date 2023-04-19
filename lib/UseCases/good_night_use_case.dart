@@ -10,11 +10,9 @@ import 'package:luna/UseCases/good_morning_model.dart';
 import 'package:luna/UseCases/good_night_model.dart';
 import 'package:luna/UseCases/use_case.dart';
 import 'package:luna/Services/notification_service.dart';
-import 'package:speech_to_text/speech_to_text.dart';
 
 @pragma('vm:entry-point')
 void onNotificationTap(NotificationResponse response) {
-  print('notificationTap');
 }
 
 /// Use case for the Good Night feature.
@@ -52,22 +50,18 @@ class GoodNightUseCase extends UseCase {
   void execute(String trigger) async {
     flutterTts.setLanguage("en-US");
     if (goodNightTriggerWords.any((element) => trigger.contains(element))) {
-      print("triggered good night case");
       executeCompleteUseCase();
       return;
     } else if (lightTriggerWords.any((element) => trigger.contains(element))) {
-      print("triggered light case");
       await turnOffAllLights().then((value) {
         flutterTts.speak(value);
       });
       return;
     } else if (sleepPlaylistTriggerWords
         .any((element) => trigger.contains(element))) {
-      print("triggered sleep playlist case");
       await startSleepPlayList();
       return;
     } else if (alarmTriggerWords.any((element) => trigger.contains(element))) {
-      print("triggered alarm case");
       setAlarm();
       return;
     }
@@ -89,12 +83,6 @@ class GoodNightUseCase extends UseCase {
       body: "It is time to go to sleep!",
       dateTime: Time(hours, minutes, 0),
     );
-    print("Notification scheduled for $hours:$minutes");
-  }
-
-  @override
-  Future<bool> checkTrigger() async {
-    return false;
   }
 
   /// Returns a list of all trigger words.
@@ -113,7 +101,6 @@ class GoodNightUseCase extends UseCase {
     await loadPreferences();
     String ip = bridgeModel.ip;
     String user = bridgeModel.user;
-    print("turning off lights: $ip, $user");
 
     // check if ip and user are set
     if (ip == "" && user == "") {
@@ -130,7 +117,6 @@ class GoodNightUseCase extends UseCase {
                 .turnOffLight(light, ip, user)
                 .then((value) {})
                 .catchError((e) {
-              print("error turning off light: $e");
               response +=
                   "Sorry, I couldn't turn off your light ${light.name}. ";
             });
@@ -151,7 +137,6 @@ class GoodNightUseCase extends UseCase {
         "Do you want me to start a sleep playlist for you?");
 
     String answer = await listenForSpeech(Duration(seconds: 5));
-    print("Spotify Answer is $answer");
     bool alarm = checkIfAnswerIsYes(answer);
     if (alarm) {
       await startSleepPlayList();
@@ -165,14 +150,10 @@ class GoodNightUseCase extends UseCase {
   Future<void> startSleepPlayList() async {
     try {
       bool result = await spotifySdkService.connect();
-      print(result);
       if (result) {
-        print("starting playlist");
         spotifySdkService.playPlaylist(playlistId);
       }
-    } catch (e) {
-      print(e);
-    }
+    } catch (e) {}
   }
 
   /// Asks the user if he wants an alarm and sets it if the user answers with yes.
@@ -180,7 +161,6 @@ class GoodNightUseCase extends UseCase {
   Future<void> askForWakeUpTime() async {
     await textToSpeechOutput("Do you want an alarm for tomorrow?");
     String answer = await listenForSpeech(Duration(seconds: 5));
-    print("Answer is $answer");
     bool alarm = checkIfAnswerIsYes(answer);
     if (alarm) {
       String result = await setAlarm();
@@ -218,10 +198,8 @@ class GoodNightUseCase extends UseCase {
   /// Returns true if the answer contains a yes trigger word.
   bool checkIfAnswerIsYes(String answer) {
     if (yesTriggerWords.any((element) => answer.contains(element))) {
-      print("answer is yes");
       return true;
     }
-    print("answer is not yes");
     return false;
   }
 }

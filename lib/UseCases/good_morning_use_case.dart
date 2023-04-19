@@ -53,35 +53,25 @@ class GoodMorningUseCase extends UseCase {
   Future<void> execute(String trigger) async {
     flutterTts.setLanguage("en-US");
     if (goodMorningTriggerWords.any((element) => trigger.contains(element))) {
-      print("triggered good morning case");
       textToSpeechOutput(await executeCompleteUseCase());
       return;
     } else if (locationTriggerWords
         .any((element) => trigger.contains(element))) {
-      print("triggered location case");
       textToSpeechOutput(await executeLocationUseCase(true));
       return;
     } else if (weatherTriggerWords
         .any((element) => trigger.contains(element))) {
-      print("triggered weather case");
       textToSpeechOutput(await executeWeatherUseCase());
       return;
     } else if (routeTriggerWords.any((element) => trigger.contains(element))) {
-      print("triggered route case");
       textToSpeechOutput(await executeRouteUseCase());
       return;
     } else if (quoteTriggerWords.any((element) => trigger.contains(element))) {
-      print("triggered quote case");
       textToSpeechOutput(await executeQuoteUseCase());
       return;
     }
     textToSpeechOutput("I don't know what you want");
     return;
-  }
-
-  @override
-  Future<bool> checkTrigger() async {
-    return false;
   }
 
   /// Returns a list of all trigger words.
@@ -153,9 +143,6 @@ class GoodMorningUseCase extends UseCase {
         TimeOfDay preferredArrivalTime0 =
             await goodMorningModel.getPreferredArrivalTime();
 
-        print("currentLocation: $currentLocation");
-        print("workAddress: $workAddress");
-        print("arrivalTime: $preferredArrivalTime0");
         routeDetails = await mapsService.getRouteDetails(
           origin: currentLocation!,
           destination: workAddress!,

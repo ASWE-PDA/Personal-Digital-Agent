@@ -28,10 +28,8 @@ class LocationService {
       final position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high,
       );
-      print("Current position: $position");
       return position;
     } catch (e) {
-      print(e);
       return null;
     }
   }

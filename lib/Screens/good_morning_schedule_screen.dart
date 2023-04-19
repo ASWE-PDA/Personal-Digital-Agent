@@ -203,7 +203,6 @@ class _GoodMorningScheduleScreen extends State<GoodMorningScheduleScreen> {
         );
       },
       onSuggestionSelected: (prediction) {
-        print("Selected: ${prediction.description}");
         // Update the text field with the selected prediction.
         _workAddressController.text = prediction.description;
         _hasUnsavedChanges = true;

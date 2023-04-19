@@ -11,10 +11,6 @@ abstract class UseCase {
   /// method that is called by the state machine to execute use case
   void execute(String trigger);
 
-  /// method that triggers use case proactively
-  Future<bool> checkTrigger();
-
-
   Future<String> listenForSpeech(Duration duration) async {
     // Create an instance of the speech_to_text package
     stt.SpeechToText speechToText = stt.SpeechToText();
@@ -22,7 +18,6 @@ abstract class UseCase {
     // Check if the device supports speech recognition
     bool isAvailable = await speechToText.initialize();
     if (!isAvailable) {
-      print("Speech recognition not available");
       return "";
     }
 
@@ -36,7 +31,6 @@ abstract class UseCase {
     speechToText.listen(
       partialResults: false,
       onResult: (result) async {
-        print("Speech recognition result: ${result.recognizedWords}");
         completer.complete(result.recognizedWords);
         await speechToText.stop();
       },
@@ -48,7 +42,6 @@ abstract class UseCase {
       String recognizedText = await completer.future;
       return recognizedText;
     } catch (e) {
-      print("Error: $e");
       return "";
     } finally {
       timer.cancel();
@@ -56,12 +49,10 @@ abstract class UseCase {
   }
 
   Future<void> textToSpeechOutput(String output) async {
-    await Future.delayed(Duration(seconds: 1, milliseconds: 200));
     Completer<bool> completer = Completer<bool>();
     flutterTts.speak(output);
     flutterTts.setCompletionHandler(() {
       completer.complete(true);
-      print("=======================================\n\n\nCOMPLETION HANDLER DONE\n\n\n====================================");
     });
     await completer.future;
     return;

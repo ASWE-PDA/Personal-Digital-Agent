@@ -38,8 +38,6 @@ class _ChatPageState extends State<ChatPage> {
   loadPreferences() {
     user = Provider.of<BridgeModel>(context, listen: false).user;
     ip = Provider.of<BridgeModel>(context, listen: false).ip;
-    print(ip);
-    print(user);
   }
 
   /// Initialize speech to text, only once

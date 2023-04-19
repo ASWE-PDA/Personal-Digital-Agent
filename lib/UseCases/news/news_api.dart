@@ -49,12 +49,7 @@ class NewYorkTimesNews implements NewsAPI {
           data['results'].map((article) => Article.fromNYTJson(article)));
       return articles;
 
-    } else if(response.statusCode == 401){
-      print("NYT: 401 Error! Passing empty String");
-      return [];
-
     } else {
-      print("Failed to load articles, returning empty list, ${response.statusCode}");
       return [];
     }
   }
@@ -82,12 +77,7 @@ class GermanNews implements NewsAPI {
       final List<Article> articles = List<Article>.from(
           data["articles"].map((article) => Article.fromGermanJson(article)));
       return articles;
-    } else if(response.statusCode == 401){
-      print("DE: 401 Error! Passing empty String");
-      return [];
-
     } else {
-      print("Failed to load articles, returning empty list, ${response.statusCode}");
       return [];
     }
     //return returnList;
@@ -114,14 +104,8 @@ class FinanceNews implements NewsAPI {
       final Map<String, dynamic> data = jsonDecode(response.body);
       final List<Article> articles = List<Article>.from(
           data["data"].map((article) => Article.fromFinancialJson(article)));
-      print("FIN: Fetch done");
       return articles;
-    } else if(response.statusCode == 401){
-      print("FIN: 401 Error! Passing empty String");
-      return [];
-
     } else {
-      print("Failed to load articles, returning empty list, ${response.statusCode}");
       return [];
     }
 
@@ -152,11 +136,9 @@ class TechNews implements NewsAPI {
           data["articles"].map((article) => Article.fromGermanJson(article)));
       return articles;
     } else if(response.statusCode == 401){
-      print("TEK: 401 Error! Passing empty String");
       return [];
 
     } else {
-      print("Failed to load articles, returning empty list, ${response.statusCode}");
       return [];
     }
   }

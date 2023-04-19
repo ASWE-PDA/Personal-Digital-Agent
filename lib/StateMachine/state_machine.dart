@@ -64,13 +64,11 @@ class StateMachine {
 
   /// Leaves the current state and transitions to the idle state.
   void transitionToIdle() {
-    print("transitioning to idle state");
     idleState.enter();
   }
 
   /// Transitions to the good morning state with the [trigger] words.
   void transitionToGoodMorning(String trigger) {
-    print("transitioning to good morning state");
     goodMorningState.enter();
     _goodMorningUseCase.execute(trigger);
     transitionToIdle();
@@ -85,7 +83,6 @@ class StateMachine {
 
   /// Transitions to the news state with the [trigger] words.
   void transitionToNews(String trigger) {
-    print("transitioning to news state");
     newsState.enter();
     _newsUseCase.execute(trigger);
     transitionToIdle();
@@ -93,7 +90,6 @@ class StateMachine {
 
   /// Transitions to the good night state with the [trigger] words.
   void transitionToGoodNight(String trigger) {
-    print("transitioning to good night state");
     goodNightState.enter();
     _goodNightUseCase.execute(trigger);
     transitionToIdle();
@@ -106,7 +102,6 @@ class StateMachine {
 
   /// Runs the idle state. Checks for use cases and transitions to appropriate state.
   void runIdleState() {
-    print("entered idle state");
     int state = useCaseCheck.activate;
     if (state > 0) {
       switch (state) {
@@ -123,7 +118,6 @@ class StateMachine {
           transitionToGoodNight(useCaseCheck.triggerWord);
           break;
         default:
-          print("error: invalid state");
       }
     }
   }
@@ -132,15 +126,15 @@ class StateMachine {
   void start() {
     // define transitions
     idleState.onEntry(() => runIdleState());
-    idleState.onExit(() => print('leaving idle state'));
-    goodMorningState.onEntry(() => print('entering good morning state'));
-    goodMorningState.onExit(() => print('leaving good morning state'));
-    eventPlanningState.onEntry(() => print('entering event planning state'));
-    eventPlanningState.onExit(() => print('leaving event planning state'));
-    newsState.onEntry(() => print('entering news state'));
-    newsState.onExit(() => print('leaving news state'));
-    goodNightState.onEntry(() => print('entering good night state'));
-    goodNightState.onExit(() => print('leaving good night state'));
+    idleState.onExit(() => {});
+    goodMorningState.onEntry(() => {});
+    goodMorningState.onExit(() => {});
+    eventPlanningState.onEntry(() => {});
+    eventPlanningState.onExit(() => {});
+    newsState.onEntry(() => {});
+    newsState.onExit(() => {});
+    goodNightState.onEntry(() => {});
+    goodNightState.onExit(() => {});
     machine.start();
   }
 

@@ -23,10 +23,8 @@ class SpotifySdkService {
           clientId: clientId, redirectUrl: "luna://spotify-auth-callback");
       return result;
     } on PlatformException {
-      print("Platform exception");
       return false;
     } catch (e) {
-      print(e);
       return false;
     }
   }
@@ -37,11 +35,7 @@ class SpotifySdkService {
       await SpotifySdk.setRepeatMode(
         repeatMode: repeatMode,
       );
-    } on PlatformException {
-      print("Platform exception");
-    } catch (e) {
-      print(e);
-    }
+    }  catch (e) {}
   }
 
   /// Plays a playlist defined by a playlist [id] and turns off the repeating mode.
@@ -50,9 +44,7 @@ class SpotifySdkService {
       await SpotifySdk.play(spotifyUri: 'spotify:playlist:$id');
       await setRepeatMode(RepeatMode.off);
     } on PlatformException catch (e) {
-      print(e);
     } catch (e) {
-      print(e);
     }
   }
 }

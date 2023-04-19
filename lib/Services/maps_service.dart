@@ -36,8 +36,6 @@ class MapsService {
     final data = json.decode(response.body);
 
     if (data["status"] != "OK") {
-      // throw Exception(data["error_message"]);
-      print("Error: ${data["status"]}");
       return {};
     }
 

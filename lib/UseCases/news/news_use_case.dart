@@ -65,7 +65,6 @@ class NewsUseCase extends ChangeNotifier implements UseCase {
   @override
   void execute(String trigger) async {
     if (NewsTriggerWords.any((element) => trigger.contains(element))) {
-      print("triggered news use case");
       await newsRoutine();
       NavigationService.pushNewsScreen();
       return;
@@ -79,13 +78,9 @@ class NewsUseCase extends ChangeNotifier implements UseCase {
   Future<bool> newsRoutine() async {
     await loadPreferences();
     await fetchArticles().then((_) {
-      print("articles fetched");
-      print(_cardArticles.length);
     });
     await flutterTts.speak("The following headlines might interest you ");
     displayNews();
-    print("articles fetched");
-    print(_cardArticles.length);
     articles.complete(_cardArticles);
     return true;
   }
@@ -148,9 +143,6 @@ class NewsUseCase extends ChangeNotifier implements UseCase {
   }
 
   List<Article> rankArticlesInList(List<Article> inputList) {
-    if (_preferences == null) {
-      print("preferences are null");
-    }
     for (var element in inputList) {
       element.calculateScore(_preferences!);
     }
@@ -210,12 +202,6 @@ class NewsUseCase extends ChangeNotifier implements UseCase {
           "Are you interested in news updates? Go into your App and ask for news",
       dateTime: Time(hours, minutes, 0),
     );
-    print("Notification scheduled for $hours:$minutes");
-  }
-
-  @override
-  Future<bool> checkTrigger() async {
-    return false;
   }
 
   @override

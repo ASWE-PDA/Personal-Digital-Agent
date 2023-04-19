@@ -16,12 +16,10 @@ class BridgeService {
   Future<bool> checkBridge(String ip) async {
     List<Bridge> bridges = await getBridges();
     for (Bridge bridge in bridges) {
-      print(bridge.internalipaddress);
       if (bridge.internalipaddress == ip) {
         return true;
       }
     }
-    print("Bridge not found");
     return false;
   }
 
@@ -44,7 +42,6 @@ class BridgeService {
       }
       return bridges;
     } catch (e) {
-      print(e);
       return [];
     }
   }
@@ -53,7 +50,6 @@ class BridgeService {
   ///
   /// Returns the user name.
   Future<String> createUser(String ip) async {
-    print("creating user");
     try {
       var user = "";
       var url = Uri.parse('http://$ip/api/');
@@ -65,11 +61,9 @@ class BridgeService {
         final responseMap = json.decode(response.body);
         try {
           user = responseMap[0]["success"]["username"];
-          print("user created: $user");
           return user;
         } catch (e) {
           String errorMessage = responseMap[0]["error"]["description"];
-          print("error creating user: $errorMessage");
           return Future.error(Exception(errorMessage));
         }
       } else {

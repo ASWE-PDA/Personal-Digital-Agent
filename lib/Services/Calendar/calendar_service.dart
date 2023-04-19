@@ -37,7 +37,6 @@ class CalendarService {
       }
       return calendarPlugin;
     } catch (e) {
-      print("error in permission req ");
       return null;
     }
   }
@@ -79,13 +78,10 @@ class CalendarService {
     final createResult = await calendarPlugin.createOrUpdateEvent(event);
 
     if (createResult == null) {
-      print("Error creating event result = null");
       return;
     }
     if (createResult.isSuccess && createResult.data != null) {
-      print("Event created successfully");
     } else {
-      print("Error creating event");
     }
   }
 }

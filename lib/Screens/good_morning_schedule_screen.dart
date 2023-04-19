@@ -163,13 +163,18 @@ class _GoodMorningScheduleScreen extends State<GoodMorningScheduleScreen> {
                       ],
                     ),
                     SizedBox(height: 20),
-                    ElevatedButton(
-                      onPressed: () {
-                        _onSaveButtonPressed(context);
-                        _hasUnsavedChanges = false;
-                      },
-                      child: Text("Save"),
-                    ),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 20.0),
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(),
+                        onPressed: () {
+                          _onSaveButtonPressed(context);
+                          _hasUnsavedChanges = false;
+                        },
+                        child: Text("Save"),
+                      ),
+                    )
                   ],
                 ),
               ),

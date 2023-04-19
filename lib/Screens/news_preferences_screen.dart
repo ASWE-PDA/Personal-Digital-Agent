@@ -32,6 +32,7 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
   Future<void> _savePreferences() async {
     await _prefs!.setStringList('preferences', _selectedPreferences);
     print("saved news prefs");
+    Navigator.of(context).pop();
   }
 
   void _handlePreferenceSelect(String preference, bool isSelected) {
@@ -46,17 +47,26 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
 
   Widget _buildPreferenceList(List<String> preferenceList) {
     return ListView.builder(
-      itemCount: preferenceList.length,
+      itemCount: preferenceList.length + 1,
       itemBuilder: (context, index) {
-        final preference = preferenceList[index];
-        final isSelected = _selectedPreferences.contains(preference);
+        if (index == preferenceList.length) {
+          return Container(
+              padding: EdgeInsets.symmetric(horizontal: 30.0),
+              child: ElevatedButton(
+                onPressed: _savePreferences,
+                child: Text("Save"),
+              ));
+        } else {
+          final preference = preferenceList[index];
+          final isSelected = _selectedPreferences.contains(preference);
 
-        return CheckboxListTile(
-          title: Text(preference),
-          value: isSelected,
-          checkColor: Colors.green,
-          onChanged: (value) => _handlePreferenceSelect(preference, value!),
-        );
+          return CheckboxListTile(
+            title: Text(preference),
+            value: isSelected,
+            checkColor: Colors.green,
+            onChanged: (value) => _handlePreferenceSelect(preference, value!),
+          );
+        }
       },
     );
   }
@@ -76,12 +86,6 @@ class _PreferencesScreenState extends State<PreferencesScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Preferences'),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.save),
-            onPressed: _savePreferences,
-          )
-        ],
       ),
       body: _selectedPreferences == null
           ? Center(child: CircularProgressIndicator())

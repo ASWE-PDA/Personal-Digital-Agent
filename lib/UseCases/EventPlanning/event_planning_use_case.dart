@@ -87,6 +87,43 @@ class EventPlanningUseCase extends UseCase {
       }
     }
     await textToSpeechOutput(output);
+
+    var tryAgain = true;
+    while (tryAgain) {
+      await Future.delayed(Duration(seconds: 2));
+      await textToSpeechOutput("Would you like to create another Event for today?");
+      String answer = await listenForSpeech(Duration(seconds: 3));
+      if (!answer.toLowerCase().contains("yes")) return;
+
+      await Future.delayed(Duration(seconds: 2));
+      await textToSpeechOutput("Whats the name of the event?");
+      String eventTitle = await listenForSpeech(Duration(seconds: 5));
+
+      await Future.delayed(Duration(seconds: 2));
+      await textToSpeechOutput("At what time would you like this event to take place?");
+      String eventTimeInput = await listenForSpeech(Duration(seconds: 5));
+      DateTime? eventTime = parseSpokenTime(eventTimeInput);
+      if (eventTime == null) {
+        await Future.delayed(Duration(seconds: 2));
+        await textToSpeechOutput("I didn't get that right. Do you want to try again?");
+        tryAgain = (await listenForSpeech(Duration(seconds: 3))).toLowerCase().contains("yes");
+        continue;
+      }
+      await Future.delayed(Duration(seconds: 2));
+      await textToSpeechOutput("How many minutes should this event last?");
+      String eventDurationInput = await listenForSpeech(Duration(seconds: 3));
+      try {
+        int eventDuration = int.parse(eventDurationInput);
+        createCalendarEvent(eventTime, eventTitle, eventDuration);
+        await Future.delayed(Duration(seconds: 2));
+        await textToSpeechOutput("I created the event $eventTitle for today starting at ${getTimeFromHoursMinutes(eventTime.hour, eventTime.minute)}.");
+      } catch (e) {
+        await Future.delayed(Duration(seconds: 2));
+        await textToSpeechOutput("I didn't get that right. Make sure that you only pass in the amount of minutes you want this event to last. Do you want to try again?");
+        tryAgain = (await listenForSpeech(Duration(seconds: 3))).toLowerCase().contains("yes");
+        continue;
+      }
+    }
   }
 
   Future<String> getTravelDuration(String destination) async {

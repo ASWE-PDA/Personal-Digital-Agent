@@ -111,27 +111,6 @@ class _ChatPageState extends State<ChatPage> {
                   ),
                 ),
               ),
-              ElevatedButton(
-                  onPressed: () async {
-                    GoodNightUseCase.instance.execute("good night");
-                  },
-                  child: Text("Test Good Night Use Case DEBUG")),
-              ElevatedButton(
-                  onPressed: () async {
-                    GoodMorningUseCase.instance.execute("good morning");
-                  },
-                  child: Text("Test Good Morning Use Case DEBUG")),
-              ElevatedButton(
-                  onPressed: () async {
-                    EventPlanningUseCase.instance.execute("calendar");
-                  },
-                  child: Text("Test Calendar Usecase DEBUG")),
-              ElevatedButton(
-                  onPressed: () async {
-                    NewsUseCase.instance.execute("news");
-                    pushNewsScreen();
-                  },
-                  child: Text("Test News Use Case DEBUG")),
               Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: AvatarGlow(

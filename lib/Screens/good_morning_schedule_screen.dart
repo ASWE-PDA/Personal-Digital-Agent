@@ -3,7 +3,6 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:intl/intl.dart';
 import 'package:luna/Services/maps_service.dart';
 import 'package:luna/UseCases/good_morning_model.dart';
-import 'package:luna/UseCases/good_morning_use_case.dart';
 import 'package:provider/provider.dart';
 
 /// Screen to enter a new time for the good morning use case.
@@ -81,10 +80,6 @@ class _GoodMorningScheduleScreen extends State<GoodMorningScheduleScreen> {
                                 _hasUnsavedChanges = true;
                               }),
                             );
-
-                            // update the notification schedule
-                            await GoodMorningUseCase.instance
-                                .schedule(_wakeUpTime.hour, _wakeUpTime.minute);
                           },
                           child: Text(formatTimeOfDay(_wakeUpTime)),
                         ),

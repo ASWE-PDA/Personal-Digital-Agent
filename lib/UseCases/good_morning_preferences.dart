@@ -71,7 +71,7 @@ class GoodMorningPreferences {
   /// Loads the preferred transport mode.
   getTransportMode() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    return sharedPreferences.getString(transportModeKey);
+    return sharedPreferences.getString(transportModeKey) ?? "Driving";
   }
 
   /// Loads the latest departure value.

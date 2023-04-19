@@ -62,7 +62,8 @@ class _ChatPageState extends State<ChatPage> {
       // State machine controller interface: push update with recognized words
       controller.update(lastWords);
 
-      if (["news", "inform me", "whats up"].any((element) => lastWords.contains(element))) {
+      if (["news", "inform me", "whats up"]
+          .any((element) => lastWords.contains(element))) {
         pushNewsScreen();
       }
     });
@@ -110,17 +111,6 @@ class _ChatPageState extends State<ChatPage> {
                   ),
                 ),
               ),
-              ElevatedButton(
-                  onPressed: () async {
-                    stopAlarm();
-                  },
-                  child: Text("Stop Alarm DEBUG")),
-              ElevatedButton(
-                  onPressed: () async {
-                    setAlarmByDateTime(
-                        DateTime.now().add(Duration(seconds: 10)));
-                  },
-                  child: Text("Test Alarm DEBUG")),
               ElevatedButton(
                   onPressed: () async {
                     GoodNightUseCase.instance.execute("good night");

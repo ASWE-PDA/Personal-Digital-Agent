@@ -25,7 +25,6 @@ class _SmartHomeSettingsScreen extends State<SmartHomeSettingsScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _ipController = TextEditingController(text: widget.ip);
   }

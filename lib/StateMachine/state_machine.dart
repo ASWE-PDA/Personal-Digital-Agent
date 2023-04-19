@@ -1,5 +1,6 @@
 import 'package:luna/UseCases/good_morning_use_case.dart';
 import 'package:luna/UseCases/EventPlanning/event_planning_use_case.dart';
+import 'package:luna/UseCases/news/news_use_case.dart';
 import 'package:statemachine/statemachine.dart';
 import '../UseCases/good_night_use_case.dart';
 import '../UseCases/use_case.dart';
@@ -64,11 +65,18 @@ class StateMachine {
   //static UseCase goodMorningUseCase;
   //static UseCase newsUseCase;
   static UseCase _goodMorningUseCase = GoodMorningUseCase.instance;
-  static UseCase _goodNightUseCase = GoodNightUseCase.instance;
-
-  set goodNightUseCase(UseCase instance) {
+  set goodMorningUseCase(UseCase instance) {
     _goodMorningUseCase = instance;
+  }
+
+  static UseCase _goodNightUseCase = GoodNightUseCase.instance;
+  set goodNightUseCase(UseCase instance) {
     _goodNightUseCase = instance;
+  }
+
+  static UseCase _newsUseCase = NewsUseCase.instance;
+  set newsUseCase(UseCase instance) {
+    _newsUseCase = instance;
   }
 
   static UseCase _eventPlanningUseCase = EventPlanningUseCase.instance;
@@ -94,13 +102,15 @@ class StateMachine {
     // leave current state and transition to event planning state
     eventPlanningState.enter();
     _eventPlanningUseCase.execute(trigger);
+    transitionToIdle();
   }
 
   void transitionToNews(String trigger) {
     // leave current state and transition to news state
     print("transitioning to news state");
     newsState.enter();
-    // TODO link to news state main and transition back to idle afterwards
+    _newsUseCase.execute(trigger);
+    transitionToIdle();
   }
 
   void transitionToGoodNight(String trigger) {

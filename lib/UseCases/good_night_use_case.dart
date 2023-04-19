@@ -9,7 +9,6 @@ import 'package:luna/Services/spotify_service.dart';
 import 'package:luna/UseCases/good_morning_model.dart';
 import 'package:luna/UseCases/good_night_model.dart';
 import 'package:luna/UseCases/use_case.dart';
-import 'package:flutter_tts/flutter_tts.dart';
 import 'package:luna/Services/notification_service.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 
@@ -31,8 +30,6 @@ class GoodNightUseCase extends UseCase {
   List<String> alarmTriggerWords = ["alarm", "wake up", "wake me up"];
   List<String> yesTriggerWords = ["Yes", "Ja", "yes", "ja", "please", "Please"];
 
-  FlutterTts flutterTts = FlutterTts();
-
   BridgeModel bridgeModel = BridgeModel();
   GoodNightModel goodNightModel = GoodNightModel();
   SmartHomeService smartHomeService = SmartHomeService();
@@ -52,11 +49,11 @@ class GoodNightUseCase extends UseCase {
   }
 
   @override
-  void execute(String trigger) async {
+  void execute(String trigger) async{
     flutterTts.setLanguage("en-US");
     if (goodNightTriggerWords.any((element) => trigger.contains(element))) {
       print("triggered good night case");
-      await executeCompleteUseCase();
+      executeCompleteUseCase();
       return;
     } else if (lightTriggerWords.any((element) => trigger.contains(element))) {
       print("triggered light case");
@@ -146,34 +143,18 @@ class GoodNightUseCase extends UseCase {
     }
   }
 
-  // TODO: implement this
   Future<void> askForSleepPlaylist() async {
-    Completer<bool> completer = Completer<bool>();
-    await flutterTts.speak("Do you want me to start a sleep playlist for you?");
-    flutterTts.setCompletionHandler(() {
-      print("completed spotify speaking");
-      completer.complete(true);
-    });
-    bool done = await completer.future;
-
-    if (done) {
-      completer = Completer();
-      String answer = await listenForSpeech(Duration(seconds: 5));
-      print("Spotify Answer is $answer");
-      bool alarm = checkIfAnswerIsYes(answer);
-      if (alarm) {
-        await startSleepPlayList();
-      } else {
-        await flutterTts.speak("Okay, I don't start a playlist. Good Night!");
-        flutterTts.setCompletionHandler(() {
-          print("completed speaking");
-          completer.complete(true);
-        });
-        done = await completer.future;
-        if (done) {
-          return;
-        }
-      }
+    await textToSpeechOutput("Do you want me to start a sleep playlist for you?");
+    
+    
+    String answer = await listenForSpeech(Duration(seconds: 5));
+    print("Spotify Answer is $answer");
+    bool alarm = checkIfAnswerIsYes(answer);
+    if (alarm) {
+      await startSleepPlayList();
+    } else {
+      await textToSpeechOutput("Okay, I don't start a playlist. Good Night!");
+      return;
     }
   }
 
@@ -191,49 +172,21 @@ class GoodNightUseCase extends UseCase {
     }
   }
 
-  // TODO: implement this
   Future<void> askForWakeUpTime() async {
-    Completer<bool> completer = Completer<bool>();
-    await flutterTts.speak("Do you want an alarm for tomorrow?");
-
-    flutterTts.setCompletionHandler(() {
-      print("completed speaking");
-      completer.complete(true);
-    });
-
-    bool done = await completer.future;
-
-    if (done) {
-      completer = Completer();
-      String answer = await listenForSpeech(Duration(seconds: 5));
-      print("Answer is $answer");
-      bool alarm = checkIfAnswerIsYes(answer);
-      if (alarm) {
-        String result = await setAlarm();
-        await flutterTts.speak(result);
-        flutterTts.setCompletionHandler(() {
-          print("completed speaking");
-          completer.complete(true);
-        });
-        done = await completer.future;
-        if (done) {
-          return;
-        }
-      } else {
-        await flutterTts.speak("Okay, I don't set an alarm.");
-        flutterTts.setCompletionHandler(() {
-          print("completed speaking");
-          completer.complete(true);
-        });
-        done = await completer.future;
-        if (done) {
-          return;
-        }
+    await textToSpeechOutput("Do you want an alarm for tomorrow?");
+    String answer = await listenForSpeech(Duration(seconds: 5));
+    print("Answer is $answer");
+    bool alarm = checkIfAnswerIsYes(answer);
+    if (alarm) {
+      String result = await setAlarm();
+      await textToSpeechOutput(result);
+      return;
+    } else {
+      await textToSpeechOutput("Okay, I don't set an alarm.");
+      return;
       }
-    }
   }
-
-  // TODO: get user input
+  
   Future<String> setAlarm() async {
     TimeOfDay timeOfDay = await goodMorningModel.getWakeUpTime();
     DateTime tomorrow = DateTime.now().add(Duration(days: 1));
@@ -244,24 +197,12 @@ class GoodNightUseCase extends UseCase {
   }
 
   Future<void> executeCompleteUseCase() async {
-    Completer<bool> completer = Completer<bool>();
-    await flutterTts.speak("Good Night. Sleep Well.");
-    flutterTts.setCompletionHandler(() {
-      print("completed good night speaking");
-      completer.complete(true);
-    });
-    await completer.future;
+    print("\n\n\n\n\nSHEEEEEEEEEESH\n\\n\n\n\n\n");
+    await textToSpeechOutput("Good Night. Sleep Well.");
 
-    completer = Completer<bool>();
     await askForWakeUpTime();
-    completer = Completer<bool>();
     String answer = await turnOffAllLights();
-    await flutterTts.speak(answer);
-    flutterTts.setCompletionHandler(() {
-      print("completed light speaking");
-      completer.complete(true);
-    });
-    await completer.future;
+    await textToSpeechOutput(answer);
     await askForSleepPlaylist();
   }
 
@@ -272,46 +213,5 @@ class GoodNightUseCase extends UseCase {
     }
     print("answer is not yes");
     return false;
-  }
-
-  Future<String> listenForSpeech(Duration duration) async {
-    // Check if the device supports speech recognition
-    bool isAvailable = await _speechToText.initialize();
-    if (!isAvailable) {
-      print("Speech recognition not available");
-      return "";
-    }
-
-    // Create a completer to create a future that completes with the recognized text
-    Completer<String> completer = Completer<String>();
-    print("Start listening");
-    // Start listening for speech for the specified duration
-    Timer timer = Timer(duration, () async {
-      print("timer stop");
-      await _speechToText.stop();
-    });
-    await _speechToText.listen(
-      partialResults: false,
-      onResult: (result) async {
-        lastWords = result.recognizedWords;
-        print("Speech recognition result: ${result.recognizedWords}");
-        timer.cancel();
-        completer.complete(result.recognizedWords);
-        await _speechToText.stop();
-      },
-      listenFor: duration,
-    );
-
-    // Wait for the future to complete and return the recognized text
-    try {
-      String recognizedText = await completer.future;
-      return recognizedText;
-    } catch (e) {
-      print("Error: $e");
-      timer.cancel();
-      return "";
-    } finally {
-      timer.cancel();
-    }
   }
 }

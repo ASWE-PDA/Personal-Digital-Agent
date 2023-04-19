@@ -76,6 +76,53 @@ void main() {
       controller.start();
       expect(controller.getCurrentState(), StateMachine.idleState);
     });
+    test('state machine run idle state call', () {
+      final sm = StateMachine();
+      sm.start();
+      expect(sm.getCurrentState(), StateMachine.idleState);
+      sm.runIdleState();
+      expect(sm.getCurrentState(), StateMachine.idleState);
+    });
+    test('state machine idle state transition to good morning', () {
+      final sm = StateMachine();
+      sm.goodMorningUseCase = MockGoodMorningUseCase();
+      sm.start();
+      expect(sm.getCurrentState(), StateMachine.idleState);
+      sm.runIdleState();
+      expect(sm.getCurrentState(), StateMachine.idleState);
+      sm.update("good morning");
+      expect(sm.getCurrentState(), StateMachine.idleState);
+    });
+    test('state machine idle state transition to event planning', () {
+      final sm = StateMachine();
+      sm.eventPlanningUseCase = MockEventPlanningUseCase();
+      sm.start();
+      expect(sm.getCurrentState(), StateMachine.idleState);
+      sm.runIdleState();
+      expect(sm.getCurrentState(), StateMachine.idleState);
+      sm.update("event");
+      expect(sm.getCurrentState(), StateMachine.idleState);
+    });
+    test('state machine idle state transition to news', () {
+      final sm = StateMachine();
+      sm.newsUseCase = MockNewsUseCase();
+      sm.start();
+      expect(sm.getCurrentState(), StateMachine.idleState);
+      sm.runIdleState();
+      expect(sm.getCurrentState(), StateMachine.idleState);
+      sm.update("news");
+      expect(sm.getCurrentState(), StateMachine.idleState);
+    });
+    test('state machine idle state transition to good night', () {
+      final sm = StateMachine();
+      sm.goodNightUseCase = MockGoodNightUseCase();
+      sm.start();
+      expect(sm.getCurrentState(), StateMachine.idleState);
+      sm.runIdleState();
+      expect(sm.getCurrentState(), StateMachine.idleState);
+      sm.update("good night");
+      expect(sm.getCurrentState(), StateMachine.idleState);
+    });
   });
   group('State Machine Use Case Checks', () {
     test('use case check service creation', () {
